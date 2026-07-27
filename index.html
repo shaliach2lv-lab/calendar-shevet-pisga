@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הוספת לוז שבט פסגה 26-27 ליומן</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg,#1e3c72,#2a5298);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 36px 28px;
+    max-width: 460px;
+    width: 100%;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    text-align: center;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 8px;
+    color: #1e3c72;
+  }
+  p.subtitle {
+    color: #555;
+    font-size: 15px;
+    margin: 0 0 28px;
+  }
+  .btn {
+    display: block;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-google {
+    background: #4285F4;
+    color: #fff;
+  }
+  .btn-google:hover { box-shadow: 0 6px 16px rgba(66,133,244,0.4); }
+  .btn-apple {
+    background: #000;
+    color: #fff;
+  }
+  .btn-apple:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.35); }
+  .hint {
+    font-size: 12.5px;
+    color: #888;
+    margin: -6px 0 20px;
+    line-height: 1.5;
+  }
+  #errorBox {
+    display: none;
+    background: #fdecea;
+    color: #b3261e;
+    border: 1px solid #f5c2c0;
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin-top: 18px;
+    text-align: right;
+    line-height: 1.6;
+  }
+  @media (max-width: 420px) {
+    .card { padding: 26px 18px; border-radius: 12px; }
+    h1 { font-size: 19px; }
+    .btn { font-size: 16px; padding: 14px; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>לוז שבט פסגה 26-27</h1>
+    <p class="subtitle">בחרו את סוג היומן שברשותכם כדי להוסיף את הלוז המשותף</p>
+
+    <a href="https://calendar.google.com/calendar/render?cid=8a4cc1c12c2d5876b4d71e551fbe842c114310ab25cae679338c3e4580d7e9af%40group.calendar.google.com" target="_blank" rel="noopener" class="btn btn-google" id="googleBtn">הוספה ליומן Google</a>
+    <p class="hint">ייפתח בכרטיסייה חדשה. יש להתחבר לחשבון Google שלכם.</p>
+
+    <a href="webcal://calendar.google.com/calendar/ical/8a4cc1c12c2d5876b4d71e551fbe842c114310ab25cae679338c3e4580d7e9af%40group.calendar.google.com/public/basic.ics" class="btn btn-apple" id="appleBtn">הוספה ליומן Apple</a>
+    <p class="hint">עובד במכשירי אייפון/אייפד/מק דרך Safari בלבד.</p>
+
+    <div id="errorBox"></div>
+  </div>
+
+<script>
+  function showError(msg) {
+    const box = document.getElementById('errorBox');
+    box.textContent = msg;
+    box.style.display = 'block';
+  }
+  function hideError() {
+    document.getElementById('errorBox').style.display = 'none';
+  }
+
+  const googleBtn = document.getElementById('googleBtn');
+  googleBtn.addEventListener('click', function(e){
+    hideError();
+    const win = window.open(googleBtn.href, '_blank');
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      e.preventDefault();
+      showError('לא הצלחנו לפתוח את יומן Google. ודאו שחוסם החלונות הקופצים כבוי ונסו שוב, או פתחו את הקישור בלחיצה ארוכה.');
+    }
+  });
+
+  const appleBtn = document.getElementById('appleBtn');
+  let appleClickTime = 0;
+  let appleHandled = false;
+
+  appleBtn.addEventListener('click', function(){
+    hideError();
+    appleHandled = false;
+    appleClickTime = Date.now();
+    setTimeout(function(){
+      if (!appleHandled) {
+        showError('נראה שהמכשיר לא תומך בפתיחה אוטומטית של יומן Apple. יש לוודא שאתם גולשים דרך Safari במכשיר אייפון, אייפד או מק, ולנסות שוב.');
+      }
+    }, 1500);
+  });
+
+  function markAppleHandled(){
+    if (Date.now() - appleClickTime < 3000) {
+      appleHandled = true;
+      hideError();
+    }
+  }
+  window.addEventListener('blur', markAppleHandled);
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) markAppleHandled();
+  });
+</script>
+</body>
+</html>
