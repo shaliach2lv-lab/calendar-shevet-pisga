@@ -128,20 +128,20 @@ h1 { font-size: 19px; }
 
 <div class="section">
 <p class="section-title">לוז שכב"ג</p>
-<p class="section-note">כולל אוטומטית גם את הלוז הכללי של שבט פסגה</p>
-<button class="btn btn-google" data-google="shchavag">הוספה ליומן Google</button>
-<p class="hint">ייפתחו שתי כרטיסיות חדשות - יש לאשר הוספה בשתיהן (לוז כללי + לוז שכב"ג).</p>
-<button class="btn btn-apple" data-apple="shchavag">הוספה ליומן Apple</button>
-<p class="hint">יופיעו ברצף שתי בקשות אישור מהמכשיר - יש לאשר את שתיהן.</p>
+  <p class="section-note">יש להוסיף בנפרד: קודם לוז כללי (למעלה), ואז לוז שכב"ג (כאן)</p>
+  <button class="btn btn-google" data-google="shchavag_only">הוספת לוז שכב"ג ליומן Google</button>
+  <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
+  <button class="btn btn-apple" data-apple="shchavag_only">הוספת לוז שכב"ג ליומן Apple</button>
+  <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
 </div>
 
 <div class="section">
 <p class="section-title">לוז ט'</p>
-<p class="section-note">כולל אוטומטית גם את הלוז הכללי של שבט פסגה</p>
-<button class="btn btn-google" data-google="tet">הוספה ליומן Google</button>
-<p class="hint">ייפתחו שתי כרטיסיות חדשות - יש לאשר הוספה בשתיהן (לוז כללי + לוז ט').</p>
-<button class="btn btn-apple" data-apple="tet">הוספה ליומן Apple</button>
-<p class="hint">יופיעו ברצף שתי בקשות אישור מהמכשיר - יש לאשר את שתיהן.</p>
+  <p class="section-note">יש להוסיף בנפרד: קודם לוז כללי (למעלה), ואז לוז ט' (כאן)</p>
+  <button class="btn btn-google" data-google="tet_only">הוספת לוז ט' ליומן Google</button>
+  <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
+  <button class="btn btn-apple" data-apple="tet_only">הוספת לוז ט' ליומן Apple</button>
+  <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
 </div>
 
 <div id="errorBox"></div>
@@ -161,13 +161,17 @@ const TET_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/uniq
 const GOOGLE_URLS = {
 generic: [GENERIC_GOOGLE],
 shchavag: [GENERIC_GOOGLE, SHCHAVAG_GOOGLE],
-tet: [GENERIC_GOOGLE, TET_GOOGLE]
+tet: [GENERIC_GOOGLE, TET_GOOGLE],
+  shchavag_only: [SHCHAVAG_GOOGLE],
+  tet_only: [TET_GOOGLE]
 };
 
 const APPLE_URLS = {
 generic: [GENERIC_APPLE],
 shchavag: [GENERIC_APPLE, SHCHAVAG_APPLE],
-tet: [GENERIC_APPLE, TET_APPLE]
+tet: [GENERIC_APPLE, TET_APPLE],
+  shchavag_only: [SHCHAVAG_APPLE],
+    tet_only: [TET_APPLE]
 };
 
 function showError(msg) {
