@@ -133,6 +133,10 @@ h1 { font-size: 19px; }
   <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
   <button class="btn btn-apple" data-apple="shchavag_only">הוספת לוז שכב"ג ליומן Apple</button>
   <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
+  <button class="btn btn-google" data-google="shchavag_en_only">הוספת לוז שכב"ג באנגלית ליומן Google</button>
+  <p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
+  <button class="btn btn-apple" data-apple="shchavag_en_only">הוספת לוז שכב"ג באנגלית ליומן Apple</button>
+  <p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
 </div>
 
 <div class="section">
@@ -142,6 +146,10 @@ h1 { font-size: 19px; }
   <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
   <button class="btn btn-apple" data-apple="tet_only">הוספת לוז ט' ליומן Apple</button>
   <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
+  <button class="btn btn-google" data-google="tet_en_only">הוספת לוז ט' באנגלית ליומן Google</button>
+  <p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
+  <button class="btn btn-apple" data-apple="tet_en_only">הוספת לוז ט' באנגלית ליומן Apple</button>
+  <p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
 </div>
 
 <div id="errorBox"></div>
@@ -155,6 +163,12 @@ const GENERIC_APPLE = "webcal://calendar.google.com/calendar/ical/" + GENERIC_ID
 const SHCHAVAG_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag.ics";
 const TET_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet.ics";
 
+
+  const SHCHAVAG_EN_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag-en.ics";
+  const TET_EN_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet-en.ics";
+
+  const SHCHAVAG_EN_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag-en.ics";
+  const TET_EN_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet-en.ics";
 const SHCHAVAG_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag.ics";
 const TET_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet.ics";
 
@@ -163,7 +177,9 @@ generic: [GENERIC_GOOGLE],
 shchavag: [GENERIC_GOOGLE, SHCHAVAG_GOOGLE],
 tet: [GENERIC_GOOGLE, TET_GOOGLE],
   shchavag_only: [SHCHAVAG_GOOGLE],
-  tet_only: [TET_GOOGLE]
+  tet_only: [TET_GOOGLE],
+  shchavag_en_only: [SHCHAVAG_EN_GOOGLE],
+  tet_en_only: [TET_EN_GOOGLE]
 };
 
 const APPLE_URLS = {
@@ -171,7 +187,9 @@ generic: [GENERIC_APPLE],
 shchavag: [GENERIC_APPLE, SHCHAVAG_APPLE],
 tet: [GENERIC_APPLE, TET_APPLE],
   shchavag_only: [SHCHAVAG_APPLE],
-    tet_only: [TET_APPLE]
+    tet_only: [TET_APPLE],
+  shchavag_en_only: [SHCHAVAG_EN_APPLE],
+  tet_en_only: [TET_EN_APPLE]
 };
 
 function showError(msg) {
