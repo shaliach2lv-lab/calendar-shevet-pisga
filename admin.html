@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+  <html lang="he" dir="rtl">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Shevet Pisga</title>
+  <style>
+  * { box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: #f2f4f7;
+    margin: 0;
+  padding: 20px;
+  color: #222;
+}
+.wrap { max-width: 1100px; margin: 0 auto; }
+h1 { color: #1e3c72; font-size: 22px; }
+.warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; }
+.panel { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.panel label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
+.panel input[type=text], .panel input[type=password] { width: 100%; max-width: 420px; padding: 8px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; }
+.panel button { margin-top: 10px; padding: 10px 16px; border: none; border-radius: 8px; background: #1e3c72; color: #fff; font-size: 14px; cursor: pointer; margin-left: 8px; }
+.panel button:hover { background: #163058; }
+#googleStatus { font-size: 13px; color: #888; margin-right: 8px; }
+#statusMsg { font-size: 13px; margin-top: 8px; white-space: pre-wrap; }
+.schedule { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow-x: auto; }
+.schedule h2 { color: #1e3c72; font-size: 18px; margin-top: 0; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { border: 1px solid #e2e2e2; padding: 6px 8px; text-align: right; vertical-align: middle; }
+th { background: #f7f8fa; }
+td input[type=text] { width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+td input[type=date], td input[type=time] { padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
+.rowbtn { padding: 5px 10px; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; margin: 2px; }
+.saveBtn { background: #2e7d32; color: #fff; }
+.deleteBtn { background: #b3261e; color: #fff; }
+.status-cell { font-size: 12px; min-width: 90px; }
+.newrow { background: #f7fbf7; }
+</style>
+  </head>
+  <body>
+  <div class="wrap">
+    <h1>אתר שליטה - שבט פסגה 26-27</h1>
+    <p class="warn">דף זה אינו מקושר מהאתר הציבורי ומיועד לשימוש פנימי בלבד. שינויים שנשמרים כאן מתבצעים ישירות בקבצים וביומן החי.</p>
+
+    <div class="panel">
+      <h2 style="margin-top:0;color:#1e3c72;font-size:16px;">חיבור</h2>
+      <label>טוקן GitHub (Personal Access Token עם הרשאת repo):</label>
+      <input type="password" id="ghToken" placeholder="ghp_...">
+    <label>Google OAuth Client ID (ליומן פסגה החי):</label>
+      <input type="text" id="gClientId" placeholder="xxxxx.apps.googleusercontent.com">
+      <div>
+        <button id="connectGoogleBtn">התחברות ל-Google</button>
+        <span id="googleStatus">לא מחובר</span>
+      </div>
+      <button id="loadAllBtn">טען את כל האירועים</button>
+      <div id="statusMsg"></div>
+    </div>
+
+    <div id="scheduleSections"></div>
+  </div>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+  (function(){
+
+  const GH_OWNER = 'shaliach2lv-lab';
+const GH_REPO = 'calendar-shevet-pisga';
+const PISGA_CALENDAR_ID = '8a4cc1c12c2d5876b4d71e551fbe842c114310ab25cae679338c3e4580d7e9af@group.calendar.google.com';
+
+const SCHEDULES = [
+{ key: 'pisga', label: 'פסגה - כללי (עברית חיה מ-Google, אנגלית מקובץ)', heSource: 'google', enFile: 'unique-pisga-en.ics' },
+{ key: 'shchavag', label: 'שכב"ג', heSource: 'github', heFile: 'unique-shchavag.ics', enFile: 'unique-shchavag-en.ics' },
+{ key: 'tet', label: 'ט׳', heSource: 'github', heFile: 'unique-tet.ics', enFile: 'unique-tet-en.ics' }
+];
+
+let googleAccessToken = null;
+let tokenClient = null;
+const state = {};
+
+function setStatus(msg, isError){
+  const el = document.getElementById('statusMsg');
+  el.style.color = isError ? '#b3261e' : '#2e7d32';
+  el.textContent = msg;
+}
+
+function b64EncodeUnicode(str){
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(m,p1){ return String.fromCharCode(parseInt(p1,16)); }));
+}
+function b64DecodeUnicode(str){
+    return decodeURIComponent(atob(str).split('').map(function(c){ return '%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2); }).join(''));
+      }
+
+      function ghHeaders(){
+        const token = document.getElementById('ghToken').value.trim();
+  return { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+}
+async function ghGetFile(path){
+  const res = await fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + path + '?ts=' + Date.now(), { headers: ghHeaders() });
+  if(!res.ok) throw new Error('שגיאה בקריאת ' + path + ' (קוד ' + res.status + ')');
+  const json = await res.json();
+  return { sha: json.sha, text: b64DecodeUnicode(json.content.replace(/\n/g,'')) };
+    }
+    async function ghPutFile(path, newText, sha, message){
+  const headers = ghHeaders();
+  headers['Content-Type'] = 'application/json';
+  const res = await fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + path, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify({ message: message, content: b64EncodeUnicode(newText), sha: sha, branch: 'main' })
+    });
+  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה בשמירת ' + path + ' (קוד ' + res.status + '): ' + t); }
+  const json = await res.json();
+  return json.content.sha;
+  }
+
+function parseICS(text){
+    const lines = text.split(/\r\n|\n|\r/);
+  const events = [];
+  let curLines = null;
+  const preLines = [];
+  const postLines = [];
+  let phase = 'pre';
+  for(const line of lines){
+        if(line.trim() === 'BEGIN:VEVENT'){ curLines = [line]; phase = 'in'; continue; }
+    if(line.trim() === 'END:VEVENT'){ curLines.push(line); events.push(curLines); curLines = null; phase = 'events'; continue; }
+    if(phase === 'in'){ curLines.push(line); }
+    else if(phase === 'pre'){ preLines.push(line); }
+    else { postLines.push(line); }
+}
+  const parsedEvents = events.map(function(evLines){
+    const obj = { lines: evLines.slice(), uid:'', dtstartIdx:-1, dtendIdx:-1, summaryIdx:-1 };
+    evLines.forEach(function(l,i){
+      if(l.indexOf('UID:') === 0) obj.uid = l.slice(4).trim();
+      else if(l.indexOf('DTSTART') === 0) obj.dtstartIdx = i;
+      else if(l.indexOf('DTEND') === 0) obj.dtendIdx = i;
+      else if(l.indexOf('SUMMARY:') === 0) obj.summaryIdx = i;
+});
+    return obj;
+        });
+  return { preLines: preLines, events: parsedEvents, postLines: postLines };
+         }
+function serializeICS(parsed){
+    const evBlocks = parsed.events.map(function(ev){ return ev.lines.join('\r\n'); });
+  return parsed.preLines.concat(evBlocks, parsed.postLines).join('\r\n');
+}
+function parseDTLine(raw){
+    if(!raw) return { allDay:true, date:'', time:'' };
+  const m1 = raw.match(/VALUE=DATE:(\d{8})/);
+  if(m1) return { allDay:true, date:m1[1], time:'' };
+  const m2 = raw.match(/:(\d{8})T(\d{6})/);
+  if(m2) return { allDay:false, date:m2[1], time:m2[2] };
+  return { allDay:true, date:'', time:'' };
+}
+function buildDTLine(tag, allDay, date, time){
+    if(allDay) return tag + ';VALUE=DATE:' + date;
+  return tag + ';TZID=Asia/Jerusalem:' + date + 'T' + time;
+}
+function dashDate(v){ return v ? v.slice(0,4)+'-'+v.slice(4,6)+'-'+v.slice(6,8) : ''; }
+  function undashDate(v){ return v ? v.replace(/-/g,'') : ''; }
+    function colonTime(v){ return v ? v.slice(0,2)+':'+v.slice(2,4) : ''; }
+      function uncolonTime(v){ return v ? v.replace(':','')+'00' : ''; }
+        function nowStamp(){
+            const d = new Date();
+  function p(n){ return String(n).padStart(2,'0'); }
+  return d.getUTCFullYear()+p(d.getUTCMonth()+1)+p(d.getUTCDate())+'T'+p(d.getUTCHours())+p(d.getUTCMinutes())+p(d.getUTCSeconds())+'Z';
+        }
+function addOneDay(yyyymmdd){
+    const y = +yyyymmdd.slice(0,4), m = +yyyymmdd.slice(4,6)-1, d = +yyyymmdd.slice(6,8);
+  const dt = new Date(Date.UTC(y,m,d));
+  dt.setUTCDate(dt.getUTCDate()+1);
+  function p(n){ return String(n).padStart(2,'0'); }
+  return dt.getUTCFullYear()+p(dt.getUTCMonth()+1)+p(dt.getUTCDate());
+}
+
+async function gcalListEvents(){
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events?maxResults=250&singleEvents=true&orderBy=startTime&timeMin=2026-01-01T00:00:00Z';
+  const res = await fetch(url, { headers: { Authorization: 'Bearer ' + googleAccessToken } });
+  if(!res.ok) throw new Error('שגיאה בקריאת יומן Google (קוד ' + res.status + ')');
+  const json = await res.json();
+  return json.items || [];
+}
+async function gcalPatchEvent(eventId, body){
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events/' + encodeURIComponent(eventId);
+  const res = await fetch(url, { method:'PATCH', headers: { Authorization: 'Bearer ' + googleAccessToken, 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה בעדכון Google (קוד ' + res.status + '): ' + t); }
+  return res.json();
+}
+async function gcalInsertEvent(body){
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events';
+  const res = await fetch(url, { method:'POST', headers: { Authorization: 'Bearer ' + googleAccessToken, 'Content-Type':'application/json' }, body: JSON.stringify(body) });
+  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה ביצירת אירוע ב-Google (קוד ' + res.status + '): ' + t); }
+  return res.json();
+}
+async function gcalDeleteEvent(eventId){
+  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events/' + encodeURIComponent(eventId);
+  const res = await fetch(url, { method:'DELETE', headers: { Authorization: 'Bearer ' + googleAccessToken } });
+  if(!res.ok && res.status !== 410 && res.status !== 404) { const t = await res.text(); throw new Error('שגיאה במחיקה ב-Google (קוד ' + res.status + '): ' + t); }
+}
+
+function normalizeGoogleEvent(ev){
+    const allDay = !!ev.start.date;
+  const date = allDay ? ev.start.date.replace(/-/g,'') : ev.start.dateTime.slice(0,10).replace(/-/g,'');
+  const time = allDay ? '' : ev.start.dateTime.slice(11,16).replace(':','')+'00';
+      const endAllDay = !!ev.end.date;
+  const endDate = endAllDay ? ev.end.date.replace(/-/g,'') : ev.end.dateTime.slice(0,10).replace(/-/g,'');
+  const endTime = endAllDay ? '' : ev.end.dateTime.slice(11,16).replace(':','')+'00';
+  return { id: ev.id, summary: ev.summary || '', allDay: allDay, date: date, time: time, endDate: endDate, endTime: endTime };
+}
+function extractHeListFromParsed(parsed){
+  return parsed.events.map(function(ev, idx){
+    const dt = parseDTLine(ev.lines[ev.dtstartIdx]);
+    const dtEnd = parseDTLine(ev.lines[ev.dtendIdx]);
+    return { idx: idx, allDay: dt.allDay, date: dt.date, time: dt.time, endDate: dtEnd.date, endTime: dtEnd.time, summary: ev.summaryIdx>=0 ? ev.lines[ev.summaryIdx].slice(8) : '' };
+});
+}
+function matchByDate(heList, enList){
+  const enUsed = new Array(enList.length).fill(false);
+  const rows = [];
+  heList.forEach(function(he){
+        let matchIdx = -1;
+    for(let i=0;i<enList.length;i++){ if(!enUsed[i] && enList[i].date === he.date){ matchIdx = i; break; } }
+    let en = null;
+    if(matchIdx !== -1){ en = enList[matchIdx]; enUsed[matchIdx] = true; }
+    rows.push({ he: he, en: en });
+  });
+  enList.forEach(function(en, idx){ if(!enUsed[idx]) rows.push({ he: null, en: en }); });
+  rows.sort(function(a,b){
+        const da = (a.he || a.en).date;
+        const db = (b.he || b.en).date;
+    return da < db ? -1 : (da > db ? 1 : 0);
+  });
+  return rows;
+  }
+
+async function loadSchedule(sched){
+  let heList = [];
+  let heParsed = null;
+  if(sched.heSource === 'github'){
+    heParsed = await ghGetFile(sched.heFile);
+    heParsed.parsed = parseICS(heParsed.text);
+    heList = extractHeListFromParsed(heParsed.parsed);
+  } else {
+    if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם כדי לטעון את לוז ' + sched.label);
+    const items = await gcalListEvents();
+    heList = items.map(normalizeGoogleEvent);
+    }
+  const enParsed = await ghGetFile(sched.enFile);
+  enParsed.parsed = parseICS(enParsed.text);
+  const enList = extractHeListFromParsed(enParsed.parsed);
+  const rows = matchByDate(heList, enList);
+  state[sched.key] = { sched: sched, heParsed: heParsed, enParsed: enParsed, rows: rows };
+  }
+
+function renderAll(){
+    const container = document.getElementById('scheduleSections');
+  container.innerHTML = '';
+      SCHEDULES.forEach(function(sched){
+            const s = state[sched.key];
+            const section = document.createElement('div');
+    section.className = 'schedule';
+    let html = '<h2>' + sched.label + '</h2>';
+    if(!s){
+      html += '<p>לא נטען עדיין.</p>';
+      section.innerHTML = html;
+      container.appendChild(section);
+      return;
+}
+    html += '<table><thead><tr>' +
+      '<th>תאריך</th><th>כל היום</th><th>שעת התחלה</th><th>שעת סיום</th>' +
+      '<th>כותרת עברית</th><th>כותרת אנגלית</th><th>פעולות</th><th>סטטוס</th>' +
+      '</tr></thead><tbody id="tbody-' + sched.key + '"></tbody></table>' +
+      '<div class="newrow" style="margin-top:14px;padding:10px;border-radius:8px;">' +
+      '<b>הוספת אירוע חדש:</b><br><br>' +
+      '<label>תאריך</label><input type="date" id="new-date-' + sched.key + '"> ' +
+      '<label>כל היום</label><input type="checkbox" id="new-allday-' + sched.key + '"> ' +
+      '<label>התחלה</label><input type="time" id="new-start-' + sched.key + '"> ' +
+      '<label>סיום</label><input type="time" id="new-end-' + sched.key + '"><br><br>' +
+      '<label>כותרת עברית</label><input type="text" id="new-hetitle-' + sched.key + '" style="width:220px;"> ' +
+      '<label>כותרת אנגלית</label><input type="text" id="new-entitle-' + sched.key + '" style="width:220px;"><br><br>' +
+      '<button onclick="AdminTool.addEvent(\'' + sched.key + '\')">הוסף אירוע</button>' +
+      ' <span id="new-status-' + sched.key + '" style="font-size:12px;margin-right:8px;"></span>' +
+      '</div>';
+    section.innerHTML = html;
+    container.appendChild(section);
+    const tbody = document.getElementById('tbody-' + sched.key);
+    s.rows.forEach(function(row, i){
+      const ref = row.he || row.en;
+      const tr = document.createElement('tr');
+      const dateVal = dashDate(ref.date);
+      const allDay = ref.allDay;
+      const startVal = allDay ? '' : colonTime(ref.time);
+      const endVal = allDay ? '' : colonTime(ref.endTime);
+      tr.innerHTML =
+        '<td><input type="date" id="date-' + sched.key + '-' + i + '" value="' + dateVal + '"></td>' +
+        '<td style="text-align:center;"><input type="checkbox" id="allday-' + sched.key + '-' + i + '" ' + (allDay?'checked':'') + '></td>' +
+        '<td><input type="time" id="start-' + sched.key + '-' + i + '" value="' + startVal + '"></td>' +
+        '<td><input type="time" id="end-' + sched.key + '-' + i + '" value="' + endVal + '"></td>' +
+        '<td><input type="text" id="hetitle-' + sched.key + '-' + i + '" value="' + (row.he ? row.he.summary.replace(/"/g,'&quot;') : '') + '"></td>' +
+        '<td><input type="text" id="entitle-' + sched.key + '-' + i + '" value="' + (row.en ? row.en.summary.replace(/"/g,'&quot;') : '') + '"></td>' +
+        '<td><button class="rowbtn saveBtn" onclick="AdminTool.saveRow(\'' + sched.key + '\',' + i + ')">שמור</button>' +
+        '<button class="rowbtn deleteBtn" onclick="AdminTool.deleteRow(\'' + sched.key + '\',' + i + ')">מחק</button></td>' +
+        '<td class="status-cell" id="status-' + sched.key + '-' + i + '"></td>';
+      tbody.appendChild(tr);
+});
+});
+}
+
+async function saveRow(schedKey, rowIndex){
+  const s = state[schedKey];
+  const row = s.rows[rowIndex];
+  const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
+  statusEl.textContent = 'שומר...';
+  try{
+    const dateVal = undashDate(document.getElementById('date-' + schedKey + '-' + rowIndex).value);
+    const allDay = document.getElementById('allday-' + schedKey + '-' + rowIndex).checked;
+    const startVal = allDay ? '' : uncolonTime(document.getElementById('start-' + schedKey + '-' + rowIndex).value);
+    const endVal = allDay ? '' : uncolonTime(document.getElementById('end-' + schedKey + '-' + rowIndex).value);
+    const heTitleVal = document.getElementById('hetitle-' + schedKey + '-' + rowIndex).value;
+    const enTitleVal = document.getElementById('entitle-' + schedKey + '-' + rowIndex).value;
+    const dtendDate = allDay ? addOneDay(dateVal) : dateVal;
+
+    if(s.sched.heSource === 'github'){
+      if(row.he){
+        const ev = s.heParsed.parsed.events[row.he.idx];
+        ev.lines[ev.dtstartIdx] = buildDTLine('DTSTART', allDay, dateVal, startVal);
+        ev.lines[ev.dtendIdx] = buildDTLine('DTEND', allDay, dtendDate, endVal);
+        if(ev.summaryIdx>=0) ev.lines[ev.summaryIdx] = 'SUMMARY:' + heTitleVal;
+}
+      const newText = serializeICS(s.heParsed.parsed);
+      const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'עדכון אירוע דרך אתר השליטה');
+      s.heParsed.sha = newSha;
+} else {
+      if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
+      if(row.he){
+        const body = { summary: heTitleVal };
+        if(allDay){ body.start = { date: dashDate(dateVal) }; body.end = { date: dashDate(dtendDate) }; }
+        else { body.start = { dateTime: dashDate(dateVal)+'T'+colonTime(startVal)+':00', timeZone:'Asia/Jerusalem' }; body.end = { dateTime: dashDate(dateVal)+'T'+colonTime(endVal)+':00', timeZone:'Asia/Jerusalem' }; }
+        await gcalPatchEvent(row.he.id, body);
+}
+}
+
+    if(row.en){
+      const ev = s.enParsed.parsed.events[row.en.idx];
+      ev.lines[ev.dtstartIdx] = buildDTLine('DTSTART', allDay, dateVal, startVal);
+      ev.lines[ev.dtendIdx] = buildDTLine('DTEND', allDay, dtendDate, endVal);
+      if(ev.summaryIdx>=0) ev.lines[ev.summaryIdx] = 'SUMMARY:' + enTitleVal;
+}
+    const newEnText = serializeICS(s.enParsed.parsed);
+    const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'עדכון אירוע דרך אתר השליטה');
+    s.enParsed.sha = newEnSha;
+
+    await loadSchedule(s.sched);
+    renderAll();
+    document.getElementById('status-' + schedKey + '-' + rowIndex).textContent = '✓ נשמר';
+} catch(e){
+    statusEl.textContent = '❌ ' + e.message;
+}
+}
+
+
+async function deleteRow(schedKey, rowIndex){
+  if(!confirm('למחוק את האירוע הזה מכל המקורות?')) return;
+  const s = state[schedKey];
+  const row = s.rows[rowIndex];
+  const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
+  statusEl.textContent = 'מוחק...';
+  try{
+    if(row.he){
+      if(s.sched.heSource === 'github'){
+        s.heParsed.parsed.events.splice(row.he.idx,1);
+        const newText = serializeICS(s.heParsed.parsed);
+        const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'מחיקת אירוע דרך אתר השליטה');
+        s.heParsed.sha = newSha;
+} else {
+        if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
+        await gcalDeleteEvent(row.he.id);
+}
+}
+    if(row.en){
+      s.enParsed.parsed.events.splice(row.en.idx,1);
+      const newEnText = serializeICS(s.enParsed.parsed);
+      const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'מחיקת אירוע דרך אתר השליטה');
+      s.enParsed.sha = newEnSha;
+}
+    await loadSchedule(s.sched);
+    renderAll();
+} catch(e){
+    statusEl.textContent = '❌ ' + e.message;
+}
+}
+
+async function addEvent(schedKey){
+  const s = state[schedKey];
+  const statusEl = document.getElementById('new-status-' + schedKey);
+  statusEl.textContent = 'שומר...';
+  try{
+    const dateVal = undashDate(document.getElementById('new-date-' + schedKey).value);
+    if(!dateVal){ statusEl.textContent = 'יש להזין תאריך'; return; }
+    const allDay = document.getElementById('new-allday-' + schedKey).checked;
+    const startVal = allDay ? '' : uncolonTime(document.getElementById('new-start-' + schedKey).value);
+    const endVal = allDay ? '' : uncolonTime(document.getElementById('new-end-' + schedKey).value);
+    const heTitleVal = document.getElementById('new-hetitle-' + schedKey).value;
+    const enTitleVal = document.getElementById('new-entitle-' + schedKey).value;
+    const dtendDate = allDay ? addOneDay(dateVal) : dateVal;
+    const uidBase = schedKey + '-' + Date.now();
+
+    if(s.sched.heSource === 'github'){
+      const newLines = ['BEGIN:VEVENT','UID:' + uidBase + '-he@shaliach2lv-lab.github.io','DTSTAMP:' + nowStamp(), buildDTLine('DTSTART', allDay, dateVal, startVal), buildDTLine('DTEND', allDay, dtendDate, endVal), 'SUMMARY:' + heTitleVal, 'END:VEVENT'];
+      s.heParsed.parsed.events.push({ lines: newLines, dtstartIdx:3, dtendIdx:4, summaryIdx:5 });
+      const newText = serializeICS(s.heParsed.parsed);
+      const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'הוספת אירוע חדש דרך אתר השליטה');
+      s.heParsed.sha = newSha;
+      } else {
+      if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
+      const body = { summary: heTitleVal };
+      if(allDay){ body.start = { date: dashDate(dateVal) }; body.end = { date: dashDate(dtendDate) }; }
+      else { body.start = { dateTime: dashDate(dateVal)+'T'+colonTime(startVal)+':00', timeZone:'Asia/Jerusalem' }; body.end = { dateTime: dashDate(dateVal)+'T'+colonTime(endVal)+':00', timeZone:'Asia/Jerusalem' }; }
+      await gcalInsertEvent(body);
+}
+
+    const newLinesEn = ['BEGIN:VEVENT','UID:' + uidBase + '-en@shaliach2lv-lab.github.io','DTSTAMP:' + nowStamp(), buildDTLine('DTSTART', allDay, dateVal, startVal), buildDTLine('DTEND', allDay, dtendDate, endVal), 'SUMMARY:' + enTitleVal, 'END:VEVENT'];
+    s.enParsed.parsed.events.push({ lines: newLinesEn, dtstartIdx:3, dtendIdx:4, summaryIdx:5 });
+    const newEnText = serializeICS(s.enParsed.parsed);
+    const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'הוספת אירוע חדש דרך אתר השליטה');
+    s.enParsed.sha = newEnSha;
+
+    await loadSchedule(s.sched);
+    renderAll();
+      } catch(e){
+    statusEl.textContent = '❌ ' + e.message;
+}
+}
+
+window.AdminTool = { saveRow: saveRow, deleteRow: deleteRow, addEvent: addEvent };
+
+document.getElementById('connectGoogleBtn').addEventListener('click', function(){
+  const clientId = document.getElementById('gClientId').value.trim();
+  if(!clientId){ alert('יש להזין Client ID קודם'); return; }
+  tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: clientId,
+    scope: 'https://www.googleapis.com/auth/calendar.events',
+    callback: function(resp){
+      if(resp.error){ document.getElementById('googleStatus').textContent = 'שגיאה: ' + resp.error; return; }
+      googleAccessToken = resp.access_token;
+      document.getElementById('googleStatus').textContent = 'מחובר ✓';
+}
+});
+  tokenClient.requestAccessToken();
+});
+
+document.getElementById('loadAllBtn').addEventListener('click', async function(){
+  setStatus('טוען...', false);
+  try{
+    for(const sched of SCHEDULES){
+      await loadSchedule(sched);
+}
+    renderAll();
+    setStatus('הכל נטען בהצלחה', false);
+} catch(e){
+    setStatus('שגיאה: ' + e.message, true);
+}
+});
+
+})();
+</script>
+</body>
+</html>
+
