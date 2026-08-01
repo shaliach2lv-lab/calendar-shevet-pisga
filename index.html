@@ -124,6 +124,10 @@ h1 { font-size: 19px; }
 <p class="hint">ייפתח בכרטיסייה חדשה. יש להתחבר לחשבון Google שלכם.</p>
 <button class="btn btn-apple" data-apple="generic">הוספה ליומן Apple</button>
 <p class="hint">עובד במכשירי אייפון/אייפד/מק דרך Safari בלבד.</p>
+  <button class="btn btn-google" data-google="pisga_en_only">Add Pisga Schedule (English) to Google Calendar</button>
+  <p class="hint">ייפתח בכרטיסייה חדשה. יש להתחבר בחשבון Google שלכם.</p>
+  <button class="btn btn-apple" data-apple="pisga_en_only">Add Pisga Schedule (English) to Apple Calendar</button>
+  <p class="hint">יופיע בקשת אישור אחת מהמחשב/הנייד – יש לאשר.</p>
 </div>
 
 <div class="section">
@@ -133,9 +137,9 @@ h1 { font-size: 19px; }
   <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
   <button class="btn btn-apple" data-apple="shchavag_only">הוספת לוז שכב"ג ליומן Apple</button>
   <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-  <button class="btn btn-google" data-google="shchavag_en_only">הוספת לוז שכב"ג באנגלית ליומן Google</button>
+  <button class="btn btn-google" data-google="shchavag_en_only">Add Shachbag Schedule (English) to Google Calendar</button>
   <p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
-  <button class="btn btn-apple" data-apple="shchavag_en_only">הוספת לוז שכב"ג באנגלית ליומן Apple</button>
+  <button class="btn btn-apple" data-apple="shchavag_en_only">Add Shachbag Schedule (English) to Apple Calendar</button>
   <p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
 </div>
 
@@ -146,9 +150,9 @@ h1 { font-size: 19px; }
   <p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
   <button class="btn btn-apple" data-apple="tet_only">הוספת לוז ט' ליומן Apple</button>
   <p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-  <button class="btn btn-google" data-google="tet_en_only">הוספת לוז ט' באנגלית ליומן Google</button>
+  <button class="btn btn-google" data-google="tet_en_only">Add Tet Schedule (English) to Google Calendar</button>
   <p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
-  <button class="btn btn-apple" data-apple="tet_en_only">הוספת לוז ט' באנגלית ליומן Apple</button>
+  <button class="btn btn-apple" data-apple="tet_en_only">Add Tet Schedule (English) to Apple Calendar</button>
   <p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
 </div>
 
@@ -159,6 +163,8 @@ h1 { font-size: 19px; }
 const GENERIC_ID = "8a4cc1c12c2d5876b4d71e551fbe842c114310ab25cae679338c3e4580d7e9af%40group.calendar.google.com";
 const GENERIC_GOOGLE = "https://calendar.google.com/calendar/render?cid=" + GENERIC_ID;
 const GENERIC_APPLE = "webcal://calendar.google.com/calendar/ical/" + GENERIC_ID + "/public/basic.ics";
+  const PISGA_EN_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga-en.ics";
+  const PISGA_EN_APPLE = "webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga-en.ics";
 
 const SHCHAVAG_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag.ics";
 const TET_GOOGLE = "https://calendar.google.com/calendar/render?cid=webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet.ics";
@@ -179,7 +185,8 @@ tet: [GENERIC_GOOGLE, TET_GOOGLE],
   shchavag_only: [SHCHAVAG_GOOGLE],
   tet_only: [TET_GOOGLE],
   shchavag_en_only: [SHCHAVAG_EN_GOOGLE],
-  tet_en_only: [TET_EN_GOOGLE]
+  tet_en_only: [TET_EN_GOOGLE],
+  pisga_en_only: [PISGA_EN_GOOGLE]
 };
 
 const APPLE_URLS = {
@@ -189,7 +196,8 @@ tet: [GENERIC_APPLE, TET_APPLE],
   shchavag_only: [SHCHAVAG_APPLE],
     tet_only: [TET_APPLE],
   shchavag_en_only: [SHCHAVAG_EN_APPLE],
-  tet_en_only: [TET_EN_APPLE]
+  tet_en_only: [TET_EN_APPLE],
+  pisga_en_only: [PISGA_EN_APPLE]
 };
 
 function showError(msg) {
