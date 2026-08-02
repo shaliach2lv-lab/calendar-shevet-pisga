@@ -256,7 +256,7 @@ function renderAll(){
 });
 }
 
-(schedKey, rowIndex){
+async function saveRow(schedKey, rowIndex){
   const s = state[schedKey];
   const row = s.rows[rowIndex];
   const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
