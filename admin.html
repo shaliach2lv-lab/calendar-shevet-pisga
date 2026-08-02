@@ -1,389 +1,418 @@
 <!DOCTYPE html>
-  <html lang="he" dir="rtl">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Panel - Shevet Pisga</title>
-  <style>
-  * { box-sizing: border-box; }
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-  background: #f2f4f7;
-    margin: 0;
-  padding: 20px;
-  color: #222;
-}
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - Shevet Pisga</title>
+<style>
+* { box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f2f4f7; margin: 0; padding: 20px; color: #222; }
 .wrap { max-width: 1100px; margin: 0 auto; }
 h1 { color: #1e3c72; font-size: 22px; }
-.warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; }
+.warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; margin-bottom: 16px; }
 .panel { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 .panel label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
-.panel input[type=text], .panel input[type=password] { width: 100%; max-width: 420px; padding: 8px 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 14px; }
-.panel button { margin-top: 10px; padding: 10px 16px; border: none; border-radius: 8px; background: #1e3c72; color: #fff; font-size: 14px; cursor: pointer; margin-left: 8px; }
-.panel button:hover { background: #163058; }
-#googleStatus { font-size: 13px; color: #888; margin-right: 8px; }
-#statusMsg { font-size: 13px; margin-top: 8px; white-space: pre-wrap; }
-.schedule { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); overflow-x: auto; }
-.schedule h2 { color: #1e3c72; font-size: 18px; margin-top: 0; }
-table { border-collapse: collapse; width: 100%; font-size: 13px; }
-th, td { border: 1px solid #e2e2e2; padding: 6px 8px; text-align: right; vertical-align: middle; }
-th { background: #f7f8fa; }
-td input[type=text] { width: 100%; padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
-td input[type=date], td input[type=time] { padding: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; }
-.rowbtn { padding: 5px 10px; border: none; border-radius: 5px; font-size: 12px; cursor: pointer; margin: 2px; }
-.saveBtn { background: #2e7d32; color: #fff; }
-.deleteBtn { background: #b3261e; color: #fff; }
-.status-cell { font-size: 12px; min-width: 90px; }
-.newrow { background: #f7fbf7; }
+.panel input[type="text"], .panel input[type="password"], .panel select { width: 100%; max-width: 420px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+.status { font-size: 13px; margin-top: 8px; }
+.status.error { color: #c0392b; }
+.status.ok { color: #1e824c; }
+.calHeader { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 14px; }
+.calHeader button { background: #1e3c72; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 16px; cursor: pointer; }
+.calHeader span { font-size: 18px; font-weight: 600; min-width: 160px; text-align: center; }
+.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.dayHeader { text-align: center; font-weight: 600; font-size: 12px; color: #666; padding: 4px 0; }
+.dayCell { background: #fafbfc; border: 1px solid #e3e6ea; border-radius: 6px; min-height: 92px; padding: 4px; cursor: pointer; overflow: hidden; }
+.dayCell:hover { background: #eef3fb; }
+.dayCell.empty { background: transparent; border: none; cursor: default; }
+.dayNum { font-size: 12px; color: #888; margin-bottom: 3px; }
+.eventPill { background: #1e88e5; color: #fff; font-size: 11px; border-radius: 4px; padding: 2px 5px; margin-bottom: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.eventPill:hover { background: #1666ad; }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.overlay.hidden { display: none; }
+.modal { background: #fff; border-radius: 12px; padding: 22px 24px; width: 380px; max-width: 90vw; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+.modal h3 { margin-top: 0; color: #1e3c72; }
+.modal label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
+.modal input[type="text"], .modal input[type="date"], .modal input[type="time"] { width: 100%; padding: 7px 9px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+.modal .checkboxRow { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+.modal .checkboxRow input { width: auto; }
+.modalActions { display: flex; gap: 8px; margin-top: 18px; }
+.modalActions button { flex: 1; padding: 9px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+#saveBtn { background: #1e824c; color: #fff; }
+#deleteBtn { background: #c0392b; color: #fff; }
+#cancelBtn { background: #ddd; color: #333; }
+#modalError { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 16px; }
 </style>
-  </head>
-  <body>
-  <div class="wrap">
-    <h1>אתר שליטה - שבט פסגה 26-27</h1>
-    <p class="warn">דף זה אינו מקושר מהאתר הציבורי ומיועד לשימוש פנימי בלבד. שינויים שנשמרים כאן מתבצעים ישירות בקבצים וביומן החי.</p>
-
-    <div class="panel">
-      <h2 style="margin-top:0;color:#1e3c72;font-size:16px;">חיבור</h2>
-      <label>טוקן GitHub (Personal Access Token עם הרשאת repo):</label>
-      <input type="password" id="ghToken" placeholder="ghp_...">
-      <button id="loadAllBtn">טען את כל האירועים</button>
-      <div id="statusMsg"></div>
-    </div>
-
-    <div id="scheduleSections"></div>
-  </div>
-  <script>
-  (function(){
-
-  const GH_OWNER = 'shaliach2lv-lab';
-const GH_REPO = 'calendar-shevet-pisga';
-
-const SCHEDULES = [
-  { key: 'pisga', label: 'פסגה - כללי', heSource: 'github', heFile: 'unique-pisga.ics', enFile: 'unique-pisga-en.ics' },
-  { key: 'shchavag', label: 'שכב"ג', heSource: 'github', heFile: 'unique-shchavag.ics', enFile: 'unique-shchavag-en.ics' },
-{ key: 'tet', label: 'ט׳', heSource: 'github', heFile: 'unique-tet.ics', enFile: 'unique-tet-en.ics' }
-];
-
-const state = {};
-
-function setStatus(msg, isError){
-  const el = document.getElementById('statusMsg');
-  el.style.color = isError ? '#b3261e' : '#2e7d32';
-  el.textContent = msg;
+</head>
+<body>
+<div class="wrap">
+<h1>לוח בקרה - שבט פסגה</h1>
+<div class="warn">עמוד זה פרטי לניהול הלוזים בלבד. הוא לא מיועד לציבור, ואינו קשור לכפתורי ההצטרפות ליומנים באתר הראשי. שינוי אירוע כאן מעדכן אוטומטית את קבצי הלוז בעברית ובאנגלית, וכך מגיע לכל מי שכבר מחובר ליומן.</div>
+<div class="panel">
+<label>GitHub Token (נדרש רק לשמירת שינויים; לצפייה בלבד אין צורך)</label>
+<input type="password" id="tokenInput" placeholder="ghp_...">
+<div class="status" id="tokenStatus"></div>
+</div>
+<div class="panel">
+<label>בחר לוז</label>
+<select id="scheduleSelect">
+<option value="pisga">פסגה - כללי</option>
+<option value="shchavag">שכב"ג</option>
+<option value="tet">ט'</option>
+</select>
+<div class="status" id="loadStatus"></div>
+</div>
+<div class="panel">
+<div class="calHeader">
+<button id="prevMonth">›</button>
+<span id="monthLabel"></span>
+<button id="nextMonth">‹</button>
+</div>
+<div class="calGrid" id="calGrid"></div>
+</div>
+</div>
+<div class="overlay hidden" id="modalOverlay">
+<div class="modal">
+<h3 id="modalTitle">אירוע</h3>
+<label>תאריך</label>
+<input type="date" id="fDate">
+<div class="checkboxRow">
+<input type="checkbox" id="fAllDay">
+<label style="margin:0;" for="fAllDay">אירוע יום שלם</label>
+</div>
+<div id="timeFields">
+<label>שעת התחלה</label>
+<input type="time" id="fStart">
+<label>שעת סיום</label>
+<input type="time" id="fEnd">
+</div>
+<label>כותרת בעברית</label>
+<input type="text" id="fTitleHe">
+<label>כותרת באנגלית</label>
+<input type="text" id="fTitleEn">
+<div class="modalActions">
+<button id="saveBtn">שמור</button>
+<button id="deleteBtn">מחק</button>
+<button id="cancelBtn">ביטול</button>
+</div>
+<div id="modalError"></div>
+</div>
+</div>
+<script>
+const REPO = 'shaliach2lv-lab/calendar-shevet-pisga';
+const SCHEDULES = {
+pisga: { label: 'פסגה - כללי', heFile: 'unique-pisga.ics', enFile: 'unique-pisga-en.ics' },
+shchavag: { label: 'שכב"ג', heFile: 'unique-shchavag.ics', enFile: 'unique-shchavag-en.ics' },
+tet: { label: "ט'", heFile: 'unique-tet.ics', enFile: 'unique-tet-en.ics' }
+};
+const state = {
+scheduleKey: 'pisga',
+events: [],
+headerHe: [], footerHe: [], shaHe: null,
+headerEn: [], footerEn: [], shaEn: null,
+currentMonth: new Date(2026, 8, 1),
+mode: 'add',
+currentEvent: null
+};
+function getToken(){
+const fromField = document.getElementById('tokenInput').value.trim();
+if(fromField) { localStorage.setItem('gh_token_pisga', fromField); return fromField; }
+return localStorage.getItem('gh_token_pisga') || '';
 }
-
-function b64EncodeUnicode(str){
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(m,p1){ return String.fromCharCode(parseInt(p1,16)); }));
+function setLoadStatus(msg, isError){
+const el = document.getElementById('loadStatus');
+el.textContent = msg;
+el.className = 'status' + (isError ? ' error' : (msg ? ' ok' : ''));
 }
 function b64DecodeUnicode(str){
-    return decodeURIComponent(atob(str).split('').map(function(c){ return '%' + ('00'+c.charCodeAt(0).toString(16)).slice(-2); }).join(''));
-      }
-
-      function ghHeaders(){
-        const token = document.getElementById('ghToken').value.trim();
-  return { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+return decodeURIComponent(Array.prototype.map.call(atob(str.replace(/\n/g,'')), function(c){
+return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+}).join(''));
+}
+function b64EncodeUnicode(str){
+return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1){
+return String.fromCharCode('0x' + p1);
+}));
 }
 async function ghGetFile(path){
-  const res = await fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + path + '?ts=' + Date.now(), { headers: ghHeaders() });
-  if(!res.ok) throw new Error('שגיאה בקריאת ' + path + ' (קוד ' + res.status + ')');
-  const json = await res.json();
-  return { sha: json.sha, text: b64DecodeUnicode(json.content.replace(/\n/g,'')) };
-    }
-    async function ghPutFile(path, newText, sha, message){
-  const headers = ghHeaders();
-  headers['Content-Type'] = 'application/json';
-  const res = await fetch('https://api.github.com/repos/' + GH_OWNER + '/' + GH_REPO + '/contents/' + path, {
-        method: 'PUT',
-        headers: headers,
-        body: JSON.stringify({ message: message, content: b64EncodeUnicode(newText), sha: sha, branch: 'main' })
-    });
-  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה בשמירת ' + path + ' (קוד ' + res.status + '): ' + t); }
-  const json = await res.json();
-  return json.content.sha;
-  }
-
-function parseICS(text){
-    const lines = text.split(/\r\n|\n|\r/);
-  const events = [];
-  let curLines = null;
-  const preLines = [];
-  const postLines = [];
-  let phase = 'pre';
-  for(const line of lines){
-        if(line.trim() === 'BEGIN:VEVENT'){ curLines = [line]; phase = 'in'; continue; }
-    if(line.trim() === 'END:VEVENT'){ curLines.push(line); events.push(curLines); curLines = null; phase = 'events'; continue; }
-    if(phase === 'in'){ curLines.push(line); }
-    else if(phase === 'pre'){ preLines.push(line); }
-    else { postLines.push(line); }
+const token = getToken();
+const headers = token ? { Authorization: 'token ' + token } : {};
+const res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, { headers: headers });
+if(!res.ok) throw new Error('שגיאה בקריאת ' + path + ' (קוד ' + res.status + ')');
+const data = await res.json();
+return { content: b64DecodeUnicode(data.content), sha: data.sha };
 }
-  const parsedEvents = events.map(function(evLines){
-    const obj = { lines: evLines.slice(), uid:'', dtstartIdx:-1, dtendIdx:-1, summaryIdx:-1 };
-    evLines.forEach(function(l,i){
-      if(l.indexOf('UID:') === 0) obj.uid = l.slice(4).trim();
-      else if(l.indexOf('DTSTART') === 0) obj.dtstartIdx = i;
-      else if(l.indexOf('DTEND') === 0) obj.dtendIdx = i;
-      else if(l.indexOf('SUMMARY:') === 0) obj.summaryIdx = i;
+async function ghPutFile(path, content, sha, message){
+const token = getToken();
+if(!token) throw new Error('נדרש GitHub Token כדי לשמור שינויים');
+const res = await fetch('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+method: 'PUT',
+headers: { Authorization: 'token ' + token, 'Content-Type': 'application/json' },
+body: JSON.stringify({ message: message, content: b64EncodeUnicode(content), sha: sha })
 });
-    return obj;
-        });
-  return { preLines: preLines, events: parsedEvents, postLines: postLines };
-         }
-function serializeICS(parsed){
-    const evBlocks = parsed.events.map(function(ev){ return ev.lines.join('\r\n'); });
-  return parsed.preLines.concat(evBlocks, parsed.postLines).join('\r\n');
+if(!res.ok){
+let msg = '';
+try { const err = await res.json(); msg = err.message || ''; } catch(e){}
+throw new Error('שגיאה בשמירת ' + path + ' (קוד ' + res.status + '): ' + msg);
 }
-function parseDTLine(raw){
-    if(!raw) return { allDay:true, date:'', time:'' };
-  const m1 = raw.match(/VALUE=DATE:(\d{8})/);
-  if(m1) return { allDay:true, date:m1[1], time:'' };
-  const m2 = raw.match(/:(\d{8})T(\d{6})/);
-  if(m2) return { allDay:false, date:m2[1], time:m2[2] };
-  return { allDay:true, date:'', time:'' };
+return await res.json();
 }
-function buildDTLine(tag, allDay, date, time){
-    if(allDay) return tag + ';VALUE=DATE:' + date;
-  return tag + ';TZID=Asia/Jerusalem:' + date + 'T' + time;
+function parseICS(content){
+const rawLines = content.split(/\r\n|\n/);
+const lines = rawLines.filter(function(l, i){ return !(i === rawLines.length - 1 && l === ''); });
+const firstIdx = lines.findIndex(function(l){ return l.indexOf('BEGIN:VEVENT') === 0; });
+const lastIdx = lines.lastIndexOf('END:VEVENT');
+const header = firstIdx === -1 ? lines.slice() : lines.slice(0, firstIdx);
+const footer = firstIdx === -1 ? [] : lines.slice(lastIdx + 1);
+const events = [];
+let cur = null;
+if(firstIdx !== -1){
+lines.slice(firstIdx, lastIdx + 1).forEach(function(line){
+if(line === 'BEGIN:VEVENT'){ cur = { uid: '', dtstamp: '', dtstartRaw: '', dtendRaw: '', summary: '' }; }
+else if(line === 'END:VEVENT'){ events.push(cur); cur = null; }
+else if(cur){
+if(line.indexOf('UID:') === 0) cur.uid = line.slice(4);
+else if(line.indexOf('DTSTAMP:') === 0) cur.dtstamp = line.slice(8);
+else if(line.indexOf('DTSTART') === 0) cur.dtstartRaw = line;
+else if(line.indexOf('DTEND') === 0) cur.dtendRaw = line;
+else if(line.indexOf('SUMMARY:') === 0) cur.summary = line.slice(8);
 }
-function dashDate(v){ return v ? v.slice(0,4)+'-'+v.slice(4,6)+'-'+v.slice(6,8) : ''; }
-  function undashDate(v){ return v ? v.replace(/-/g,'') : ''; }
-    function colonTime(v){ return v ? v.slice(0,2)+':'+v.slice(2,4) : ''; }
-      function uncolonTime(v){ return v ? v.replace(':','')+'00' : ''; }
-        function nowStamp(){
-            const d = new Date();
-  function p(n){ return String(n).padStart(2,'0'); }
-  return d.getUTCFullYear()+p(d.getUTCMonth()+1)+p(d.getUTCDate())+'T'+p(d.getUTCHours())+p(d.getUTCMinutes())+p(d.getUTCSeconds())+'Z';
-        }
-function addOneDay(yyyymmdd){
-    const y = +yyyymmdd.slice(0,4), m = +yyyymmdd.slice(4,6)-1, d = +yyyymmdd.slice(6,8);
-  const dt = new Date(Date.UTC(y,m,d));
-  dt.setUTCDate(dt.getUTCDate()+1);
-  function p(n){ return String(n).padStart(2,'0'); }
-  return dt.getUTCFullYear()+p(dt.getUTCMonth()+1)+p(dt.getUTCDate());
-}
-
-function extractHeListFromParsed(parsed){
-  return parsed.events.map(function(ev, idx){
-    const dt = parseDTLine(ev.lines[ev.dtstartIdx]);
-    const dtEnd = parseDTLine(ev.lines[ev.dtendIdx]);
-    return { idx: idx, allDay: dt.allDay, date: dt.date, time: dt.time, endDate: dtEnd.date, endTime: dtEnd.time, summary: ev.summaryIdx>=0 ? ev.lines[ev.summaryIdx].slice(8) : '' };
 });
 }
-function matchByDate(heList, enList){
-  const enUsed = new Array(enList.length).fill(false);
-  const rows = [];
-  heList.forEach(function(he){
-        let matchIdx = -1;
-    for(let i=0;i<enList.length;i++){ if(!enUsed[i] && enList[i].date === he.date){ matchIdx = i; break; } }
-    let en = null;
-    if(matchIdx !== -1){ en = enList[matchIdx]; enUsed[matchIdx] = true; }
-    rows.push({ he: he, en: en });
-  });
-  enList.forEach(function(en, idx){ if(!enUsed[idx]) rows.push({ he: null, en: en }); });
-  rows.sort(function(a,b){
-        const da = (a.he || a.en).date;
-        const db = (b.he || b.en).date;
-    return da < db ? -1 : (da > db ? 1 : 0);
-  });
-  return rows;
-  }
-
-async function loadSchedule(sched){
-  let heList = [];
-  let heParsed = null;
-  if(sched.heSource === 'github'){
-    heParsed = await ghGetFile(sched.heFile);
-    heParsed.parsed = parseICS(heParsed.text);
-    heList = extractHeListFromParsed(heParsed.parsed);
-  }
-  const enParsed = await ghGetFile(sched.enFile);
-  enParsed.parsed = parseICS(enParsed.text);
-  const enList = extractHeListFromParsed(enParsed.parsed);
-  const rows = matchByDate(heList, enList);
-  state[sched.key] = { sched: sched, heParsed: heParsed, enParsed: enParsed, rows: rows };
-  }
-
-function renderAll(){
-    const container = document.getElementById('scheduleSections');
-  container.innerHTML = '';
-      SCHEDULES.forEach(function(sched){
-            const s = state[sched.key];
-            const section = document.createElement('div');
-    section.className = 'schedule';
-    let html = '<h2>' + sched.label + '</h2>';
-    if(!s){
-      html += '<p>לא נטען עדיין.</p>';
-      section.innerHTML = html;
-      container.appendChild(section);
-      return;
+return { header: header, footer: footer, events: events };
 }
-    html += '<table><thead><tr>' +
-      '<th>תאריך</th><th>כל היום</th><th>שעת התחלה</th><th>שעת סיום</th>' +
-      '<th>כותרת עברית</th><th>כותרת אנגלית</th><th>פעולות</th><th>סטטוס</th>' +
-      '</tr></thead><tbody id="tbody-' + sched.key + '"></tbody></table>' +
-      '<div class="newrow" style="margin-top:14px;padding:10px;border-radius:8px;">' +
-      '<b>הוספת אירוע חדש:</b><br><br>' +
-      '<label>תאריך</label><input type="date" id="new-date-' + sched.key + '"> ' +
-      '<label>כל היום</label><input type="checkbox" id="new-allday-' + sched.key + '"> ' +
-      '<label>התחלה</label><input type="time" id="new-start-' + sched.key + '"> ' +
-      '<label>סיום</label><input type="time" id="new-end-' + sched.key + '"><br><br>' +
-      '<label>כותרת עברית</label><input type="text" id="new-hetitle-' + sched.key + '" style="width:220px;"> ' +
-      '<label>כותרת אנגלית</label><input type="text" id="new-entitle-' + sched.key + '" style="width:220px;"><br><br>' +
-      '<button onclick="AdminTool.addEvent(\'' + sched.key + '\')">הוסף אירוע</button>' +
-      ' <span id="new-status-' + sched.key + '" style="font-size:12px;margin-right:8px;"></span>' +
-      '</div>';
-    section.innerHTML = html;
-    container.appendChild(section);
-    const tbody = document.getElementById('tbody-' + sched.key);
-    s.rows.forEach(function(row, i){
-      const ref = row.he || row.en;
-      const tr = document.createElement('tr');
-      const dateVal = dashDate(ref.date);
-      const allDay = ref.allDay;
-      const startVal = allDay ? '' : colonTime(ref.time);
-      const endVal = allDay ? '' : colonTime(ref.endTime);
-      tr.innerHTML =
-        '<td><input type="date" id="date-' + sched.key + '-' + i + '" value="' + dateVal + '"></td>' +
-        '<td style="text-align:center;"><input type="checkbox" id="allday-' + sched.key + '-' + i + '" ' + (allDay?'checked':'') + '></td>' +
-        '<td><input type="time" id="start-' + sched.key + '-' + i + '" value="' + startVal + '"></td>' +
-        '<td><input type="time" id="end-' + sched.key + '-' + i + '" value="' + endVal + '"></td>' +
-        '<td><input type="text" id="hetitle-' + sched.key + '-' + i + '" value="' + (row.he ? row.he.summary.replace(/"/g,'&quot;') : '') + '"></td>' +
-        '<td><input type="text" id="entitle-' + sched.key + '-' + i + '" value="' + (row.en ? row.en.summary.replace(/"/g,'&quot;') : '') + '"></td>' +
-        '<td><button class="rowbtn saveBtn" onclick="AdminTool.saveRow(\'' + sched.key + '\',' + i + ')">שמור</button>' +
-        '<button class="rowbtn deleteBtn" onclick="AdminTool.deleteRow(\'' + sched.key + '\',' + i + ')">מחק</button></td>' +
-        '<td class="status-cell" id="status-' + sched.key + '-' + i + '"></td>';
-      tbody.appendChild(tr);
+function serializeICS(header, footer, vevents){
+let all = header.slice();
+vevents.forEach(function(ev){
+all = all.concat(['BEGIN:VEVENT','UID:' + ev.uid,'DTSTAMP:' + ev.dtstamp, ev.dtstartRaw, ev.dtendRaw, 'SUMMARY:' + ev.summary,'END:VEVENT']);
 });
+all = all.concat(footer);
+return all.join('\r\n');
+}
+function parseDT(raw){
+if(!raw) return { allDay: true, date: '', time: '' };
+let m = raw.match(/VALUE=DATE:(\d{8})/);
+if(m) return { allDay: true, date: m[1], time: '' };
+m = raw.match(/:(\d{8})T(\d{6})/);
+if(m) return { allDay: false, date: m[1], time: m[2] };
+return { allDay: true, date: '', time: '' };
+}
+function addOneDay(ymd){
+const y = +ymd.slice(0,4), mo = +ymd.slice(4,6) - 1, d = +ymd.slice(6,8);
+const dt = new Date(y, mo, d + 1);
+return '' + dt.getFullYear() + String(dt.getMonth()+1).padStart(2,'0') + String(dt.getDate()).padStart(2,'0');
+}
+function formatDT(prefix, dateYmd, timeHms, allDay){
+if(allDay){
+if(prefix === 'DTSTART') return 'DTSTART;VALUE=DATE:' + dateYmd;
+return 'DTEND;VALUE=DATE:' + addOneDay(dateYmd);
+}
+return prefix + ';TZID=Asia/Jerusalem:' + dateYmd + 'T' + timeHms;
+}
+function nowStamp(){
+const d = new Date();
+return d.getUTCFullYear() + String(d.getUTCMonth()+1).padStart(2,'0') + String(d.getUTCDate()).padStart(2,'0') + 'T' + String(d.getUTCHours()).padStart(2,'0') + String(d.getUTCMinutes()).padStart(2,'0') + String(d.getUTCSeconds()).padStart(2,'0') + 'Z';
+}
+function ymdToInput(ymd){ return ymd.slice(0,4) + '-' + ymd.slice(4,6) + '-' + ymd.slice(6,8); }
+function inputToYmd(v){ return v.replace(/-/g,''); }
+function hmsToInput(hms){ return hms ? hms.slice(0,2) + ':' + hms.slice(2,4) : ''; }
+function inputToHms(v){ return v.replace(':','') + '00'; }
+async function loadSchedule(){
+const sched = SCHEDULES[state.scheduleKey];
+setLoadStatus('טוען...', false);
+try{
+const heFile = await ghGetFile(sched.heFile);
+const enFile = await ghGetFile(sched.enFile);
+const heParsed = parseICS(heFile.content);
+const enParsed = parseICS(enFile.content);
+state.headerHe = heParsed.header; state.footerHe = heParsed.footer; state.shaHe = heFile.sha;
+state.headerEn = enParsed.header; state.footerEn = enParsed.footer; state.shaEn = enFile.sha;
+const n = Math.min(heParsed.events.length, enParsed.events.length);
+const events = [];
+for(let i=0;i < n;i++){
+const he = heParsed.events[i], en = enParsed.events[i];
+const dt = parseDT(he.dtstartRaw);
+const dtEnd = parseDT(he.dtendRaw);
+events.push({
+uidHe: he.uid, uidEn: en.uid, dtstampHe: he.dtstamp, dtstampEn: en.dtstamp,
+date: dt.date, allDay: dt.allDay, start: dt.time, end: dtEnd.time,
+summaryHe: he.summary, summaryEn: en.summary
 });
 }
-
-async function saveRow(schedKey, rowIndex){
-  const s = state[schedKey];
-  const row = s.rows[rowIndex];
-  const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
-  statusEl.textContent = 'שומר...';
-  try{
-    const dateVal = undashDate(document.getElementById('date-' + schedKey + '-' + rowIndex).value);
-    const allDay = document.getElementById('allday-' + schedKey + '-' + rowIndex).checked;
-    const startVal = allDay ? '' : uncolonTime(document.getElementById('start-' + schedKey + '-' + rowIndex).value);
-    const endVal = allDay ? '' : uncolonTime(document.getElementById('end-' + schedKey + '-' + rowIndex).value);
-    const heTitleVal = document.getElementById('hetitle-' + schedKey + '-' + rowIndex).value;
-    const enTitleVal = document.getElementById('entitle-' + schedKey + '-' + rowIndex).value;
-    const dtendDate = allDay ? addOneDay(dateVal) : dateVal;
-
-    if(s.sched.heSource === 'github'){
-      if(row.he){
-        const ev = s.heParsed.parsed.events[row.he.idx];
-        ev.lines[ev.dtstartIdx] = buildDTLine('DTSTART', allDay, dateVal, startVal);
-        ev.lines[ev.dtendIdx] = buildDTLine('DTEND', allDay, dtendDate, endVal);
-        if(ev.summaryIdx>=0) ev.lines[ev.summaryIdx] = 'SUMMARY:' + heTitleVal;
+state.events = events;
+if(heParsed.events.length !== enParsed.events.length){
+setLoadStatus('אזהרה: מספר האירועים בעברית (' + heParsed.events.length + ') שונה מבאנגלית (' + enParsed.events.length + '). מוצגים ' + n + ' בלבד.', true);
+} else {
+setLoadStatus('נטען בהצלחה (' + n + ' אירועים).', false);
 }
-      const newText = serializeICS(s.heParsed.parsed);
-      const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'עדכון אירוע דרך אתר השליטה');
-      s.heParsed.sha = newSha;
-    }
-    
-    if(row.en){
-      const ev = s.enParsed.parsed.events[row.en.idx];
-      ev.lines[ev.dtstartIdx] = buildDTLine('DTSTART', allDay, dateVal, startVal);
-      ev.lines[ev.dtendIdx] = buildDTLine('DTEND', allDay, dtendDate, endVal);
-      if(ev.summaryIdx>=0) ev.lines[ev.summaryIdx] = 'SUMMARY:' + enTitleVal;
+if(events.length){
+const first = events[0].date;
+state.currentMonth = new Date(+first.slice(0,4), +first.slice(4,6)-1, 1);
 }
-    const newEnText = serializeICS(s.enParsed.parsed);
-    const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'עדכון אירוע דרך אתר השליטה');
-    s.enParsed.sha = newEnSha;
-
-    await loadSchedule(s.sched);
-    renderAll();
-    document.getElementById('status-' + schedKey + '-' + rowIndex).textContent = '✓ נשמר';
-} catch(e){
-    statusEl.textContent = '❌ ' + e.message;
+renderCalendar();
+}catch(err){
+setLoadStatus(err.message, true);
 }
 }
-
-
-async function deleteRow(schedKey, rowIndex){
-  if(!confirm('למחוק את האירוע הזה מכל המקורות?')) return;
-  const s = state[schedKey];
-  const row = s.rows[rowIndex];
-  const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
-  statusEl.textContent = 'מוחק...';
-  try{
-    if(row.he){
-      if(s.sched.heSource === 'github'){
-        s.heParsed.parsed.events.splice(row.he.idx,1);
-        const newText = serializeICS(s.heParsed.parsed);
-        const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'מחיקת אירוע דרך אתר השליטה');
-        s.heParsed.sha = newSha;
-      }
-    }
-    if(row.en){
-      s.enParsed.parsed.events.splice(row.en.idx,1);
-      const newEnText = serializeICS(s.enParsed.parsed);
-      const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'מחיקת אירוע דרך אתר השליטה');
-      s.enParsed.sha = newEnSha;
-}
-    await loadSchedule(s.sched);
-    renderAll();
-} catch(e){
-    statusEl.textContent = '❌ ' + e.message;
-}
-}
-
-async function addEvent(schedKey){
-  const s = state[schedKey];
-  const statusEl = document.getElementById('new-status-' + schedKey);
-  statusEl.textContent = 'שומר...';
-  try{
-    const dateVal = undashDate(document.getElementById('new-date-' + schedKey).value);
-    if(!dateVal){ statusEl.textContent = 'יש להזין תאריך'; return; }
-    const allDay = document.getElementById('new-allday-' + schedKey).checked;
-    const startVal = allDay ? '' : uncolonTime(document.getElementById('new-start-' + schedKey).value);
-    const endVal = allDay ? '' : uncolonTime(document.getElementById('new-end-' + schedKey).value);
-    const heTitleVal = document.getElementById('new-hetitle-' + schedKey).value;
-    const enTitleVal = document.getElementById('new-entitle-' + schedKey).value;
-    const dtendDate = allDay ? addOneDay(dateVal) : dateVal;
-    const uidBase = schedKey + '-' + Date.now();
-
-    if(s.sched.heSource === 'github'){
-      const newLines = ['BEGIN:VEVENT','UID:' + uidBase + '-he@shaliach2lv-lab.github.io','DTSTAMP:' + nowStamp(), buildDTLine('DTSTART', allDay, dateVal, startVal), buildDTLine('DTEND', allDay, dtendDate, endVal), 'SUMMARY:' + heTitleVal, 'END:VEVENT'];
-      s.heParsed.parsed.events.push({ lines: newLines, dtstartIdx:3, dtendIdx:4, summaryIdx:5 });
-      const newText = serializeICS(s.heParsed.parsed);
-      const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'הוספת אירוע חדש דרך אתר השליטה');
-      s.heParsed.sha = newSha;
-    }
-    
-
-    const newLinesEn = ['BEGIN:VEVENT','UID:' + uidBase + '-en@shaliach2lv-lab.github.io','DTSTAMP:' + nowStamp(), buildDTLine('DTSTART', allDay, dateVal, startVal), buildDTLine('DTEND', allDay, dtendDate, endVal), 'SUMMARY:' + enTitleVal, 'END:VEVENT'];
-    s.enParsed.parsed.events.push({ lines: newLinesEn, dtstartIdx:3, dtendIdx:4, summaryIdx:5 });
-    const newEnText = serializeICS(s.enParsed.parsed);
-    const newEnSha = await ghPutFile(s.sched.enFile, newEnText, s.enParsed.sha, 'הוספת אירוע חדש דרך אתר השליטה');
-    s.enParsed.sha = newEnSha;
-
-    await loadSchedule(s.sched);
-    renderAll();
-      } catch(e){
-    statusEl.textContent = '❌ ' + e.message;
-}
-}
-
-window.AdminTool = { saveRow: saveRow, deleteRow: deleteRow, addEvent: addEvent };
-
-
-document.getElementById('loadAllBtn').addEventListener('click', async function(){
-  setStatus('טוען...', false);
-  try{
-    for(const sched of SCHEDULES){
-      await loadSchedule(sched);
-}
-    renderAll();
-    setStatus('הכל נטען בהצלחה', false);
-} catch(e){
-    setStatus('שגיאה: ' + e.message, true);
-}
+function renderCalendar(){
+const grid = document.getElementById('calGrid');
+grid.innerHTML = '';
+const year = state.currentMonth.getFullYear();
+const month = state.currentMonth.getMonth();
+document.getElementById('monthLabel').textContent = state.currentMonth.toLocaleDateString('he-IL', { month: 'long', year: 'numeric' });
+['א','ב','ג','ד','ה','ו','ש'].forEach(function(d){
+const el = document.createElement('div'); el.className = 'dayHeader'; el.textContent = d; grid.appendChild(el);
 });
-
+const firstDay = new Date(year, month, 1);
+const startOffset = firstDay.getDay();
+const daysInMonth = new Date(year, month+1, 0).getDate();
+for(let i=0;i < startOffset;i++){
+const el = document.createElement('div'); el.className = 'dayCell empty'; grid.appendChild(el);
+}
+for(let day=1; day <= daysInMonth; day++){
+const dateYmd = '' + year + String(month+1).padStart(2,'0') + String(day).padStart(2,'0');
+const cell = document.createElement('div');
+cell.className = 'dayCell';
+const num = document.createElement('div'); num.className = 'dayNum'; num.textContent = day;
+cell.appendChild(num);
+state.events.filter(function(e){ return e.date === dateYmd; }).forEach(function(ev){
+const pill = document.createElement('div');
+pill.className = 'eventPill';
+pill.textContent = ev.summaryHe || ev.summaryEn || '(ללא כותרת)';
+pill.addEventListener('click', function(e){ e.stopPropagation(); openEditModal(ev); });
+cell.appendChild(pill);
+});
+cell.addEventListener('click', function(){ openAddModal(dateYmd); });
+grid.appendChild(cell);
+}
+}
+function openAddModal(dateYmd){
+state.mode = 'add';
+state.currentEvent = null;
+document.getElementById('modalTitle').textContent = 'אירוע חדש';
+document.getElementById('fDate').value = ymdToInput(dateYmd);
+document.getElementById('fAllDay').checked = false;
+document.getElementById('fStart').value = '';
+document.getElementById('fEnd').value = '';
+document.getElementById('fTitleHe').value = '';
+document.getElementById('fTitleEn').value = '';
+document.getElementById('deleteBtn').style.display = 'none';
+document.getElementById('modalError').textContent = '';
+toggleTimeFields();
+document.getElementById('modalOverlay').classList.remove('hidden');
+}
+function openEditModal(ev){
+state.mode = 'edit';
+state.currentEvent = ev;
+document.getElementById('modalTitle').textContent = 'עריכת אירוע';
+document.getElementById('fDate').value = ymdToInput(ev.date);
+document.getElementById('fAllDay').checked = ev.allDay;
+document.getElementById('fStart').value = hmsToInput(ev.start);
+document.getElementById('fEnd').value = hmsToInput(ev.end);
+document.getElementById('fTitleHe').value = ev.summaryHe;
+document.getElementById('fTitleEn').value = ev.summaryEn;
+document.getElementById('deleteBtn').style.display = 'block';
+document.getElementById('modalError').textContent = '';
+toggleTimeFields();
+document.getElementById('modalOverlay').classList.remove('hidden');
+}
+function closeModal(){ document.getElementById('modalOverlay').classList.add('hidden'); }
+function toggleTimeFields(){
+document.getElementById('timeFields').style.display = document.getElementById('fAllDay').checked ? 'none' : 'block';
+}
+function toHeVevent(ev){
+return { uid: ev.uidHe, dtstamp: ev.dtstampHe, dtstartRaw: formatDT('DTSTART', ev.date, ev.start, ev.allDay), dtendRaw: formatDT('DTEND', ev.date, ev.end, ev.allDay), summary: ev.summaryHe };
+}
+function toEnVevent(ev){
+return { uid: ev.uidEn, dtstamp: ev.dtstampEn, dtstartRaw: formatDT('DTSTART', ev.date, ev.start, ev.allDay), dtendRaw: formatDT('DTEND', ev.date, ev.end, ev.allDay), summary: ev.summaryEn };
+}
+async function saveToGithub(successMsg){
+const sched = SCHEDULES[state.scheduleKey];
+state.events.sort(function(a,b){ return (a.date + a.start).localeCompare(b.date + b.start); });
+const heContent = serializeICS(state.headerHe, state.footerHe, state.events.map(toHeVevent));
+const enContent = serializeICS(state.headerEn, state.footerEn, state.events.map(toEnVevent));
+const putHe = await ghPutFile(sched.heFile, heContent, state.shaHe, 'עדכון לוז דרך לוח הבקרה');
+state.shaHe = putHe.content.sha;
+const putEn = await ghPutFile(sched.enFile, enContent, state.shaEn, 'עדכון לוז דרך לוח הבקרה');
+state.shaEn = putEn.content.sha;
+setLoadStatus(successMsg, false);
+}
+async function onSave(){
+const errEl = document.getElementById('modalError');
+errEl.textContent = '';
+try{
+const dateYmd = inputToYmd(document.getElementById('fDate').value);
+const allDay = document.getElementById('fAllDay').checked;
+const startVal = document.getElementById('fStart').value;
+const endVal = document.getElementById('fEnd').value;
+const titleHe = document.getElementById('fTitleHe').value.trim();
+const titleEn = document.getElementById('fTitleEn').value.trim();
+if(!dateYmd || dateYmd.length !== 8) throw new Error('יש לבחור תאריך');
+if(!titleHe && !titleEn) throw new Error('יש למלא כותרת בעברית או באנגלית');
+if(!allDay && (!startVal || !endVal)) throw new Error('יש למלא שעת התחלה ושעת סיום, או לסמן "אירוע יום שלם"');
+const start = allDay ? '' : inputToHms(startVal);
+const end = allDay ? '' : inputToHms(endVal);
+if(state.mode === 'add'){
+const ts = Date.now();
+state.events.push({
+uidHe: 'new-' + ts + '@shaliach2lv-lab.github.io', uidEn: 'new-en-' + ts + '@shaliach2lv-lab.github.io',
+dtstampHe: nowStamp(), dtstampEn: nowStamp(), date: dateYmd, allDay: allDay, start: start, end: end,
+summaryHe: titleHe, summaryEn: titleEn
+});
+} else {
+const ev = state.currentEvent;
+ev.date = dateYmd; ev.allDay = allDay; ev.start = start; ev.end = end;
+ev.summaryHe = titleHe; ev.summaryEn = titleEn;
+}
+document.getElementById('saveBtn').disabled = true;
+await saveToGithub('האירוע נשמר ועודכן בכל קבצי הלוז.');
+document.getElementById('saveBtn').disabled = false;
+closeModal();
+renderCalendar();
+}catch(err){
+document.getElementById('saveBtn').disabled = false;
+errEl.textContent = err.message;
+}
+}
+async function onDelete(){
+const errEl = document.getElementById('modalError');
+try{
+if(!state.currentEvent) return;
+if(!confirm('למחוק את האירוע?')) return;
+const idx = state.events.indexOf(state.currentEvent);
+if(idx < 0){} else { state.events.splice(idx, 1); }
+await saveToGithub('האירוע נמחק מכל קבצי הלוז.');
+closeModal();
+renderCalendar();
+}catch(err){
+errEl.textContent = err.message;
+}
+}
+document.getElementById('saveBtn').addEventListener('click', onSave);
+document.getElementById('deleteBtn').addEventListener('click', onDelete);
+document.getElementById('cancelBtn').addEventListener('click', closeModal);
+document.getElementById('fAllDay').addEventListener('change', toggleTimeFields);
+document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target.id === 'modalOverlay') closeModal(); });
+document.getElementById('prevMonth').addEventListener('click', function(){
+state.currentMonth = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth()-1, 1);
+renderCalendar();
+});
+document.getElementById('nextMonth').addEventListener('click', function(){
+state.currentMonth = new Date(state.currentMonth.getFullYear(), state.currentMonth.getMonth()+1, 1);
+renderCalendar();
+});
+document.getElementById('scheduleSelect').addEventListener('change', function(){
+state.scheduleKey = this.value;
+loadSchedule();
+});
+document.getElementById('tokenInput').addEventListener('change', function(){
+const t = this.value.trim();
+if(t) localStorage.setItem('gh_token_pisga', t);
+});
+(function init(){
+const saved = localStorage.getItem('gh_token_pisga');
+if(saved) document.getElementById('tokenInput').value = saved;
+loadSchedule();
 })();
 </script>
 </body>
 </html>
-
