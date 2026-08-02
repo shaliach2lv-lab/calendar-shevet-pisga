@@ -46,34 +46,24 @@ td input[type=date], td input[type=time] { padding: 5px; border: 1px solid #ccc;
       <h2 style="margin-top:0;color:#1e3c72;font-size:16px;">חיבור</h2>
       <label>טוקן GitHub (Personal Access Token עם הרשאת repo):</label>
       <input type="password" id="ghToken" placeholder="ghp_...">
-    <label>Google OAuth Client ID (ליומן פסגה החי):</label>
-      <input type="text" id="gClientId" placeholder="xxxxx.apps.googleusercontent.com">
-      <div>
-        <button id="connectGoogleBtn">התחברות ל-Google</button>
-        <span id="googleStatus">לא מחובר</span>
-      </div>
       <button id="loadAllBtn">טען את כל האירועים</button>
       <div id="statusMsg"></div>
     </div>
 
     <div id="scheduleSections"></div>
   </div>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
   (function(){
 
   const GH_OWNER = 'shaliach2lv-lab';
 const GH_REPO = 'calendar-shevet-pisga';
-const PISGA_CALENDAR_ID = '8a4cc1c12c2d5876b4d71e551fbe842c114310ab25cae679338c3e4580d7e9af@group.calendar.google.com';
 
 const SCHEDULES = [
-{ key: 'pisga', label: 'פסגה - כללי (עברית חיה מ-Google, אנגלית מקובץ)', heSource: 'google', enFile: 'unique-pisga-en.ics' },
-{ key: 'shchavag', label: 'שכב"ג', heSource: 'github', heFile: 'unique-shchavag.ics', enFile: 'unique-shchavag-en.ics' },
+  { key: 'pisga', label: 'פסגה - כללי', heSource: 'github', heFile: 'unique-pisga.ics', enFile: 'unique-pisga-en.ics' },
+  { key: 'shchavag', label: 'שכב"ג', heSource: 'github', heFile: 'unique-shchavag.ics', enFile: 'unique-shchavag-en.ics' },
 { key: 'tet', label: 'ט׳', heSource: 'github', heFile: 'unique-tet.ics', enFile: 'unique-tet-en.ics' }
 ];
 
-let googleAccessToken = null;
-let tokenClient = null;
 const state = {};
 
 function setStatus(msg, isError){
@@ -171,40 +161,6 @@ function addOneDay(yyyymmdd){
   return dt.getUTCFullYear()+p(dt.getUTCMonth()+1)+p(dt.getUTCDate());
 }
 
-async function gcalListEvents(){
-  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events?maxResults=250&singleEvents=true&orderBy=startTime&timeMin=2026-01-01T00:00:00Z';
-  const res = await fetch(url, { headers: { Authorization: 'Bearer ' + googleAccessToken } });
-  if(!res.ok) throw new Error('שגיאה בקריאת יומן Google (קוד ' + res.status + ')');
-  const json = await res.json();
-  return json.items || [];
-}
-async function gcalPatchEvent(eventId, body){
-  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events/' + encodeURIComponent(eventId);
-  const res = await fetch(url, { method:'PATCH', headers: { Authorization: 'Bearer ' + googleAccessToken, 'Content-Type':'application/json' }, body: JSON.stringify(body) });
-  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה בעדכון Google (קוד ' + res.status + '): ' + t); }
-  return res.json();
-}
-async function gcalInsertEvent(body){
-  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events';
-  const res = await fetch(url, { method:'POST', headers: { Authorization: 'Bearer ' + googleAccessToken, 'Content-Type':'application/json' }, body: JSON.stringify(body) });
-  if(!res.ok){ const t = await res.text(); throw new Error('שגיאה ביצירת אירוע ב-Google (קוד ' + res.status + '): ' + t); }
-  return res.json();
-}
-async function gcalDeleteEvent(eventId){
-  const url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(PISGA_CALENDAR_ID) + '/events/' + encodeURIComponent(eventId);
-  const res = await fetch(url, { method:'DELETE', headers: { Authorization: 'Bearer ' + googleAccessToken } });
-  if(!res.ok && res.status !== 410 && res.status !== 404) { const t = await res.text(); throw new Error('שגיאה במחיקה ב-Google (קוד ' + res.status + '): ' + t); }
-}
-
-function normalizeGoogleEvent(ev){
-    const allDay = !!ev.start.date;
-  const date = allDay ? ev.start.date.replace(/-/g,'') : ev.start.dateTime.slice(0,10).replace(/-/g,'');
-  const time = allDay ? '' : ev.start.dateTime.slice(11,16).replace(':','')+'00';
-      const endAllDay = !!ev.end.date;
-  const endDate = endAllDay ? ev.end.date.replace(/-/g,'') : ev.end.dateTime.slice(0,10).replace(/-/g,'');
-  const endTime = endAllDay ? '' : ev.end.dateTime.slice(11,16).replace(':','')+'00';
-  return { id: ev.id, summary: ev.summary || '', allDay: allDay, date: date, time: time, endDate: endDate, endTime: endTime };
-}
 function extractHeListFromParsed(parsed){
   return parsed.events.map(function(ev, idx){
     const dt = parseDTLine(ev.lines[ev.dtstartIdx]);
@@ -238,11 +194,7 @@ async function loadSchedule(sched){
     heParsed = await ghGetFile(sched.heFile);
     heParsed.parsed = parseICS(heParsed.text);
     heList = extractHeListFromParsed(heParsed.parsed);
-  } else {
-    if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם כדי לטעון את לוז ' + sched.label);
-    const items = await gcalListEvents();
-    heList = items.map(normalizeGoogleEvent);
-    }
+  }
   const enParsed = await ghGetFile(sched.enFile);
   enParsed.parsed = parseICS(enParsed.text);
   const enList = extractHeListFromParsed(enParsed.parsed);
@@ -304,7 +256,7 @@ function renderAll(){
 });
 }
 
-async function saveRow(schedKey, rowIndex){
+(schedKey, rowIndex){
   const s = state[schedKey];
   const row = s.rows[rowIndex];
   const statusEl = document.getElementById('status-' + schedKey + '-' + rowIndex);
@@ -328,16 +280,8 @@ async function saveRow(schedKey, rowIndex){
       const newText = serializeICS(s.heParsed.parsed);
       const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'עדכון אירוע דרך אתר השליטה');
       s.heParsed.sha = newSha;
-} else {
-      if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
-      if(row.he){
-        const body = { summary: heTitleVal };
-        if(allDay){ body.start = { date: dashDate(dateVal) }; body.end = { date: dashDate(dtendDate) }; }
-        else { body.start = { dateTime: dashDate(dateVal)+'T'+colonTime(startVal)+':00', timeZone:'Asia/Jerusalem' }; body.end = { dateTime: dashDate(dateVal)+'T'+colonTime(endVal)+':00', timeZone:'Asia/Jerusalem' }; }
-        await gcalPatchEvent(row.he.id, body);
-}
-}
-
+    }
+    
     if(row.en){
       const ev = s.enParsed.parsed.events[row.en.idx];
       ev.lines[ev.dtstartIdx] = buildDTLine('DTSTART', allDay, dateVal, startVal);
@@ -370,11 +314,8 @@ async function deleteRow(schedKey, rowIndex){
         const newText = serializeICS(s.heParsed.parsed);
         const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'מחיקת אירוע דרך אתר השליטה');
         s.heParsed.sha = newSha;
-} else {
-        if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
-        await gcalDeleteEvent(row.he.id);
-}
-}
+      }
+    }
     if(row.en){
       s.enParsed.parsed.events.splice(row.en.idx,1);
       const newEnText = serializeICS(s.enParsed.parsed);
@@ -409,13 +350,8 @@ async function addEvent(schedKey){
       const newText = serializeICS(s.heParsed.parsed);
       const newSha = await ghPutFile(s.sched.heFile, newText, s.heParsed.sha, 'הוספת אירוע חדש דרך אתר השליטה');
       s.heParsed.sha = newSha;
-      } else {
-      if(!googleAccessToken) throw new Error('יש להתחבר ל-Google קודם');
-      const body = { summary: heTitleVal };
-      if(allDay){ body.start = { date: dashDate(dateVal) }; body.end = { date: dashDate(dtendDate) }; }
-      else { body.start = { dateTime: dashDate(dateVal)+'T'+colonTime(startVal)+':00', timeZone:'Asia/Jerusalem' }; body.end = { dateTime: dashDate(dateVal)+'T'+colonTime(endVal)+':00', timeZone:'Asia/Jerusalem' }; }
-      await gcalInsertEvent(body);
-}
+    }
+    
 
     const newLinesEn = ['BEGIN:VEVENT','UID:' + uidBase + '-en@shaliach2lv-lab.github.io','DTSTAMP:' + nowStamp(), buildDTLine('DTSTART', allDay, dateVal, startVal), buildDTLine('DTEND', allDay, dtendDate, endVal), 'SUMMARY:' + enTitleVal, 'END:VEVENT'];
     s.enParsed.parsed.events.push({ lines: newLinesEn, dtstartIdx:3, dtendIdx:4, summaryIdx:5 });
@@ -432,20 +368,6 @@ async function addEvent(schedKey){
 
 window.AdminTool = { saveRow: saveRow, deleteRow: deleteRow, addEvent: addEvent };
 
-document.getElementById('connectGoogleBtn').addEventListener('click', function(){
-  const clientId = document.getElementById('gClientId').value.trim();
-  if(!clientId){ alert('יש להזין Client ID קודם'); return; }
-  tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: clientId,
-    scope: 'https://www.googleapis.com/auth/calendar.events',
-    callback: function(resp){
-      if(resp.error){ document.getElementById('googleStatus').textContent = 'שגיאה: ' + resp.error; return; }
-      googleAccessToken = resp.access_token;
-      document.getElementById('googleStatus').textContent = 'מחובר ✓';
-}
-});
-  tokenClient.requestAccessToken();
-});
 
 document.getElementById('loadAllBtn').addEventListener('click', async function(){
   setStatus('טוען...', false);
