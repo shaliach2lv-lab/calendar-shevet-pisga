@@ -6,11 +6,11 @@
 <title>Admin Panel - Shevet Pisga</title>
 <style>
 * { box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f2f4f7; margin: 0; padding: 20px; color: #222; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#eef2f9,#e6edf8); margin: 0; padding: 24px 20px; color: #222; }
 .wrap { max-width: 1100px; margin: 0 auto; }
-h1 { color: #1e3c72; font-size: 22px; }
+h1 { color: #1e3c72; font-size: 22px; margin: 0; }
 .warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; margin-bottom: 16px; }
-.panel { background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.panel { background: #fff; border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
 .panel label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
 .panel input[type="text"], .panel input[type="password"], .panel select { width: 100%; max-width: 420px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
 .status { font-size: 13px; margin-top: 8px; }
@@ -19,9 +19,9 @@ h1 { color: #1e3c72; font-size: 22px; }
 .calHeader { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 14px; }
 .calHeader button { background: #1e3c72; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 16px; cursor: pointer; }
 .calHeader span { font-size: 18px; font-weight: 600; min-width: 160px; text-align: center; }
-.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
 .dayHeader { text-align: center; font-weight: 600; font-size: 12px; color: #666; padding: 4px 0; }
-.dayCell { background: #fafbfc; border: 1px solid #e3e6ea; border-radius: 6px; min-height: 92px; padding: 4px; cursor: pointer; overflow: hidden; }
+.dayCell { background: #fafbfc; border: 1px solid #e3e6ea; border-radius: 8px; min-height: 100px; padding: 5px; cursor: pointer; overflow: hidden; transition: background .15s; }
 .dayCell:hover { background: #eef3fb; }
 .dayCell.empty { background: transparent; border: none; cursor: default; }
 .dayNum { font-size: 12px; color: #888; margin-bottom: 3px; }
@@ -41,12 +41,34 @@ h1 { color: #1e3c72; font-size: 22px; }
 #deleteBtn { background: #c0392b; color: #fff; }
 #cancelBtn { background: #ddd; color: #333; }
 #modalError { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 16px; }
+.topBar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+.logoImg { width: 60px; height: auto; border-radius: 10px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+.topSub { margin: 2px 0 0; font-size: 13px; color: #667; }
+@media (max-width: 640px) {
+  body { padding: 10px; }
+  .wrap { max-width: 100%; }
+  .topBar { gap: 10px; margin-bottom: 12px; }
+  .logoImg { width: 46px; }
+  h1 { font-size: 17px; }
+  .topSub { font-size: 11px; }
+  .panel { padding: 14px 12px; }
+  .calHeader { gap: 8px; }
+  .calHeader span { min-width: 100px; font-size: 14px; }
+  .calHeader button { padding: 5px 10px; font-size: 15px; }
+  .calGrid { gap: 2px; }
+  .dayHeader { font-size: 9px; padding: 2px 0; }
+  .dayCell { min-height: 56px; padding: 2px; border-radius: 4px; }
+  .dayNum { font-size: 9px; margin-bottom: 1px; }
+  .eventPill { font-size: 8px; padding: 1px 3px; margin-bottom: 1px; }
+  .modal { padding: 16px 14px; width: 92vw; }
+  .modal h3 { font-size: 16px; }
+  .modalActions button { padding: 11px; font-size: 13px; }
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>לוח בקרה - שבט פסגה</h1>
-<div class="warn">עמוד זה פרטי לניהול הלוזים בלבד. הוא לא מיועד לציבור, ואינו קשור לכפתורי ההצטרפות ליומנים באתר הראשי. שינוי אירוע כאן מעדכן אוטומטית את קבצי הלוז בעברית ובאנגלית, וכך מגיע לכל מי שכבר מחובר ליומן.</div>
+<div class="topBar"><img class="logoImg" src="https://static.wixstatic.com/media/2713c6_54fc814e5dab40e99a2eaf372db73372~mv2.png" alt="לוגו שבט פסגה"><div><h1>לוח בקרה - שבט פסגה</h1><p class="topSub">ניהול פרטי של הלוזים - לא מיועד לציבור</p></div></div><div class="warn">עמוד זה פרטי לניהול הלוזים בלבד. הוא לא מיועד לציבור, ואינו קשור לכפתורי ההצטרפות ליומנים באתר הראשי. שינוי אירוע כאן מעדכן אוטומטית את קבצי הלוז בעברית ובאנגלית, וכך מגיע לכל מי שכבר מחובר ליומן.</div>
 <div class="panel">
 <label>GitHub Token (נדרש רק לשמירת שינויים; לצפייה בלבד אין צורך)</label>
 <input type="password" id="tokenInput" placeholder="ghp_...">
