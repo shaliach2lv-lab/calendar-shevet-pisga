@@ -48,24 +48,24 @@ h1 { color: #1e3c72; font-size: 22px; margin: 0; }
 #cancelBtn { background: #ddd; color: #333; }
 #modalError { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 16px; }
 @media (max-width: 640px) {
-  body { padding: 10px; }
-  .wrap { max-width: 100%; }
-  .topBar { gap: 10px; margin-bottom: 12px; }
-  .logoImg { width: 46px; }
-  h1 { font-size: 17px; }
-  .topSub { font-size: 11px; }
-  .panel { padding: 14px 12px; }
-  .calHeader { gap: 8px; }
-  .calHeader span { min-width: 100px; font-size: 14px; }
-  .calHeader button { padding: 5px 10px; font-size: 15px; }
-  .calGrid { gap: 2px; }
-  .dayHeader { font-size: 9px; padding: 2px 0; }
-  .dayCell { min-height: 56px; padding: 2px; border-radius: 4px; }
-  .dayNum { font-size: 9px; margin-bottom: 1px; }
-  .eventPill { font-size: 8px; padding: 1px 3px; margin-bottom: 1px; }
-  .modal { padding: 16px 14px; width: 92vw; }
-  .modal h3 { font-size: 16px; }
-  .modalActions button { padding: 11px; font-size: 13px; }
+body { padding: 10px; }
+.wrap { max-width: 100%; }
+.topBar { gap: 10px; margin-bottom: 12px; }
+.logoImg { width: 46px; }
+h1 { font-size: 17px; }
+.topSub { font-size: 11px; }
+.panel { padding: 14px 12px; }
+.calHeader { gap: 8px; }
+.calHeader span { min-width: 100px; font-size: 14px; }
+.calHeader button { padding: 5px 10px; font-size: 15px; }
+.calGrid { gap: 2px; }
+.dayHeader { font-size: 9px; padding: 2px 0; }
+.dayCell { min-height: 56px; padding: 2px; border-radius: 4px; }
+.dayNum { font-size: 9px; margin-bottom: 1px; }
+.eventPill { font-size: 8px; padding: 1px 3px; margin-bottom: 1px; }
+.modal { padding: 16px 14px; width: 92vw; }
+.modal h3 { font-size: 16px; }
+.modalActions button { padding: 11px; font-size: 13px; }
 }
 </style>
 </head>
@@ -124,9 +124,9 @@ h1 { color: #1e3c72; font-size: 22px; margin: 0; }
 var CLIENT_ID = '742382352121-oe8ei5tg0a855bgvqsnm7js1a00v4cfc.apps.googleusercontent.com';
 var SCOPES = 'https://www.googleapis.com/auth/calendar.events';
 var SCHEDULES = {
-  pisga: {label:'פסגה - כללי', he:'78a1c8832e0f5325457e14a097548c508e4466d39d156c6a49fa63216502f3b5@group.calendar.google.com', en:'2a2f4851658d38983ef4d51401b61754301b7a77c75aac7b9029b4e306cfb8d7@group.calendar.google.com', heIcs:'unique-pisga.ics', enIcs:'unique-pisga-en.ics'},
-  shchavag: {label:'שכב"ג', he:'bff79465d460bdad777f8aab5bd40ce0dc103183354759308b414dc0987b3e68@group.calendar.google.com', en:'54e597cf5ed2456ebcfc7e1ce4828195339217c35cb1fe7561ac5b785c772a6c@group.calendar.google.com', heIcs:'unique-shchavag.ics', enIcs:'unique-shchavag-en.ics'},
-  tet: {label:'ט\'', he:'02b46e45f7ffb880bdbeb97d8fefb37165d3e7b948685942c6d025c81ca3e299@group.calendar.google.com', en:'f2893fef888c557396075415e352d21e80b3566f994281885d2c228e54d628b6@group.calendar.google.com', heIcs:'unique-tet.ics', enIcs:'unique-tet-en.ics'}
+pisga: {label:'פסגה - כללי', he:'57dac4005f4fc68ef5b2e109eda5c8567748d9490a433bafaf751eee8c50ad8f@group.calendar.google.com', en:'e93473c3e58f9a586fc90cc57bb53897cf02411a4610f7b3e771d3f38e6e45de@group.calendar.google.com', heIcs:'unique-pisga.ics', enIcs:'unique-pisga-en.ics'},
+shchavag: {label:'שכב"ג', he:'588b8eaf531b857cf433e0f43f3cf22166c6beb6d1aea82d330fb24cf870bb5f@group.calendar.google.com', en:'799d638105da98b131071f27a0b4a6c77bc18405e46c439697592377bc2c8316@group.calendar.google.com', heIcs:'unique-shchavag.ics', enIcs:'unique-shchavag-en.ics'},
+tet: {label:'ט\'', he:'9004c346beb0ee2ef12f2efe544639c1659c25ba3a3efb1e33e6f8b8a5b5505f@group.calendar.google.com', en:'118f3d4b734cb410483c1d21faf57241e48bd0f95ed0618aedb69732e27272b1@group.calendar.google.com', heIcs:'unique-tet.ics', enIcs:'unique-tet-en.ics'}
 };
 var accessToken = null;
 var currentSchedule = 'pisga';
@@ -136,95 +136,95 @@ var editing = null;
 var pendingDateStr = null;
 
 function setStatus(elId, msg, isError){
-  var el = document.getElementById(elId);
-  el.textContent = msg || '';
-  el.className = 'status' + (isError ? ' error' : (msg ? ' ok' : ''));
+var el = document.getElementById(elId);
+el.textContent = msg || '';
+el.className = 'status' + (isError ? ' error' : (msg ? ' ok' : ''));
 }
 
 window.onGisLoaded = function(){
-  window.tokenClient = google.accounts.oauth2.initTokenClient({
-    client_id: CLIENT_ID,
-    scope: SCOPES,
-    callback: function(resp){
-      if (resp.error) { setStatus('authStatus', 'שגיאת התחברות: ' + resp.error, true); return; }
-      accessToken = resp.access_token;
-      document.getElementById('signinPanel').classList.add('hidden');
-      document.getElementById('mainArea').classList.remove('hidden');
-      var now = new Date();
-      viewYear = now.getFullYear(); viewMonth = now.getMonth();
-      loadEvents();
-    }
-  });
+window.tokenClient = google.accounts.oauth2.initTokenClient({
+client_id: CLIENT_ID,
+scope: SCOPES,
+callback: function(resp){
+if (resp.error) { setStatus('authStatus', 'שגיאת התחברות: ' + resp.error, true); return; }
+accessToken = resp.access_token;
+document.getElementById('signinPanel').classList.add('hidden');
+document.getElementById('mainArea').classList.remove('hidden');
+var now = new Date();
+viewYear = now.getFullYear(); viewMonth = now.getMonth();
+loadEvents();
+}
+});
 };
 
 document.getElementById('signinBtn').addEventListener('click', function(){
-  if (!window.tokenClient) { setStatus('authStatus','עדיין טוען את Google, נסו שוב בעוד רגע',true); return; }
-  window.tokenClient.requestAccessToken();
+if (!window.tokenClient) { setStatus('authStatus','עדיין טוען את Google, נסו שוב בעוד רגע',true); return; }
+window.tokenClient.requestAccessToken();
 });
 
 document.getElementById('scheduleSelect').addEventListener('change', function(e){
-  currentSchedule = e.target.value;
-  loadEvents();
+currentSchedule = e.target.value;
+loadEvents();
 });
 
 document.getElementById('prevMonth').addEventListener('click', function(){
-  viewMonth--; if (viewMonth<0){viewMonth=11;viewYear--;}
-  renderCalendar();
+viewMonth--; if (viewMonth<0){viewMonth=11;viewYear--;}
+renderCalendar();
 });
 document.getElementById('nextMonth').addEventListener('click', function(){
-  viewMonth++; if (viewMonth>11){viewMonth=0;viewYear++;}
-  renderCalendar();
+viewMonth++; if (viewMonth>11){viewMonth=0;viewYear++;}
+renderCalendar();
 });
 
 function apiHeaders(){
-  return { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
+return { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
 }
 function listEvents(calId){
-  var timeMin = '2024-01-01T00:00:00Z';
-  var timeMax = '2029-01-01T00:00:00Z';
-  var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events?singleEvents=true&orderBy=startTime&maxResults=2500&timeMin=' + timeMin + '&timeMax=' + timeMax;
-  return fetch(url, { headers: apiHeaders() }).then(function(r){ return r.json(); });
+var timeMin = '2024-01-01T00:00:00Z';
+var timeMax = '2029-01-01T00:00:00Z';
+var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events?singleEvents=true&orderBy=startTime&maxResults=2500&timeMin=' + timeMin + '&timeMax=' + timeMax;
+return fetch(url, { headers: apiHeaders() }).then(function(r){ return r.json(); });
 }
 
 function loadEvents(){
-  setStatus('loadStatus','טוען אירועים...',false);
-  document.getElementById('migrateStatus').textContent = '';
-  var cfg = SCHEDULES[currentSchedule];
-  Promise.all([listEvents(cfg.he), listEvents(cfg.en)]).then(function(results){
-    var heData = results[0], enData = results[1];
-    if (heData.error || enData.error) {
-      setStatus('loadStatus','שגיאה בטעינה: ' + JSON.stringify(heData.error||enData.error), true);
-      return;
-    }
-    var map = {};
-    (heData.items||[]).forEach(function(ev){
-      var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
-      if (!pk) pk = 'he_' + ev.id;
-      if (!map[pk]) map[pk] = {};
-      map[pk].heId = ev.id;
-      map[pk].heTitle = ev.summary || '';
-      map[pk].start = ev.start; map[pk].end = ev.end;
-    });
-    (enData.items||[]).forEach(function(ev){
-      var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
-      if (!pk) pk = 'en_' + ev.id;
-      if (!map[pk]) map[pk] = {};
-      map[pk].enId = ev.id;
-      map[pk].enTitle = ev.summary || '';
-      if (!map[pk].start) { map[pk].start = ev.start; map[pk].end = ev.end; }
-    });
-    var list = [];
-    Object.keys(map).forEach(function(pk){
-      var m = map[pk];
-      if (!m.start) return;
-      list.push({ pk: pk, heId: m.heId||null, enId: m.enId||null, titleHe: m.heTitle||'', titleEn: m.enTitle||'', start: m.start, end: m.end });
-    });
-    currentEvents = list;
-    setStatus('loadStatus', 'נטענו ' + list.length + ' אירועים', false);
-    renderCalendar();
-  }).catch(function(err){
-    setStatus('loadStatus','שגיאת רשת: ' + err.message, true);
-  });
+setStatus('loadStatus','טוען אירועים...',false);
+document.getElementById('migrateStatus').textContent = '';
+var cfg = SCHEDULES[currentSchedule];
+Promise.all([listEvents(cfg.he), listEvents(cfg.en)]).then(function(results){
+var heData = results[0], enData = results[1];
+if (heData.error || enData.error) {
+setStatus('loadStatus','שגיאה בטעינה: ' + JSON.stringify(heData.error||enData.error), true);
+return;
+}
+var map = {};
+(heData.items||[]).forEach(function(ev){
+var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
+if (!pk) pk = 'he_' + ev.id;
+if (!map[pk]) map[pk] = {};
+map[pk].heId = ev.id;
+map[pk].heTitle = ev.summary || '';
+map[pk].start = ev.start; map[pk].end = ev.end;
+});
+(enData.items||[]).forEach(function(ev){
+var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
+if (!pk) pk = 'en_' + ev.id;
+if (!map[pk]) map[pk] = {};
+map[pk].enId = ev.id;
+map[pk].enTitle = ev.summary || '';
+if (!map[pk].start) { map[pk].start = ev.start; map[pk].end = ev.end; }
+});
+var list = [];
+Object.keys(map).forEach(function(pk){
+var m = map[pk];
+if (!m.start) return;
+list.push({ pk: pk, heId: m.heId||null, enId: m.enId||null, titleHe: m.heTitle||'', titleEn: m.enTitle||'', start: m.start, end: m.end });
+});
+currentEvents = list;
+setStatus('loadStatus', 'נטענו ' + list.length + ' אירועים', false);
+renderCalendar();
+}).catch(function(err){
+setStatus('loadStatus','שגיאת רשת: ' + err.message, true);
+});
 }
 
 function dateOf(dt){ return dt.date ? dt.date : dt.dateTime.slice(0,10); }
@@ -234,200 +234,200 @@ var MONTH_NAMES = ['ינואר','פברואר','מרץ','אפריל','מאי','�
 var DAY_NAMES = ['א','ב','ג','ד','ה','ו','ש'];
 
 function renderCalendar(){
-  document.getElementById('monthLabel').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
-  var grid = document.getElementById('calGrid');
-  grid.innerHTML = '';
-  DAY_NAMES.forEach(function(d){
-    var h = document.createElement('div');
-    h.className = 'dayHeader'; h.textContent = d;
-    grid.appendChild(h);
-  });
-  var first = new Date(viewYear, viewMonth, 1);
-  var startOffset = first.getDay();
-  var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
-  var byDate = {};
-  currentEvents.forEach(function(ev){
-    var d = dateOf(ev.start);
-    if (!byDate[d]) byDate[d] = [];
-    byDate[d].push(ev);
-  });
-  for (var i=0;i<startOffset;i++){
-    var empty = document.createElement('div');
-    empty.className = 'dayCell empty';
-    grid.appendChild(empty);
-  }
-  for (var day=1; day<=daysInMonth; day++){
-    var cell = document.createElement('div');
-    cell.className = 'dayCell';
-    var mm = String(viewMonth+1).padStart(2,'0');
-    var dd = String(day).padStart(2,'0');
-    var dateStr = viewYear + '-' + mm + '-' + dd;
-    var num = document.createElement('div');
-    num.className = 'dayNum'; num.textContent = day;
-    cell.appendChild(num);
-    (byDate[dateStr]||[]).forEach(function(ev){
-      var pill = document.createElement('div');
-      pill.className = 'eventPill';
-      var t = timeOf(ev.start);
-      pill.textContent = (t ? t + ' ' : '') + (ev.titleHe || ev.titleEn || '(ללא כותרת)');
-      pill.addEventListener('click', function(evObj){ return function(e){ e.stopPropagation(); openModal(evObj, dateStr); }; }(ev));
-      cell.appendChild(pill);
-    });
-    cell.addEventListener('click', function(ds){ return function(){ openModal(null, ds); }; }(dateStr));
-    grid.appendChild(cell);
-  }
+document.getElementById('monthLabel').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+var grid = document.getElementById('calGrid');
+grid.innerHTML = '';
+DAY_NAMES.forEach(function(d){
+var h = document.createElement('div');
+h.className = 'dayHeader'; h.textContent = d;
+grid.appendChild(h);
+});
+var first = new Date(viewYear, viewMonth, 1);
+var startOffset = first.getDay();
+var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+var byDate = {};
+currentEvents.forEach(function(ev){
+var d = dateOf(ev.start);
+if (!byDate[d]) byDate[d] = [];
+byDate[d].push(ev);
+});
+for (var i=0;i<startOffset;i++){
+var empty = document.createElement('div');
+empty.className = 'dayCell empty';
+grid.appendChild(empty);
+}
+for (var day=1; day<=daysInMonth; day++){
+var cell = document.createElement('div');
+cell.className = 'dayCell';
+var mm = String(viewMonth+1).padStart(2,'0');
+var dd = String(day).padStart(2,'0');
+var dateStr = viewYear + '-' + mm + '-' + dd;
+var num = document.createElement('div');
+num.className = 'dayNum'; num.textContent = day;
+cell.appendChild(num);
+(byDate[dateStr]||[]).forEach(function(ev){
+var pill = document.createElement('div');
+pill.className = 'eventPill';
+var t = timeOf(ev.start);
+pill.textContent = (t ? t + ' ' : '') + (ev.titleHe || ev.titleEn || '(ללא כותרת)');
+pill.addEventListener('click', function(evObj){ return function(e){ e.stopPropagation(); openModal(evObj, dateStr); }; }(ev));
+cell.appendChild(pill);
+});
+cell.addEventListener('click', function(ds){ return function(){ openModal(null, ds); }; }(dateStr));
+grid.appendChild(cell);
+}
 }
 function openModal(ev, dateStr){
-  editing = ev;
-  document.getElementById('modalError').textContent = '';
-  document.getElementById('modalTitle').textContent = ev ? 'עריכת אירוע' : 'אירוע חדש';
-  document.getElementById('deleteBtn').style.display = ev ? 'block' : 'none';
-  document.getElementById('fDate').value = dateStr;
-  if (ev){
-    document.getElementById('fStart').value = timeOf(ev.start);
-    document.getElementById('fEnd').value = timeOf(ev.end);
-    document.getElementById('fTitleHe').value = ev.titleHe || '';
-    document.getElementById('fTitleEn').value = ev.titleEn || '';
-  } else {
-    document.getElementById('fStart').value = '';
-    document.getElementById('fEnd').value = '';
-    document.getElementById('fTitleHe').value = '';
-    document.getElementById('fTitleEn').value = '';
-  }
-  document.getElementById('modalOverlay').classList.remove('hidden');
+editing = ev;
+document.getElementById('modalError').textContent = '';
+document.getElementById('modalTitle').textContent = ev ? 'עריכת אירוע' : 'אירוע חדש';
+document.getElementById('deleteBtn').style.display = ev ? 'block' : 'none';
+document.getElementById('fDate').value = dateStr;
+if (ev){
+document.getElementById('fStart').value = timeOf(ev.start);
+document.getElementById('fEnd').value = timeOf(ev.end);
+document.getElementById('fTitleHe').value = ev.titleHe || '';
+document.getElementById('fTitleEn').value = ev.titleEn || '';
+} else {
+document.getElementById('fStart').value = '';
+document.getElementById('fEnd').value = '';
+document.getElementById('fTitleHe').value = '';
+document.getElementById('fTitleEn').value = '';
+}
+document.getElementById('modalOverlay').classList.remove('hidden');
 }
 function closeModal(){
-  document.getElementById('modalOverlay').classList.add('hidden');
-  editing = null;
+document.getElementById('modalOverlay').classList.add('hidden');
+editing = null;
 }
 document.getElementById('cancelBtn').addEventListener('click', closeModal);
 document.getElementById('modalOverlay').addEventListener('click', function(e){
-  if (e.target.id === 'modalOverlay') closeModal();
+if (e.target.id === 'modalOverlay') closeModal();
 });
 
 function uid(){ return 'ev' + Date.now() + Math.random().toString(36).slice(2,8); }
 
 function putEvent(calId, eventId, body){
-  var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events' + (eventId ? ('/' + eventId) : '');
-  return fetch(url, { method: eventId ? 'PATCH' : 'POST', headers: apiHeaders(), body: JSON.stringify(body) }).then(function(r){ return r.json(); });
+var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events' + (eventId ? ('/' + eventId) : '');
+return fetch(url, { method: eventId ? 'PATCH' : 'POST', headers: apiHeaders(), body: JSON.stringify(body) }).then(function(r){ return r.json(); });
 }
 function deleteEvent(calId, eventId){
-  if (!eventId) return Promise.resolve({});
-  var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events/' + eventId;
-  return fetch(url, { method: 'DELETE', headers: apiHeaders() }).then(function(r){ return r.status===204 || r.status===410 ? {} : r.json(); });
+if (!eventId) return Promise.resolve({});
+var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events/' + eventId;
+return fetch(url, { method: 'DELETE', headers: apiHeaders() }).then(function(r){ return r.status===204 || r.status===410 ? {} : r.json(); });
 }
 
 document.getElementById('saveBtn').addEventListener('click', function(){
-  var dateStr = document.getElementById('fDate').value;
-  var startT = document.getElementById('fStart').value;
-  var endT = document.getElementById('fEnd').value;
-  var titleHe = document.getElementById('fTitleHe').value.trim();
-  var titleEn = document.getElementById('fTitleEn').value.trim();
-  if (!dateStr || !startT || !endT){
-    document.getElementById('modalError').textContent = 'יש למלא תאריך, שעת התחלה ושעת סיום';
-    return;
-  }
-  if (!titleHe && !titleEn){
-    document.getElementById('modalError').textContent = 'יש למלא כותרת בעברית או באנגלית לפחות';
-    return;
-  }
-  var cfg = SCHEDULES[currentSchedule];
-  var pk = editing ? editing.pk : uid();
-  var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'Asia/Jerusalem' };
-  var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'Asia/Jerusalem' };
-  var extProps = { private: { pk: pk } };
-  var tasks = [];
-  var heId = editing ? editing.heId : null;
-  var enId = editing ? editing.enId : null;
-  if (titleHe){
-    tasks.push(putEvent(cfg.he, heId, { summary: titleHe, start: startObj, end: endObj, extendedProperties: extProps }));
-  } else if (heId){
-    tasks.push(deleteEvent(cfg.he, heId));
-  } else { tasks.push(Promise.resolve({})); }
-  if (titleEn){
-    tasks.push(putEvent(cfg.en, enId, { summary: titleEn, start: startObj, end: endObj, extendedProperties: extProps }));
-  } else if (enId){
-    tasks.push(deleteEvent(cfg.en, enId));
-  } else { tasks.push(Promise.resolve({})); }
-  document.getElementById('modalError').textContent = 'שומר...';
-  Promise.all(tasks).then(function(res){
-    var err = res.find(function(r){ return r && r.error; });
-    if (err) { document.getElementById('modalError').textContent = 'שגיאה: ' + JSON.stringify(err.error); return; }
-    closeModal();
-    loadEvents();
-  }).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
+var dateStr = document.getElementById('fDate').value;
+var startT = document.getElementById('fStart').value;
+var endT = document.getElementById('fEnd').value;
+var titleHe = document.getElementById('fTitleHe').value.trim();
+var titleEn = document.getElementById('fTitleEn').value.trim();
+if (!dateStr || !startT || !endT){
+document.getElementById('modalError').textContent = 'יש למלא תאריך, שעת התחלה ושעת סיום';
+return;
+}
+if (!titleHe && !titleEn){
+document.getElementById('modalError').textContent = 'יש למלא כותרת בעברית או באנגלית לפחות';
+return;
+}
+var cfg = SCHEDULES[currentSchedule];
+var pk = editing ? editing.pk : uid();
+var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'Asia/Jerusalem' };
+var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'Asia/Jerusalem' };
+var extProps = { private: { pk: pk } };
+var tasks = [];
+var heId = editing ? editing.heId : null;
+var enId = editing ? editing.enId : null;
+if (titleHe){
+tasks.push(putEvent(cfg.he, heId, { summary: titleHe, start: startObj, end: endObj, extendedProperties: extProps }));
+} else if (heId){
+tasks.push(deleteEvent(cfg.he, heId));
+} else { tasks.push(Promise.resolve({})); }
+if (titleEn){
+tasks.push(putEvent(cfg.en, enId, { summary: titleEn, start: startObj, end: endObj, extendedProperties: extProps }));
+} else if (enId){
+tasks.push(deleteEvent(cfg.en, enId));
+} else { tasks.push(Promise.resolve({})); }
+document.getElementById('modalError').textContent = 'שומר...';
+Promise.all(tasks).then(function(res){
+var err = res.find(function(r){ return r && r.error; });
+if (err) { document.getElementById('modalError').textContent = 'שגיאה: ' + JSON.stringify(err.error); return; }
+closeModal();
+loadEvents();
+}).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
 });
 
 document.getElementById('deleteBtn').addEventListener('click', function(){
-  if (!editing) return;
-  if (!confirm('למחוק את האירוע הזה משני היומנים (עברית ואנגלית)?')) return;
-  var cfg = SCHEDULES[currentSchedule];
-  Promise.all([deleteEvent(cfg.he, editing.heId), deleteEvent(cfg.en, editing.enId)]).then(function(){
-    closeModal();
-    loadEvents();
-  }).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
+if (!editing) return;
+if (!confirm('למחוק את האירוע הזה משני היומנים (עברית ואנגלית)?')) return;
+var cfg = SCHEDULES[currentSchedule];
+Promise.all([deleteEvent(cfg.he, editing.heId), deleteEvent(cfg.en, editing.enId)]).then(function(){
+closeModal();
+loadEvents();
+}).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
 });
 function parseIcs(text){
-  var events = [];
-  var blocks = text.split('BEGIN:VEVENT').slice(1);
-  blocks.forEach(function(b){
-    var uidM = b.match(/UID:([^\r\n]+)/);
-    var startM = b.match(/DTSTART;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
-    var endM = b.match(/DTEND;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
-    var sumM = b.match(/SUMMARY:([^\r\n]+)/);
-    if (!startM || !endM || !sumM) return;
-    events.push({
-      uid: uidM ? uidM[1].trim() : '',
-      start: icsToIso(startM[1]),
-      end: icsToIso(endM[1]),
-      summary: sumM[1].trim()
-    });
-  });
-  events.sort(function(a,b){ return a.start < b.start ? -1 : (a.start > b.start ? 1 : 0); });
-  return events;
+var events = [];
+var blocks = text.split('BEGIN:VEVENT').slice(1);
+blocks.forEach(function(b){
+var uidM = b.match(/UID:([^\r\n]+)/);
+var startM = b.match(/DTSTART;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
+var endM = b.match(/DTEND;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
+var sumM = b.match(/SUMMARY:([^\r\n]+)/);
+if (!startM || !endM || !sumM) return;
+events.push({
+uid: uidM ? uidM[1].trim() : '',
+start: icsToIso(startM[1]),
+end: icsToIso(endM[1]),
+summary: sumM[1].trim()
+});
+});
+events.sort(function(a,b){ return a.start < b.start ? -1 : (a.start > b.start ? 1 : 0); });
+return events;
 }
 function icsToIso(s){
-  return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8)+'T'+s.slice(9,11)+':'+s.slice(11,13)+':'+s.slice(13,15);
+return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8)+'T'+s.slice(9,11)+':'+s.slice(11,13)+':'+s.slice(13,15);
 }
 
 document.getElementById('migrateBtn').addEventListener('click', function(){
-  var cfg = SCHEDULES[currentSchedule];
-  var msEl = document.getElementById('migrateStatus');
-  msEl.textContent = 'טוען קבצי ICS...'; msEl.className='status';
-  Promise.all([
-    fetch(cfg.heIcs).then(function(r){ return r.text(); }),
-    fetch(cfg.enIcs).then(function(r){ return r.text(); })
-  ]).then(function(texts){
-    var heEvents = parseIcs(texts[0]);
-    var enEvents = parseIcs(texts[1]);
-    var count = Math.max(heEvents.length, enEvents.length);
-    var existingKeys = {};
-    currentEvents.forEach(function(ev){ if (ev.pk && ev.pk.indexOf('mig_'+currentSchedule+'_')===0) existingKeys[ev.pk]=true; });
-    var tasks = [];
-    var added = 0, skipped = 0;
-    for (var i=0;i<count;i++){
-      var pk = 'mig_' + currentSchedule + '_' + i;
-      if (existingKeys[pk]) { skipped++; continue; }
-      var he = heEvents[i], en = enEvents[i];
-      var startObj, endObj;
-      if (he){ startObj = { dateTime: he.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: he.end, timeZone: 'Asia/Jerusalem' }; }
-      else if (en){ startObj = { dateTime: en.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: en.end, timeZone: 'Asia/Jerusalem' }; }
-      else continue;
-      var extProps = { private: { pk: pk } };
-      if (he){ tasks.push(putEvent(cfg.he, null, { summary: he.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
-      if (en){ tasks.push(putEvent(cfg.en, null, { summary: en.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
-      added++;
-    }
-    msEl.textContent = 'מייבא ' + added + ' אירועים (' + skipped + ' כבר קיימים, מדולגים)...';
-    return Promise.all(tasks).then(function(){ return {added:added, skipped:skipped}; });
-  }).then(function(r){
-    msEl.textContent = 'ייבוא הושלם: נוספו ' + r.added + ' אירועים, דולגו ' + r.skipped + ' שכבר יובאו בעבר.';
-    msEl.className = 'status ok';
-    loadEvents();
-  }).catch(function(e){
-    msEl.textContent = 'שגיאה בייבוא: ' + e.message;
-    msEl.className = 'status error';
-  });
+var cfg = SCHEDULES[currentSchedule];
+var msEl = document.getElementById('migrateStatus');
+msEl.textContent = 'טוען קבצי ICS...'; msEl.className='status';
+Promise.all([
+fetch(cfg.heIcs).then(function(r){ return r.text(); }),
+fetch(cfg.enIcs).then(function(r){ return r.text(); })
+]).then(function(texts){
+var heEvents = parseIcs(texts[0]);
+var enEvents = parseIcs(texts[1]);
+var count = Math.max(heEvents.length, enEvents.length);
+var existingKeys = {};
+currentEvents.forEach(function(ev){ if (ev.pk && ev.pk.indexOf('mig_'+currentSchedule+'_')===0) existingKeys[ev.pk]=true; });
+var tasks = [];
+var added = 0, skipped = 0;
+for (var i=0;i<count;i++){
+var pk = 'mig_' + currentSchedule + '_' + i;
+if (existingKeys[pk]) { skipped++; continue; }
+var he = heEvents[i], en = enEvents[i];
+var startObj, endObj;
+if (he){ startObj = { dateTime: he.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: he.end, timeZone: 'Asia/Jerusalem' }; }
+else if (en){ startObj = { dateTime: en.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: en.end, timeZone: 'Asia/Jerusalem' }; }
+else continue;
+var extProps = { private: { pk: pk } };
+if (he){ tasks.push(putEvent(cfg.he, null, { summary: he.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
+if (en){ tasks.push(putEvent(cfg.en, null, { summary: en.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
+added++;
+}
+msEl.textContent = 'מייבא ' + added + ' אירועים (' + skipped + ' כבר קיימים, מדולגים)...';
+return Promise.all(tasks).then(function(){ return {added:added, skipped:skipped}; });
+}).then(function(r){
+msEl.textContent = 'ייבוא הושלם: נוספו ' + r.added + ' אירועים, דולגו ' + r.skipped + ' שכבר יובאו בעבר.';
+msEl.className = 'status ok';
+loadEvents();
+}).catch(function(e){
+msEl.textContent = 'שגיאה בייבוא: ' + e.message;
+msEl.className = 'status error';
+});
 });
 </script>
 <script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
