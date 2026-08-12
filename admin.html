@@ -1,435 +1,457 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Panel - Shevet Pisga</title>
-<style>
-* { box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#eef2f9,#e6edf8); margin: 0; padding: 24px 20px; color: #222; }
-.wrap { max-width: 1100px; margin: 0 auto; }
-.topBar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
-.logoImg { width: 60px; height: auto; border-radius: 10px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
-.topSub { margin: 2px 0 0; font-size: 13px; color: #667; }
-h1 { color: #1e3c72; font-size: 22px; margin: 0; }
-.warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; margin-bottom: 16px; }
-.panel { background: #fff; border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
-.panel label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
-.panel select { width: 100%; max-width: 420px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-.status { font-size: 13px; margin-top: 8px; }
-.status.error { color: #c0392b; }
-.status.ok { color: #1e824c; }
-.hidden { display: none !important; }
-#signinBtn { background:#1e3c72;color:#fff;border:none;border-radius:6px;padding:10px 18px;font-size:14px;cursor:pointer; }
-#migrateBtn { margin-top:10px;background:#8e44ad;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:13px;cursor:pointer; }
-.calHeader { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 14px; }
-.calHeader button { background: #1e3c72; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 16px; cursor: pointer; }
-.calHeader span { font-size: 18px; font-weight: 600; min-width: 160px; text-align: center; }
-.calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-.dayHeader { text-align: center; font-weight: 600; font-size: 12px; color: #666; padding: 4px 0; }
-.dayCell { background: #fafbfc; border: 1px solid #e3e6ea; border-radius: 8px; min-height: 100px; padding: 5px; cursor: pointer; overflow: hidden; transition: background .15s; }
-.dayCell:hover { background: #eef3fb; }
-.dayCell.empty { background: transparent; border: none; cursor: default; }
-.dayNum { font-size: 12px; color: #888; margin-bottom: 3px; }
-.eventPill { background: #1e88e5; color: #fff; font-size: 11px; border-radius: 4px; padding: 2px 5px; margin-bottom: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.eventPill:hover { background: #1666ad; }
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
-.overlay.hidden { display: none; }
-.modal { background: #fff; border-radius: 12px; padding: 22px 24px; width: 380px; max-width: 90vw; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-height: 88vh; overflow-y: auto; }
-.modal h3 { margin-top: 0; color: #1e3c72; }
-.modal label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
-.modal input[type="text"], .modal input[type="date"], .modal input[type="time"] { width: 100%; padding: 7px 9px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
-.modal .checkboxRow { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
-.modal .checkboxRow input { width: auto; }
-.modalActions { display: flex; gap: 8px; margin-top: 18px; }
-.modalActions button { flex: 1; padding: 9px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
-#saveBtn { background: #1e824c; color: #fff; }
-#deleteBtn { background: #c0392b; color: #fff; }
-#cancelBtn { background: #ddd; color: #333; }
-#modalError { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 16px; }
-@media (max-width: 640px) {
-body { padding: 10px; }
-.wrap { max-width: 100%; }
-.topBar { gap: 10px; margin-bottom: 12px; }
-.logoImg { width: 46px; }
-h1 { font-size: 17px; }
-.topSub { font-size: 11px; }
-.panel { padding: 14px 12px; }
-.calHeader { gap: 8px; }
-.calHeader span { min-width: 100px; font-size: 14px; }
-.calHeader button { padding: 5px 10px; font-size: 15px; }
-.calGrid { gap: 2px; }
-.dayHeader { font-size: 9px; padding: 2px 0; }
-.dayCell { min-height: 56px; padding: 2px; border-radius: 4px; }
-.dayNum { font-size: 9px; margin-bottom: 1px; }
-.eventPill { font-size: 8px; padding: 1px 3px; margin-bottom: 1px; }
-.modal { padding: 16px 14px; width: 92vw; }
-.modal h3 { font-size: 16px; }
-.modalActions button { padding: 11px; font-size: 13px; }
-}
-</style>
-</head>
-<body>
-<div class="wrap">
-<div class="topBar"><img class="logoImg" src="https://static.wixstatic.com/media/2713c6_54fc814e5dab40e99a2eaf372db73372~mv2.png" alt="לוגו שבט פסגה"><div><h1>לוח בקרה - שבט פסגה</h1><p class="topSub">ניהול פרטי של הלוזים - לא מיועד לציבור</p></div></div>
-<div class="warn">עמוד זה פרטי לניהול הלוזים בלבד. הוא לא מיועד לציבור, ואינו קשור לכפתורי ההצטרפות ליומנים באתר הראשי. שינוי אירוע כאן מתעדכן ישירות ביומני Google החיים (עברית ואנגלית יחד), וכך מגיע במהירות לכל מי שכבר מנוי דרך Google.</div>
-<div class="panel" id="signinPanel">
-<button id="signinBtn">התחברות לחשבון Google</button>
-<div class="status" id="authStatus"></div>
-</div>
-<div id="mainArea" class="hidden">
-<div class="panel">
-<label>בחר לוז</label>
-<select id="scheduleSelect">
-<option value="pisga">פסגה - כללי</option>
-<option value="shchavag">שכב"ג</option>
-<option value="tet">ט'</option>
-</select>
-<div class="status" id="loadStatus"></div>
-<button id="migrateBtn">ייבוא ראשוני מקובצי ה-ICS (חד פעמי, בטוח להרצה חוזרת)</button>
-<div class="status" id="migrateStatus"></div>
-</div>
-<div class="panel">
-<div class="calHeader">
-<button id="prevMonth">›</button>
-<span id="monthLabel"></span>
-<button id="nextMonth">‹</button>
-</div>
-<div class="calGrid" id="calGrid"></div>
-</div>
-</div>
-</div>
-<div class="overlay hidden" id="modalOverlay">
-<div class="modal">
-<h3 id="modalTitle">אירוע</h3>
-<label>תאריך</label>
-<input type="date" id="fDate">
-<label>שעת התחלה</label>
-<input type="time" id="fStart">
-<label>שעת סיום</label>
-<input type="time" id="fEnd">
-<label>כותרת בעברית</label>
-<input type="text" id="fTitleHe">
-<label>כותרת באנגלית</label>
-<input type="text" id="fTitleEn">
-<div class="modalActions">
-<button id="saveBtn">שמור</button>
-<button id="deleteBtn">מחק</button>
-<button id="cancelBtn">ביטול</button>
-</div>
-<div id="modalError"></div>
-</div>
-</div>
-<script>
-var CLIENT_ID = '742382352121-oe8ei5tg0a855bgvqsnm7js1a00v4cfc.apps.googleusercontent.com';
-var SCOPES = 'https://www.googleapis.com/auth/calendar.events';
-var SCHEDULES = {
-pisga: {label:'פסגה - כללי', he:'57dac4005f4fc68ef5b2e109eda5c8567748d9490a433bafaf751eee8c50ad8f@group.calendar.google.com', en:'e93473c3e58f9a586fc90cc57bb53897cf02411a4610f7b3e771d3f38e6e45de@group.calendar.google.com', heIcs:'unique-pisga.ics', enIcs:'unique-pisga-en.ics'},
-shchavag: {label:'שכב"ג', he:'588b8eaf531b857cf433e0f43f3cf22166c6beb6d1aea82d330fb24cf870bb5f@group.calendar.google.com', en:'799d638105da98b131071f27a0b4a6c77bc18405e46c439697592377bc2c8316@group.calendar.google.com', heIcs:'unique-shchavag.ics', enIcs:'unique-shchavag-en.ics'},
-tet: {label:'ט\'', he:'9004c346beb0ee2ef12f2efe544639c1659c25ba3a3efb1e33e6f8b8a5b5505f@group.calendar.google.com', en:'118f3d4b734cb410483c1d21faf57241e48bd0f95ed0618aedb69732e27272b1@group.calendar.google.com', heIcs:'unique-tet.ics', enIcs:'unique-tet-en.ics'}
-};
-var accessToken = null;
-var currentSchedule = 'pisga';
-var currentEvents = [];
-var viewYear, viewMonth;
-var editing = null;
-var pendingDateStr = null;
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Shevet Pisga</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#eef2f9,#e6edf8); margin: 0; padding: 24px 20px; color: #222; }
+    .wrap { max-width: 1100px; margin: 0 auto; }
+    .topBar { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .logoImg { width: 60px; height: auto; border-radius: 10px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+    .topSub { margin: 2px 0 0; font-size: 13px; color: #667; }
+    h1 { color: #1e3c72; font-size: 22px; margin: 0; }
+    .warn { background: #fff3cd; border: 1px solid #ffe08a; padding: 10px 14px; border-radius: 8px; font-size: 13px; color: #7a5b00; margin-bottom: 16px; }
+    .panel { background: #fff; border-radius: 14px; padding: 20px 22px; margin-bottom: 22px; box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+    .panel label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
+    .panel select { width: 100%; max-width: 420px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .status { font-size: 13px; margin-top: 8px; }
+    .status.error { color: #c0392b; }
+    .status.ok { color: #1e824c; }
+    .hidden { display: none !important; }
+    #signinBtn { background:#1e3c72;color:#fff;border:none;border-radius:6px;padding:10px 18px;font-size:14px;cursor:pointer; }
+    #migrateBtn { margin-top:10px;background:#8e44ad;color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:13px;cursor:pointer; }
+    .calHeader { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 14px; }
+    .calHeader button { background: #1e3c72; color: #fff; border: none; border-radius: 6px; padding: 6px 14px; font-size: 16px; cursor: pointer; }
+    .calHeader span { font-size: 18px; font-weight: 600; min-width: 160px; text-align: center; }
+    .calGrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
+    .dayHeader { text-align: center; font-weight: 600; font-size: 12px; color: #666; padding: 4px 0; }
+    .dayCell { background: #fafbfc; border: 1px solid #e3e6ea; border-radius: 8px; min-height: 100px; padding: 5px; cursor: pointer; overflow: hidden; transition: background .15s; }
+    .dayCell:hover { background: #eef3fb; }
+    .dayCell.empty { background: transparent; border: none; cursor: default; }
+    .dayNum { font-size: 12px; color: #888; margin-bottom: 3px; }
+    .eventPill { background: #1e88e5; color: #fff; font-size: 11px; border-radius: 4px; padding: 2px 5px; margin-bottom: 3px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .eventPill:hover { background: #1666ad; }
+    .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; z-index: 50; }
+    .overlay.hidden { display: none; }
+    .modal { background: #fff; border-radius: 12px; padding: 22px 24px; width: 380px; max-width: 90vw; box-shadow: 0 10px 30px rgba(0,0,0,0.25); max-height: 88vh; overflow-y: auto; }
+    .modal h3 { margin-top: 0; color: #1e3c72; }
+    .modal label { display: block; font-size: 13px; margin: 10px 0 4px; color: #555; }
+    .modal input[type="text"], .modal input[type="date"], .modal input[type="time"] { width: 100%; padding: 7px 9px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+    .modal .checkboxRow { display: flex; align-items: center; gap: 6px; margin-top: 10px; }
+    .modal .checkboxRow input { width: auto; }
+    .modalActions { display: flex; gap: 8px; margin-top: 18px; }
+    .modalActions button { flex: 1; padding: 9px; border: none; border-radius: 6px; font-size: 14px; cursor: pointer; }
+    #saveBtn { background: #1e824c; color: #fff; }
+    #deleteBtn { background: #c0392b; color: #fff; }
+    #cancelBtn { background: #ddd; color: #333; }
+    #modalError { color: #c0392b; font-size: 13px; margin-top: 10px; min-height: 16px; }
+    @media (max-width: 640px) {
+      body { padding: 10px; }
+      .wrap { max-width: 100%; }
+      .topBar { gap: 10px; margin-bottom: 12px; }
+      .logoImg { width: 46px; }
+      h1 { font-size: 17px; }
+      .topSub { font-size: 11px; }
+      .panel { padding: 14px 12px; }
+      .calHeader { gap: 8px; }
+      .calHeader span { min-width: 100px; font-size: 14px; }
+      .calHeader button { padding: 5px 10px; font-size: 15px; }
+      .calGrid { gap: 2px; }
+      .dayHeader { font-size: 9px; padding: 2px 0; }
+      .dayCell { min-height: 56px; padding: 2px; border-radius: 4px; }
+      .dayNum { font-size: 9px; margin-bottom: 1px; }
+      .eventPill { font-size: 8px; padding: 1px 3px; margin-bottom: 1px; }
+      .modal { padding: 16px 14px; width: 92vw; }
+      .modal h3 { font-size: 16px; }
+      .modalActions button { padding: 11px; font-size: 13px; }
+    }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="topBar"><img class="logoImg" src="https://static.wixstatic.com/media/2713c6_54fc814e5dab40e99a2eaf372db73372~mv2.png" alt="לוגו שבט פסגה"><div><h1>לוח בקרה - שבט פסגה</h1><p class="topSub">ניהול פרטי של הלוזים - לא מיועד לציבור</p>p></div></div>
+    <div class="warn">עמוד זה פרטי לניהול הלוזים בלבד. הוא לא מיועד לציבור, ואינו קשור לכפתורי ההצטרפות ליומנים באתר הראשי. שינוי אירוע כאן מתעדכן ישירות ביומני Google החיים (עברית ואנגלית יחד), וכך מגיע במהירות לכל מי שכבר מנוי דרך Google.</div>
+    <div class="panel" id="signinPanel">
+    <button id="signinBtn">התחברות לחשבון Google</button>button>
+    <div class="status" id="authStatus"></div>
+    </div>
+    <div id="mainArea" class="hidden">
+    <div class="panel">
+    <label>בחר לוז</label>
+    <select id="scheduleSelect">
+    <option value="pisga">פסגה - כללי</option>option>
+    <option value="shchavag">שכב"ג</option>option>
+    <option value="tet">ט'</option>option>
+    </select>select>
+    <div class="status" id="loadStatus"></div>
+    <button id="migrateBtn">ייבוא ראשוני מקובצי ה-ICS (חד פעמי, בטוח להרצה חוזרת)</button>button>
+    <div class="status" id="migrateStatus"></div>
+    </div>
+    <div class="panel">
+    <div class="calHeader">
+    <button id="prevMonth">›</button>button>
+    <span id="monthLabel"></span>span>
+    <button id="nextMonth">‹</button>button>
+    </div>
+    <div class="calGrid" id="calGrid"></div>
+    </div>
+    </div>
+    </div>
+  <div class="overlay hidden" id="modalOverlay">
+  <div class="modal">
+  <h3 id="modalTitle">אירוע</h3>
+  <label>תאריך</label>
+  <input type="date" id="fDate">
+  <label>שעת התחלה</label>
+  <input type="time" id="fStart">
+  <label>שעת סיום</label>
+  <input type="time" id="fEnd">
+  <label>כותרת בעברית</label>
+  <input type="text" id="fTitleHe">
+  <label>כותרת באנגלית</label>
+  <input type="text" id="fTitleEn">
+  <div class="modalActions">
+  <button id="saveBtn">שמור</button>button>
+  <button id="deleteBtn">מחק</button>button>
+  <button id="cancelBtn">ביטול</button>button>
+  </div>
+  <div id="modalError"></div>
+  </div>
+  </div>
+  <script>
+    var CLIENT_ID = '742382352121-oe8ei5tg0a855bgvqsnm7js1a00v4cfc.apps.googleusercontent.com';
+    var SCOPES = 'https://www.googleapis.com/auth/calendar.events';
+    var SCHEDULES = {
+      pisga: {label:'פסגה - כללי', he:'57dac4005f4fc68ef5b2e109eda5c8567748d9490a433bafaf751eee8c50ad8f@group.calendar.google.com', en:'e93473c3e58f9a586fc90cc57bb53897cf02411a4610f7b3e771d3f38e6e45de@group.calendar.google.com', heIcs:'unique-pisga.ics', enIcs:'unique-pisga-en.ics'},
+      shchavag: {label:'שכב"ג', he:'588b8eaf531b857cf433e0f43f3cf22166c6beb6d1aea82d330fb24cf870bb5f@group.calendar.google.com', en:'799d638105da98b131071f27a0b4a6c77bc18405e46c439697592377bc2c8316@group.calendar.google.com', heIcs:'unique-shchavag.ics', enIcs:'unique-shchavag-en.ics'},
+      tet: {label:'ט\'', he:'9004c346beb0ee2ef12f2efe544639c1659c25ba3a3efb1e33e6f8b8a5b5505f@group.calendar.google.com', en:'118f3d4b734cb410483c1d21faf57241e48bd0f95ed0618aedb69732e27272b1@group.calendar.google.com', heIcs:'unique-tet.ics', enIcs:'unique-tet-en.ics'}
+    };
+    var accessToken = null;
+    var currentSchedule = 'pisga';
+    var currentEvents = [];
+    var viewYear, viewMonth;
+    var editing = null;
+    var pendingDateStr = null;
 
-function setStatus(elId, msg, isError){
-var el = document.getElementById(elId);
-el.textContent = msg || '';
-el.className = 'status' + (isError ? ' error' : (msg ? ' ok' : ''));
-}
+    function setStatus(elId, msg, isError){
+      var el = document.getElementById(elId);
+      el.textContent = msg || '';
+      el.className = 'status' + (isError ? ' error' : (msg ? ' ok' : ''));
+    }
 
-window.onGisLoaded = function(){
-window.tokenClient = google.accounts.oauth2.initTokenClient({
-client_id: CLIENT_ID,
-scope: SCOPES,
-callback: function(resp){
-if (resp.error) { setStatus('authStatus', 'שגיאת התחברות: ' + resp.error, true); return; }
-accessToken = resp.access_token;
-document.getElementById('signinPanel').classList.add('hidden');
-document.getElementById('mainArea').classList.remove('hidden');
-var now = new Date();
-viewYear = now.getFullYear(); viewMonth = now.getMonth();
-loadEvents();
-}
-});
-};
+    window.onGisLoaded = function(){
+      window.tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: CLIENT_ID,
+        scope: SCOPES,
+        callback: function(resp){
+          if (resp.error) { setStatus('authStatus', 'שגיאת התחברות: ' + resp.error, true); return; }
+          accessToken = resp.access_token;
+          document.getElementById('signinPanel').classList.add('hidden');
+          document.getElementById('mainArea').classList.remove('hidden');
+          var now = new Date();
+          viewYear = now.getFullYear(); viewMonth = now.getMonth();
+          loadEvents();
+        }
+      });
+    };
 
-document.getElementById('signinBtn').addEventListener('click', function(){
-if (!window.tokenClient) { setStatus('authStatus','עדיין טוען את Google, נסו שוב בעוד רגע',true); return; }
-window.tokenClient.requestAccessToken();
-});
+    document.getElementById('signinBtn').addEventListener('click', function(){
+      if (!window.tokenClient) { setStatus('authStatus','עדיין טוען את Google, נסו שוב בעוד רגע',true); return; }
+      window.tokenClient.requestAccessToken();
+    });
 
-document.getElementById('scheduleSelect').addEventListener('change', function(e){
-currentSchedule = e.target.value;
-loadEvents();
-});
+    document.getElementById('scheduleSelect').addEventListener('change', function(e){
+      currentSchedule = e.target.value;
+      loadEvents();
+    });
 
-document.getElementById('prevMonth').addEventListener('click', function(){
-viewMonth--; if (viewMonth<0){viewMonth=11;viewYear--;}
-renderCalendar();
-});
-document.getElementById('nextMonth').addEventListener('click', function(){
-viewMonth++; if (viewMonth>11){viewMonth=0;viewYear++;}
-renderCalendar();
-});
+    document.getElementById('prevMonth').addEventListener('click', function(){
+      viewMonth--; if (viewMonth<0){viewMonth=11;viewYear--;}
+      renderCalendar();
+    });
+    document.getElementById('nextMonth').addEventListener('click', function(){
+      viewMonth++; if (viewMonth>11){viewMonth=0;viewYear++;}
+      renderCalendar();
+    });
 
-function apiHeaders(){
-return { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
-}
-function listEvents(calId){
-var timeMin = '2024-01-01T00:00:00Z';
-var timeMax = '2029-01-01T00:00:00Z';
-var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events?singleEvents=true&orderBy=startTime&maxResults=2500&timeMin=' + timeMin + '&timeMax=' + timeMax;
-return fetch(url, { headers: apiHeaders() }).then(function(r){ return r.json(); });
-}
+    function apiHeaders(){
+      return { 'Authorization': 'Bearer ' + accessToken, 'Content-Type': 'application/json' };
+    }
+    function listEvents(calId){
+      var timeMin = '2024-01-01T00:00:00Z';
+      var timeMax = '2029-01-01T00:00:00Z';
+      var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events?singleEvents=true&orderBy=startTime&maxResults=2500&timeMin=' + timeMin + '&timeMax=' + timeMax;
+      return fetch(url, { headers: apiHeaders() }).then(function(r){ return r.json(); });
+    }
 
-function loadEvents(){
-setStatus('loadStatus','טוען אירועים...',false);
-document.getElementById('migrateStatus').textContent = '';
-var cfg = SCHEDULES[currentSchedule];
-Promise.all([listEvents(cfg.he), listEvents(cfg.en)]).then(function(results){
-var heData = results[0], enData = results[1];
-if (heData.error || enData.error) {
-setStatus('loadStatus','שגיאה בטעינה: ' + JSON.stringify(heData.error||enData.error), true);
-return;
-}
-var map = {};
-(heData.items||[]).forEach(function(ev){
-var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
-if (!pk) pk = 'he_' + ev.id;
-if (!map[pk]) map[pk] = {};
-map[pk].heId = ev.id;
-map[pk].heTitle = ev.summary || '';
-map[pk].start = ev.start; map[pk].end = ev.end;
-});
-(enData.items||[]).forEach(function(ev){
-var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
-if (!pk) pk = 'en_' + ev.id;
-if (!map[pk]) map[pk] = {};
-map[pk].enId = ev.id;
-map[pk].enTitle = ev.summary || '';
-if (!map[pk].start) { map[pk].start = ev.start; map[pk].end = ev.end; }
-});
-var list = [];
-Object.keys(map).forEach(function(pk){
-var m = map[pk];
-if (!m.start) return;
-list.push({ pk: pk, heId: m.heId||null, enId: m.enId||null, titleHe: m.heTitle||'', titleEn: m.enTitle||'', start: m.start, end: m.end });
-});
-currentEvents = list;
-setStatus('loadStatus', 'נטענו ' + list.length + ' אירועים', false);
-renderCalendar();
-}).catch(function(err){
-setStatus('loadStatus','שגיאת רשת: ' + err.message, true);
-});
-}
+    function loadEvents(){
+      setStatus('loadStatus','טוען אירועים...',false);
+      document.getElementById('migrateStatus').textContent = '';
+      var cfg = SCHEDULES[currentSchedule];
+      Promise.all([listEvents(cfg.he), listEvents(cfg.en)]).then(function(results){
+        var heData = results[0], enData = results[1];
+        if (heData.error || enData.error) {
+          setStatus('loadStatus','שגיאה בטעינה: ' + JSON.stringify(heData.error||enData.error), true);
+          return;
+        }
+        var map = {};
+        (heData.items||[]).forEach(function(ev){
+          var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
+          if (!pk) pk = 'he_' + ev.id;
+          if (!map[pk]) map[pk] = {};
+          map[pk].heId = ev.id;
+          map[pk].heTitle = ev.summary || '';
+          map[pk].start = ev.start; map[pk].end = ev.end;
+        });
+        (enData.items||[]).forEach(function(ev){
+          var pk = ev.extendedProperties && ev.extendedProperties.private && ev.extendedProperties.private.pk;
+          if (!pk) pk = 'en_' + ev.id;
+          if (!map[pk]) map[pk] = {};
+          map[pk].enId = ev.id;
+          map[pk].enTitle = ev.summary || '';
+          if (!map[pk].start) { map[pk].start = ev.start; map[pk].end = ev.end; }
+        });
+        var list = [];
+        Object.keys(map).forEach(function(pk){
+          var m = map[pk];
+          if (!m.start) return;
+          list.push({ pk: pk, heId: m.heId||null, enId: m.enId||null, titleHe: m.heTitle||'', titleEn: m.enTitle||'', start: m.start, end: m.end });
+        });
+        currentEvents = list;
+        setStatus('loadStatus', 'נטענו ' + list.length + ' אירועים', false);
+        renderCalendar();
+      }).catch(function(err){
+        setStatus('loadStatus','שגיאת רשת: ' + err.message, true);
+      });
+    }
 
-function dateOf(dt){ return dt.date ? dt.date : dt.dateTime.slice(0,10); }
-function timeOf(dt){ return dt.dateTime ? dt.dateTime.slice(11,16) : ''; }
+    function dateOf(dt){ return dt.date ? dt.date : dt.dateTime.slice(0,10); }
+    function timeOf(dt){ return dt.dateTime ? dt.dateTime.slice(11,16) : ''; }
 
-var MONTH_NAMES = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
-var DAY_NAMES = ['א','ב','ג','ד','ה','ו','ש'];
+    var MONTH_NAMES = ['ינואר','פברואר','מרץ','אפריל','מאי','יוני','יולי','אוגוסט','ספטמבר','אוקטובר','נובמבר','דצמבר'];
+    var DAY_NAMES = ['א','ב','ג','ד','ה','ו','ש'];
 
-function renderCalendar(){
-document.getElementById('monthLabel').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
-var grid = document.getElementById('calGrid');
-grid.innerHTML = '';
-DAY_NAMES.forEach(function(d){
-var h = document.createElement('div');
-h.className = 'dayHeader'; h.textContent = d;
-grid.appendChild(h);
-});
-var first = new Date(viewYear, viewMonth, 1);
-var startOffset = first.getDay();
-var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
-var byDate = {};
-currentEvents.forEach(function(ev){
-var d = dateOf(ev.start);
-if (!byDate[d]) byDate[d] = [];
-byDate[d].push(ev);
-});
-for (var i=0;i<startOffset;i++){
-var empty = document.createElement('div');
-empty.className = 'dayCell empty';
-grid.appendChild(empty);
-}
-for (var day=1; day<=daysInMonth; day++){
-var cell = document.createElement('div');
-cell.className = 'dayCell';
-var mm = String(viewMonth+1).padStart(2,'0');
-var dd = String(day).padStart(2,'0');
-var dateStr = viewYear + '-' + mm + '-' + dd;
-var num = document.createElement('div');
-num.className = 'dayNum'; num.textContent = day;
-cell.appendChild(num);
-(byDate[dateStr]||[]).forEach(function(ev){
-var pill = document.createElement('div');
-pill.className = 'eventPill';
-var t = timeOf(ev.start);
-pill.textContent = (t ? t + ' ' : '') + (ev.titleHe || ev.titleEn || '(ללא כותרת)');
-pill.addEventListener('click', function(evObj){ return function(e){ e.stopPropagation(); openModal(evObj, dateStr); }; }(ev));
-cell.appendChild(pill);
-});
-cell.addEventListener('click', function(ds){ return function(){ openModal(null, ds); }; }(dateStr));
-grid.appendChild(cell);
-}
-}
-function openModal(ev, dateStr){
-editing = ev;
-document.getElementById('modalError').textContent = '';
-document.getElementById('modalTitle').textContent = ev ? 'עריכת אירוע' : 'אירוע חדש';
-document.getElementById('deleteBtn').style.display = ev ? 'block' : 'none';
-document.getElementById('fDate').value = dateStr;
-if (ev){
-document.getElementById('fStart').value = timeOf(ev.start);
-document.getElementById('fEnd').value = timeOf(ev.end);
-document.getElementById('fTitleHe').value = ev.titleHe || '';
-document.getElementById('fTitleEn').value = ev.titleEn || '';
-} else {
-document.getElementById('fStart').value = '';
-document.getElementById('fEnd').value = '';
-document.getElementById('fTitleHe').value = '';
-document.getElementById('fTitleEn').value = '';
-}
-document.getElementById('modalOverlay').classList.remove('hidden');
-}
-function closeModal(){
-document.getElementById('modalOverlay').classList.add('hidden');
-editing = null;
-}
-document.getElementById('cancelBtn').addEventListener('click', closeModal);
-document.getElementById('modalOverlay').addEventListener('click', function(e){
-if (e.target.id === 'modalOverlay') closeModal();
-});
+    function renderCalendar(){
+      document.getElementById('monthLabel').textContent = MONTH_NAMES[viewMonth] + ' ' + viewYear;
+      var grid = document.getElementById('calGrid');
+      grid.innerHTML = '';
+      DAY_NAMES.forEach(function(d){
+        var h = document.createElement('div');
+        h.className = 'dayHeader'; h.textContent = d;
+        grid.appendChild(h);
+      });
+      var first = new Date(viewYear, viewMonth, 1);
+      var startOffset = first.getDay();
+      var daysInMonth = new Date(viewYear, viewMonth+1, 0).getDate();
+      var byDate = {};
+      currentEvents.forEach(function(ev){
+        var d = dateOf(ev.start);
+        if (!byDate[d]) byDate[d] = [];
+        byDate[d].push(ev);
+      });
+      for (var i=0;i<startOffset;i++){
+        var empty = document.createElement('div');
+        empty.className = 'dayCell empty';
+        grid.appendChild(empty);
+      }
+      for (var day=1; day<=daysInMonth; day++){
+        var cell = document.createElement('div');
+        cell.className = 'dayCell';
+        var mm = String(viewMonth+1).padStart(2,'0');
+        var dd = String(day).padStart(2,'0');
+        var dateStr = viewYear + '-' + mm + '-' + dd;
+        var num = document.createElement('div');
+        num.className = 'dayNum'; num.textContent = day;
+        cell.appendChild(num);
+        (byDate[dateStr]||[]).forEach(function(ev){
+          var pill = document.createElement('div');
+          pill.className = 'eventPill';
+          var t = timeOf(ev.start);
+          pill.textContent = (t ? t + ' ' : '') + (ev.titleHe || ev.titleEn || '(ללא כותרת)');
+          pill.addEventListener('click', function(evObj){ return function(e){ e.stopPropagation(); openModal(evObj, dateStr); }; }(ev));
+          cell.appendChild(pill);
+        });
+        cell.addEventListener('click', function(ds){ return function(){ openModal(null, ds); }; }(dateStr));
+        grid.appendChild(cell);
+      }
+    }
+    function openModal(ev, dateStr){
+      editing = ev;
+      document.getElementById('modalError').textContent = '';
+      document.getElementById('modalTitle').textContent = ev ? 'עריכת אירוע' : 'אירוע חדש';
+      document.getElementById('deleteBtn').style.display = ev ? 'block' : 'none';
+      document.getElementById('fDate').value = dateStr;
+      if (ev){
+        document.getElementById('fStart').value = timeOf(ev.start);
+        document.getElementById('fEnd').value = timeOf(ev.end);
+        document.getElementById('fTitleHe').value = ev.titleHe || '';
+        document.getElementById('fTitleEn').value = ev.titleEn || '';
+      } else {
+        document.getElementById('fStart').value = '';
+        document.getElementById('fEnd').value = '';
+        document.getElementById('fTitleHe').value = '';
+        document.getElementById('fTitleEn').value = '';
+      }
+      document.getElementById('modalOverlay').classList.remove('hidden');
+    }
+    function closeModal(){
+      document.getElementById('modalOverlay').classList.add('hidden');
+      editing = null;
+    }
+    document.getElementById('cancelBtn').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', function(e){
+      if (e.target.id === 'modalOverlay') closeModal();
+    });
 
-function uid(){ return 'ev' + Date.now() + Math.random().toString(36).slice(2,8); }
+    function uid(){ return 'ev' + Date.now() + Math.random().toString(36).slice(2,8); }
 
-function putEvent(calId, eventId, body){
-var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events' + (eventId ? ('/' + eventId) : '');
-return fetch(url, { method: eventId ? 'PATCH' : 'POST', headers: apiHeaders(), body: JSON.stringify(body) }).then(function(r){ return r.json(); });
-}
-function deleteEvent(calId, eventId){
-if (!eventId) return Promise.resolve({});
-var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events/' + eventId;
-return fetch(url, { method: 'DELETE', headers: apiHeaders() }).then(function(r){ return r.status===204 || r.status===410 ? {} : r.json(); });
-}
+    function putEvent(calId, eventId, body){
+      var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events' + (eventId ? ('/' + eventId) : '');
+      return fetch(url, { method: eventId ? 'PATCH' : 'POST', headers: apiHeaders(), body: JSON.stringify(body) }).then(function(r){ return r.json(); });
+    }
+    function deleteEvent(calId, eventId){
+      if (!eventId) return Promise.resolve({});
+      var url = 'https://www.googleapis.com/calendar/v3/calendars/' + encodeURIComponent(calId) + '/events/' + eventId;
+      return fetch(url, { method: 'DELETE', headers: apiHeaders() }).then(function(r){ return r.status===204 || r.status===410 ? {} : r.json(); });
+    }
 
-document.getElementById('saveBtn').addEventListener('click', function(){
-var dateStr = document.getElementById('fDate').value;
-var startT = document.getElementById('fStart').value;
-var endT = document.getElementById('fEnd').value;
-var titleHe = document.getElementById('fTitleHe').value.trim();
-var titleEn = document.getElementById('fTitleEn').value.trim();
-if (!dateStr || !startT || !endT){
-document.getElementById('modalError').textContent = 'יש למלא תאריך, שעת התחלה ושעת סיום';
-return;
-}
-if (!titleHe && !titleEn){
-document.getElementById('modalError').textContent = 'יש למלא כותרת בעברית או באנגלית לפחות';
-return;
-}
-var cfg = SCHEDULES[currentSchedule];
-var pk = editing ? editing.pk : uid();
-var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'Asia/Jerusalem' };
-var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'Asia/Jerusalem' };
-var extProps = { private: { pk: pk } };
-var tasks = [];
-var heId = editing ? editing.heId : null;
-var enId = editing ? editing.enId : null;
-if (titleHe){
-tasks.push(putEvent(cfg.he, heId, { summary: titleHe, start: startObj, end: endObj, extendedProperties: extProps }));
-} else if (heId){
-tasks.push(deleteEvent(cfg.he, heId));
-} else { tasks.push(Promise.resolve({})); }
-if (titleEn){
-tasks.push(putEvent(cfg.en, enId, { summary: titleEn, start: startObj, end: endObj, extendedProperties: extProps }));
-} else if (enId){
-tasks.push(deleteEvent(cfg.en, enId));
-} else { tasks.push(Promise.resolve({})); }
-document.getElementById('modalError').textContent = 'שומר...';
-Promise.all(tasks).then(function(res){
-var err = res.find(function(r){ return r && r.error; });
-if (err) { document.getElementById('modalError').textContent = 'שגיאה: ' + JSON.stringify(err.error); return; }
-closeModal();
-loadEvents();
-}).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
-});
+    document.getElementById('saveBtn').addEventListener('click', function(){
+      var dateStr = document.getElementById('fDate').value;
+      var startT = document.getElementById('fStart').value;
+      var endT = document.getElementById('fEnd').value;
+      var titleHe = document.getElementById('fTitleHe').value.trim();
+      var titleEn = document.getElementById('fTitleEn').value.trim();
+      if (!dateStr || !startT || !endT){
+        document.getElementById('modalError').textContent = 'יש למלא תאריך, שעת התחלה ושעת סיום';
+        return;
+      }
+      if (!titleHe && !titleEn){
+        document.getElementById('modalError').textContent = 'יש למלא כותרת בעברית או באנגלית לפחות';
+        return;
+      }
+      var cfg = SCHEDULES[currentSchedule];
+      var pk = editing ? editing.pk : uid();
+      var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'Asia/Jerusalem' };
+      var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'Asia/Jerusalem' };
+      var extProps = { private: { pk: pk } };
+      var tasks = [];
+      var heId = editing ? editing.heId : null;
+      var enId = editing ? editing.enId : null;
+      if (titleHe){
+        tasks.push(putEvent(cfg.he, heId, { summary: titleHe, start: startObj, end: endObj, extendedProperties: extProps }));
+      } else if (heId){
+        tasks.push(deleteEvent(cfg.he, heId));
+      } else { tasks.push(Promise.resolve({})); }
+      if (titleEn){
+        tasks.push(putEvent(cfg.en, enId, { summary: titleEn, start: startObj, end: endObj, extendedProperties: extProps }));
+      } else if (enId){
+        tasks.push(deleteEvent(cfg.en, enId));
+      } else { tasks.push(Promise.resolve({})); }
+      document.getElementById('modalError').textContent = 'שומר...';
+      Promise.all(tasks).then(function(res){
+        var err = res.find(function(r){ return r && r.error; });
+        if (err) { document.getElementById('modalError').textContent = 'שגיאה: ' + JSON.stringify(err.error); return; }
+        closeModal();
+        loadEvents();
+      }).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
+    });
 
-document.getElementById('deleteBtn').addEventListener('click', function(){
-if (!editing) return;
-if (!confirm('למחוק את האירוע הזה משני היומנים (עברית ואנגלית)?')) return;
-var cfg = SCHEDULES[currentSchedule];
-Promise.all([deleteEvent(cfg.he, editing.heId), deleteEvent(cfg.en, editing.enId)]).then(function(){
-closeModal();
-loadEvents();
-}).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
-});
-function parseIcs(text){
-var events = [];
-var blocks = text.split('BEGIN:VEVENT').slice(1);
-blocks.forEach(function(b){
-var uidM = b.match(/UID:([^\r\n]+)/);
-var startM = b.match(/DTSTART;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
-var endM = b.match(/DTEND;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
-var sumM = b.match(/SUMMARY:([^\r\n]+)/);
-if (!startM || !endM || !sumM) return;
-events.push({
-uid: uidM ? uidM[1].trim() : '',
-start: icsToIso(startM[1]),
-end: icsToIso(endM[1]),
-summary: sumM[1].trim()
-});
-});
-events.sort(function(a,b){ return a.start < b.start ? -1 : (a.start > b.start ? 1 : 0); });
-return events;
-}
-function icsToIso(s){
-return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8)+'T'+s.slice(9,11)+':'+s.slice(11,13)+':'+s.slice(13,15);
-}
+    document.getElementById('deleteBtn').addEventListener('click', function(){
+      if (!editing) return;
+      if (!confirm('למחוק את האירוע הזה משני היומנים (עברית ואנגלית)?')) return;
+      var cfg = SCHEDULES[currentSchedule];
+      Promise.all([deleteEvent(cfg.he, editing.heId), deleteEvent(cfg.en, editing.enId)]).then(function(){
+        closeModal();
+        loadEvents();
+      }).catch(function(e){ document.getElementById('modalError').textContent = 'שגיאת רשת: ' + e.message; });
+    });
 
-document.getElementById('migrateBtn').addEventListener('click', function(){
-var cfg = SCHEDULES[currentSchedule];
-var msEl = document.getElementById('migrateStatus');
-msEl.textContent = 'טוען קבצי ICS...'; msEl.className='status';
-Promise.all([
-fetch(cfg.heIcs).then(function(r){ return r.text(); }),
-fetch(cfg.enIcs).then(function(r){ return r.text(); })
-]).then(function(texts){
-var heEvents = parseIcs(texts[0]);
-var enEvents = parseIcs(texts[1]);
-var count = Math.max(heEvents.length, enEvents.length);
-var existingKeys = {};
-currentEvents.forEach(function(ev){ if (ev.pk && ev.pk.indexOf('mig_'+currentSchedule+'_')===0) existingKeys[ev.pk]=true; });
-var tasks = [];
-var added = 0, skipped = 0;
-for (var i=0;i<count;i++){
-var pk = 'mig_' + currentSchedule + '_' + i;
-if (existingKeys[pk]) { skipped++; continue; }
-var he = heEvents[i], en = enEvents[i];
-var startObj, endObj;
-if (he){ startObj = { dateTime: he.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: he.end, timeZone: 'Asia/Jerusalem' }; }
-else if (en){ startObj = { dateTime: en.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: en.end, timeZone: 'Asia/Jerusalem' }; }
-else continue;
-var extProps = { private: { pk: pk } };
-if (he){ tasks.push(putEvent(cfg.he, null, { summary: he.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
-if (en){ tasks.push(putEvent(cfg.en, null, { summary: en.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
-added++;
-}
-msEl.textContent = 'מייבא ' + added + ' אירועים (' + skipped + ' כבר קיימים, מדולגים)...';
-return Promise.all(tasks).then(function(){ return {added:added, skipped:skipped}; });
-}).then(function(r){
-msEl.textContent = 'ייבוא הושלם: נוספו ' + r.added + ' אירועים, דולגו ' + r.skipped + ' שכבר יובאו בעבר.';
-msEl.className = 'status ok';
-loadEvents();
-}).catch(function(e){
-msEl.textContent = 'שגיאה בייבוא: ' + e.message;
-msEl.className = 'status error';
-});
-});
-</script>
-<script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
-</body>
-</html>
+    function parseIcs(text){
+      var events = [];
+      var blocks = text.split('BEGIN:VEVENT').slice(1);
+      blocks.forEach(function(b){
+        var uidM = b.match(/UID:([^\r\n]+)/);
+        var startM = b.match(/DTSTART;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
+        var endM = b.match(/DTEND;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
+        var startDateM = b.match(/DTSTART;VALUE=DATE:(\d{8})/);
+        var endDateM = b.match(/DTEND;VALUE=DATE:(\d{8})/);
+        var sumM = b.match(/SUMMARY:([^\r\n]+)/);
+        if (!sumM) return;
+        if (startM && endM){
+          events.push({
+            uid: uidM ? uidM[1].trim() : '',
+            allDay: false,
+            start: icsToIso(startM[1]),
+            end: icsToIso(endM[1]),
+            summary: sumM[1].trim()
+          });
+        } else if (startDateM && endDateM){
+          events.push({
+            uid: uidM ? uidM[1].trim() : '',
+            allDay: true,
+            start: icsDateToIso(startDateM[1]),
+            end: icsDateToIso(endDateM[1]),
+            summary: sumM[1].trim()
+          });
+        }
+      });
+      events.sort(function(a,b){ return a.start < b.start ? -1 : (a.start > b.start ? 1 : 0); });
+      return events;
+    }
+    function icsToIso(s){
+      return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8)+'T'+s.slice(9,11)+':'+s.slice(11,13)+':'+s.slice(13,15);
+    }
+    function icsDateToIso(s){
+      return s.slice(0,4)+'-'+s.slice(4,6)+'-'+s.slice(6,8);
+    }
+
+    document.getElementById('migrateBtn').addEventListener('click', function(){
+      var cfg = SCHEDULES[currentSchedule];
+      var msEl = document.getElementById('migrateStatus');
+      msEl.textContent = 'טוען קבצי ICS...'; msEl.className='status';
+      Promise.all([
+        fetch(cfg.heIcs).then(function(r){ return r.text(); }),
+        fetch(cfg.enIcs).then(function(r){ return r.text(); })
+        ]).then(function(texts){
+        var heEvents = parseIcs(texts[0]);
+        var enEvents = parseIcs(texts[1]);
+        var count = Math.max(heEvents.length, enEvents.length);
+        var existingKeys = {};
+        currentEvents.forEach(function(ev){ if (ev.pk && ev.pk.indexOf('mig_'+currentSchedule+'_')===0) existingKeys[ev.pk]=true; });
+        var tasks = [];
+        var added = 0, skipped = 0;
+        for (var i=0;i<count;i++){
+          var pk = 'mig_' + currentSchedule + '_' + i;
+          if (existingKeys[pk]) { skipped++; continue; }
+          var he = heEvents[i], en = enEvents[i];
+          var srcEv = he || en;
+          if (!srcEv) continue;
+          var startObj, endObj;
+          if (srcEv.allDay){ startObj = { date: srcEv.start }; endObj = { date: srcEv.end }; }
+          else { startObj = { dateTime: srcEv.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: srcEv.end, timeZone: 'Asia/Jerusalem' }; }
+          var extProps = { private: { pk: pk } };
+          if (he){ tasks.push(putEvent(cfg.he, null, { summary: he.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
+          if (en){ tasks.push(putEvent(cfg.en, null, { summary: en.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
+          added++;
+        }
+        msEl.textContent = 'מייבא ' + added + ' אירועים (' + skipped + ' כבר קיימים, מדולגים)...';
+        return Promise.all(tasks).then(function(){ return {added:added, skipped:skipped}; });
+      }).then(function(r){
+        msEl.textContent = 'ייבוא הושלם: נוספו ' + r.added + ' אירועים, דולגו ' + r.skipped + ' שכבר יובאו בעבר.';
+        msEl.className = 'status ok';
+        loadEvents();
+      }).catch(function(e){
+        msEl.textContent = 'שגיאה בייבוא: ' + e.message;
+        msEl.className = 'status error';
+      });
+    });
+  </script>
+    <script src="https://accounts.google.com/gsi/client" async defer onload="onGisLoaded()"></script>
+  </body>
+</html>html>
+  </script></label></label></h1></div>
+  </body>
+  </style></title>
+  </head>
