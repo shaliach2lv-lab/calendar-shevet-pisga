@@ -333,8 +333,8 @@ return;
 }
 var cfg = SCHEDULES[currentSchedule];
 var pk = editing ? editing.pk : uid();
-var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'Asia/Jerusalem' };
-var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'Asia/Jerusalem' };
+var startObj = { dateTime: dateStr + 'T' + startT + ':00', timeZone: 'America/Los_Angeles' };
+var endObj = { dateTime: dateStr + 'T' + endT + ':00', timeZone: 'America/Los_Angeles' };
 var extProps = { private: { pk: pk } };
 var tasks = [];
 var heId = editing ? editing.heId : null;
@@ -373,8 +373,8 @@ var events = [];
 var blocks = text.split('BEGIN:VEVENT').slice(1);
 blocks.forEach(function(b){
 var uidM = b.match(/UID:([^\r\n]+)/);
-var startM = b.match(/DTSTART;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
-var endM = b.match(/DTEND;TZID=Asia\/Jerusalem:(\d{8}T\d{6})/);
+var startM = b.match(/DTSTART;TZID=America\/Los_Angeles:(\d{8}T\d{6})/);
+var endM = b.match(/DTEND;TZID=America\/Los_Angeles:(\d{8}T\d{6})/);
 var startDateM = b.match(/DTSTART;VALUE=DATE:(\d{8})/);
 var endDateM = b.match(/DTEND;VALUE=DATE:(\d{8})/);
 var sumM = b.match(/SUMMARY:([^\r\n]+)/);
@@ -430,7 +430,7 @@ var srcEv = he || en;
 if (!srcEv) continue;
 var startObj, endObj;
 if (srcEv.allDay){ startObj = { date: srcEv.start }; endObj = { date: srcEv.end }; }
-else { startObj = { dateTime: srcEv.start, timeZone: 'Asia/Jerusalem' }; endObj = { dateTime: srcEv.end, timeZone: 'Asia/Jerusalem' }; }
+else { startObj = { dateTime: srcEv.start, timeZone: 'America/Los_Angeles' }; endObj = { dateTime: srcEv.end, timeZone: 'America/Los_Angeles' }; }
 var extProps = { private: { pk: pk } };
 if (he){ tasks.push(putEvent(cfg.he, null, { summary: he.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
 if (en){ tasks.push(putEvent(cfg.en, null, { summary: en.summary, start: startObj, end: endObj, extendedProperties: extProps })); }
