@@ -202,17 +202,38 @@ tet_en: liveAppleUrl("tet_en")
 function showError(msg) {
 const box = document.getElementById('errorBox');
 box.textContent = msg;
+box.style.background = '#fdecea';
+box.style.color = '#b3261e';
+box.style.border = '1px solid #f5c2c0';
+box.style.display = 'block';
+}
+function showNote(html) {
+const box = document.getElementById('errorBox');
+box.innerHTML = html;
+box.style.background = '#eef6ff';
+box.style.color = '#1a3d6d';
+box.style.border = '1px solid #9cc3f0';
 box.style.display = 'block';
 }
 function hideError() {
 document.getElementById('errorBox').style.display = 'none';
 }
 
+const UA = navigator.userAgent || '';
+const IS_IOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const IS_ANDROID = /Android/.test(UA);
+const IS_MOBILE = IS_IOS || IS_ANDROID;
+
 function addToGoogle(key) {
 hideError();
+if (IS_MOBILE) {
+showNote('<b>שימו לב</b><br>אפליקציית יומן Google לא יודעת להוסיף יומן מקושר. ההוספה נעשית פעם אחת דרך אתר Google, ומיד לאחריה היומן מופיע אוטומטית גם באפליקציה.<br><br>1. בדף שנפתח אשרו את ההוספה.<br>2. אם לא מופיעה בקשת ההוספה - פתחו את תפריט הדפדפן, בחרו "אתר במחשב" (Request desktop site) ורעננו.<br><br>מעדיפים שהיומן ייפתח ישר באפליקציית היומן של המכשיר? השתמשו בכפתור Apple Calendar של אותו הלוז.<br><br><a href="' + GOOGLE_URLS[key] + '" target="_blank" rel="noopener">לחצו כאן אם דף Google לא נפתח</a>');
+}
 const win = window.open(GOOGLE_URLS[key], '_blank');
 if (!win || win.closed || typeof win.closed === 'undefined') {
+if (!IS_MOBILE) {
 showError('לא הצלחנו לפתוח את יומן Google. ודאו שחוסם החלונות הקופצים כבוי ונסו שוב, או פתחו את הקישור בלחיצה ארוכה.');
+}
 }
 }
 
@@ -232,7 +253,7 @@ a.click();
 setTimeout(function(){ document.body.removeChild(a); }, 50);
 setTimeout(function(){
 if (!appleHandled) {
-showError('נראה שהמכשיר לא תומך בפתיחה אוטומטית של יומן Apple. יש לוודא שאתם גולשים דרך Safari במכשיר אייפון, אייפד או מק, ולנסות שוב.');
+showNote('לא הצלחנו לפתוח את אפליקציית היומן של המכשיר.<br><br>אם נפתח לכם יומן Google בדפדפן במקום אפליקציית היומן - הדפדפן מוגדר לפתוח קישורי webcal ביומן Google. ב-Chrome ניתן לשנות זאת בהגדרות: chrome://settings/handlers<br><br>באייפון, באייפד ובמק מומלץ לפתוח את הדף ב-Safari ולנסות שוב.');
 }
 }, 1500);
 }
