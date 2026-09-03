@@ -9,276 +9,137 @@
 body {
 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
 background: linear-gradient(135deg,#1e3c72,#2a5298);
-min-height: 100vh;
-margin: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 20px;
+min-height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; padding: 16px;
 }
-.card {
-background: #fff;
-border-radius: 16px;
-padding: 36px 28px;
-max-width: 460px;
-width: 100%;
-box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-text-align: center;
-}
-.logo {
-width: 110px;
-height: auto;
-margin: 0 auto 16px;
-display: block;
-}
-h1 {
-font-size: 22px;
-margin: 0 0 8px;
-color: #1e3c72;
-}
-p.subtitle {
-color: #555;
-font-size: 15px;
-margin: 0 0 24px;
-}
-.section {
-border-top: 1px solid #e6e6e6;
-padding-top: 22px;
-margin-top: 22px;
-}
-.section:first-of-type {
-border-top: none;
-padding-top: 0;
-margin-top: 0;
-}
-.section-title {
-font-size: 17px;
-color: #1e3c72;
-margin: 0 0 4px;
-}
-.section-note {
-font-size: 12.5px;
-color: #888;
-margin: 0 0 16px;
-}
-.btn {
-display: block;
-width: 100%;
-padding: 16px;
-margin-bottom: 14px;
-border-radius: 10px;
-border: none;
-font-size: 17px;
-font-weight: 600;
-cursor: pointer;
-text-decoration: none;
-transition: transform .15s ease, box-shadow .15s ease;
-font-family: inherit;
-}
-.btn:active { transform: scale(0.98); }
-.btn-google {
-background: #4285F4;
-color: #fff;
-}
-.btn-google:hover { box-shadow: 0 6px 16px rgba(66,133,244,0.4); }
-.btn-apple {
-background: #000;
-color: #fff;
-}
-.btn-apple:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.35); }
-.hint {
-font-size: 12.5px;
-color: #888;
-margin: -6px 0 20px;
-line-height: 1.5;
-}
-#errorBox {
-display: none;
-background: #fdecea;
-color: #b3261e;
-border: 1px solid #f5c2c0;
-border-radius: 10px;
-padding: 14px 16px;
-font-size: 14px;
-margin-top: 18px;
-text-align: right;
-line-height: 1.6;
-}
-@media (max-width: 420px) {
-.card { padding: 26px 18px; border-radius: 12px; }
-h1 { font-size: 19px; }
-.btn { font-size: 16px; padding: 14px; }
-.logo { width: 90px; }
-}
+.card { background:#fff; border-radius:18px; padding:28px 22px; max-width:520px; width:100%; box-shadow:0 12px 40px rgba(0,0,0,0.25); text-align:center; }
+.logo { width:90px; margin-bottom:10px; }
+h1 { font-size:24px; margin:0 0 6px; color:#1e3c72; }
+.subtitle { color:#666; font-size:15px; margin:0 0 18px; }
+.device { background:#eef4ff; border:1px solid #cfe0ff; color:#1e3c72; border-radius:12px; padding:12px 14px; font-size:14px; line-height:1.6; text-align:right; margin-bottom:6px; }
+.section { border-top:1px solid #eee; padding-top:18px; margin-top:18px; }
+.section-title { font-size:19px; font-weight:700; color:#1e3c72; margin:0 0 12px; }
+.btn { display:block; width:100%; border:0; border-radius:12px; padding:16px; font-size:17px; font-weight:700; cursor:pointer; margin:0 0 8px; font-family:inherit; text-align:center; text-decoration:none; }
+.btn-main { background:#1a73e8; color:#fff; }
+.btn-sm { background:#f1f3f4; color:#222; font-size:15px; padding:12px; font-weight:600; }
+.links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:2px; }
+.lnk { background:none; border:0; color:#1a73e8; font-size:14px; text-decoration:underline; cursor:pointer; font-family:inherit; padding:4px; }
+.alt { display:none; margin-top:12px; }
+.alt.open { display:block; }
+.msg { display:none; border-radius:12px; padding:14px; font-size:14px; line-height:1.7; text-align:right; margin-top:18px; }
+.msg.show { display:block; }
+.note { background:#fff8e1; border:1px solid #ffe082; color:#5d4037; }
+.err { background:#fdecea; border:1px solid #f5c6cb; color:#8a1c1c; }
+details { margin-top:22px; text-align:right; font-size:14px; color:#444; }
+summary { cursor:pointer; color:#1a73e8; font-weight:600; }
+details ol { padding-inline-start:20px; line-height:1.8; }
+.foot { margin-top:18px; font-size:12px; color:#999; line-height:1.6; }
 </style>
 </head>
 <body>
 <div class="card">
 <img class="logo" src="https://static.wixstatic.com/media/2713c6_54fc814e5dab40e99a2eaf372db73372~mv2.png" alt="לוגו שבט פסגה לאס וגאס">
 <h1>לוז שבט פסגה 26-27</h1>
-<p class="subtitle">בחרו את הלוז המתאים לכם ואת סוג היומן שברשותכם</p>
-
+<p class="subtitle">בוחרים לוז ולוחצים על הכפתור הכוחל. זה הכל.</p>
+<div class="device" id="deviceBox"></div>
 <div class="section">
-<p class="section-title">לוז כללי - שבט פסגה</p>
-<button class="btn btn-google" data-google="pisga_he">הוספה ליומן Google</button>
-<p class="hint">ייפתח בכרטיסייה חדשה. יש להתחבר לחשבון Google שלכם. עדכונים באתר יופיעו אצלכם אוטומטית.</p>
-<button class="btn btn-apple" data-apple="pisga_he">הוספה ליומן Apple</button>
-<p class="hint">עובד במכשירי אייפון/אייפד/מק דרך Safari בלבד.</p>
-<button class="btn btn-google" data-google="pisga_en">Add Pisga Schedule (English) to Google Calendar</button>
-<p class="hint">ייפתח בכרטיסייה חדשה. יש להתחבר בחשבון Google שלכם.</p>
-<button class="btn btn-apple" data-apple="pisga_en">Add Pisga Schedule (English) to Apple Calendar</button>
-<p class="hint">יופיע בקשת אישור אחת מהמחשב/הנייד – יש לאשר.</p>
+<p class="section-title">לוז חניכים ג׳-ח׳</p>
+<button class="btn btn-main" data-add="pisga_he">הוספה ליומן שלי</button>
+<div class="links">
+<button class="lnk" data-add="pisga_en">English version</button>
+<button class="lnk" data-toggle="pisga">אפשרויות נוספות</button>
 </div>
-
+<div class="alt" id="alt-pisga">
+<button class="btn btn-sm" data-apple="pisga_he">פתיחה ביומן המכשיר (iPhone / iPad / Mac)</button>
+<button class="btn btn-sm" data-google="pisga_he">הוספה דרך אתר Google Calendar</button>
+<a class="btn btn-sm" data-file="pisga_he" href="#">הורדת קובץ יומן (ICS)</a>
+</div>
+</div>
 <div class="section">
-<p class="section-title">לוז שכב"ג</p>
-<p class="section-note">יש להוסיף בנפרד: קודם לוז כללי (למעלה), ואז לוז שכב"ג (כאן)</p>
-<button class="btn btn-google" data-google="shchavag_he">הוספת לוז שכב"ג ליומן Google</button>
-<p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-<button class="btn btn-apple" data-apple="shchavag_he">הוספת לוז שכב"ג ליומן Apple</button>
-<p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-<button class="btn btn-google" data-google="shchavag_en">Add Shachbag Schedule (English) to Google Calendar</button>
-<p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
-<button class="btn btn-apple" data-apple="shchavag_en">Add Shachbag Schedule (English) to Apple Calendar</button>
-<p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
+<p class="section-title">לוז ט׳</p>
+<button class="btn btn-main" data-add="tet_he">הוספה ליומן שלי</button>
+<div class="links">
+<button class="lnk" data-add="tet_en">English version</button>
+<button class="lnk" data-toggle="tet">אפשרויות נוספות</button>
 </div>
-
+<div class="alt" id="alt-tet">
+<button class="btn btn-sm" data-apple="tet_he">פתיחה ביומן המכשיר (iPhone / iPad / Mac)</button>
+<button class="btn btn-sm" data-google="tet_he">הוספה דרך אתר Google Calendar</button>
+<a class="btn btn-sm" data-file="tet_he" href="#">הורדת קובץ יומן (ICS)</a>
+</div>
+</div>
 <div class="section">
-<p class="section-title">לוז ט'</p>
-<p class="section-note">יש להוסיף בנפרד: קודם לוז כללי (למעלה), ואז לוז ט' (כאן)</p>
-<button class="btn btn-google" data-google="tet_he">הוספת לוז ט' ליומן Google</button>
-<p class="hint">ייפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-<button class="btn btn-apple" data-apple="tet_he">הוספת לוז ט' ליומן Apple</button>
-<p class="hint">יופיע בקשת אישור אחת מהמכשיר - יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה - עשו זאת גם כן.</p>
-<button class="btn btn-google" data-google="tet_en">Add Tet Schedule (English) to Google Calendar</button>
-<p class="hint">יפתח בכרטיסייה חדשה. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
-<button class="btn btn-apple" data-apple="tet_en">Add Tet Schedule (English) to Apple Calendar</button>
-<p class="hint">יופיע בקשת אישור אחת מהמחשיר – יש לאשר. אם עדיין לא הוספתם את הלוז הכללי למעלה – עשו זאת גם כן.</p>
+<p class="section-title">לוז שכב״ג</p>
+<button class="btn btn-main" data-add="shchavag_he">הוספה ליומן שלי</button>
+<div class="links">
+<button class="lnk" data-add="shchavag_en">English version</button>
+<button class="lnk" data-toggle="shchavag">אפשרויות נוספות</button>
 </div>
-
-<div id="errorBox"></div>
+<div class="alt" id="alt-shchavag">
+<button class="btn btn-sm" data-apple="shchavag_he">פתיחה ביומן המכשיר (iPhone / iPad / Mac)</button>
+<button class="btn btn-sm" data-google="shchavag_he">הוספה דרך אתר Google Calendar</button>
+<a class="btn btn-sm" data-file="shchavag_he" href="#">הורדת קובץ יומן (ICS)</a>
 </div>
-
+</div>
+<div class="msg note" id="noteBox"></div>
+<div class="msg err" id="errorBox"></div>
+<details>
+<summary>מה קורה אחרי הלחיצה?</summary>
+<div id="howto"></div>
+</details>
+<p class="foot">הלוז מתעדכן לבד. כל שינוי בלוז יופיע ביומן שלכם מעצמו - אין צורך להוסיף שוב.</p>
+</div>
 <script>
 const ICS_BASE = "shaliach2lv-lab.github.io/calendar-shevet-pisga/";
-
 const ICS_FILES = {
-  pisga_he: "unique-pisga.ics",
-  pisga_en: "unique-pisga-en.ics",
-  shchavag_he: "unique-shchavag.ics",
-  shchavag_en: "unique-shchavag-en.ics",
-  tet_he: "unique-tet.ics",
-  tet_en: "unique-tet-en.ics"
+pisga_he: "unique-pisga.ics",
+pisga_en: "unique-pisga-en.ics",
+tet_he: "unique-tet.ics",
+tet_en: "unique-tet-en.ics",
+shchavag_he: "unique-shchavag.ics",
+shchavag_en: "unique-shchavag-en.ics"
 };
+function webcalUrl(k) { return "webcal://" + ICS_BASE + ICS_FILES[k]; }
+function httpsUrl(k) { return "https://" + ICS_BASE + ICS_FILES[k]; }
+function googleUrl(k) { return "https://calendar.google.com/calendar/r" + "?" + "cid" + "=" + encodeURIComponent(webcalUrl(k)); }
 
-function icsWebcalUrl(key) {
-  return "webcal://" + ICS_BASE + ICS_FILES[key];
-}
-function liveGoogleUrl(key) {
-  return "https://calendar.google.com/calendar/r?cid=" + encodeURIComponent(icsWebcalUrl(key));
-}
-function liveAppleUrl(key) {
-  return icsWebcalUrl(key);
-}
-
-const GOOGLE_URLS = {
-pisga_he: liveGoogleUrl("pisga_he"),
-pisga_en: liveGoogleUrl("pisga_en"),
-shchavag_he: liveGoogleUrl("shchavag_he"),
-tet_he: liveGoogleUrl("tet_he"),
-shchavag_en: liveGoogleUrl("shchavag_en"),
-tet_en: liveGoogleUrl("tet_en")
-};
-
-const APPLE_URLS = {
-pisga_he: liveAppleUrl("pisga_he"),
-pisga_en: liveAppleUrl("pisga_en"),
-shchavag_he: liveAppleUrl("shchavag_he"),
-tet_he: liveAppleUrl("tet_he"),
-shchavag_en: liveAppleUrl("shchavag_en"),
-tet_en: liveAppleUrl("tet_en")
-};
-
-function showError(msg) {
-const box = document.getElementById('errorBox');
-box.textContent = msg;
-box.style.background = '#fdecea';
-box.style.color = '#b3261e';
-box.style.border = '1px solid #f5c2c0';
-box.style.display = 'block';
-}
-function showNote(html) {
-const box = document.getElementById('errorBox');
-box.innerHTML = html;
-box.style.background = '#eef6ff';
-box.style.color = '#1a3d6d';
-box.style.border = '1px solid #9cc3f0';
-box.style.display = 'block';
-}
-function hideError() {
-document.getElementById('errorBox').style.display = 'none';
-}
-
-const UA = navigator.userAgent || '';
-const IS_IOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const UA = navigator.userAgent || "";
+const IS_IOS = /iPad|iPhone|iPod/.test(UA) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+const IS_MAC = /Macintosh/.test(UA) && !IS_IOS;
 const IS_ANDROID = /Android/.test(UA);
-const IS_MOBILE = IS_IOS || IS_ANDROID;
+const NATIVE = IS_IOS || IS_MAC;
 
-function addToGoogle(key) {
-hideError();
-if (IS_MOBILE) {
-showNote('<b>שימו לב</b><br>אפליקציית יומן Google לא יודעת להוסיף יומן מקושר. ההוספה נעשית פעם אחת דרך אתר Google, ומיד לאחריה היומן מופיע אוטומטית גם באפליקציה.<br><br>1. בדף שנפתח אשרו את ההוספה.<br>2. אם לא מופיעה בקשת ההוספה - פתחו את תפריט הדפדפן, בחרו "אתר במחשב" (Request desktop site) ורעננו.<br><br>מעדיפים שהיומן ייפתח ישר באפליקציית היומן של המכשיר? השתמשו בכפתור Apple Calendar של אותו הלוז.<br><br><a href="' + GOOGLE_URLS[key] + '" target="_blank" rel="noopener">לחצו כאן אם דף Google לא נפתח</a>');
+const noteBox = document.getElementById("noteBox");
+const errorBox = document.getElementById("errorBox");
+function hideMsgs() { noteBox.classList.remove("show"); errorBox.classList.remove("show"); }
+function showNote(h) { errorBox.classList.remove("show"); noteBox.innerHTML = h; noteBox.classList.add("show"); }
+function openWebcal(k) {
+hideMsgs();
+const a = document.createElement("a");
+a.href = webcalUrl(k); a.style.display = "none";
+document.body.appendChild(a); a.click();
+setTimeout(function() { a.remove(); }, 1500);
+showNote('<b>עוד לחיצה אחת</b><br>נפתחת עכשו אפליקציית היומן של המכשיר. לחצו <b>הרשמה</b> (Subscribe) ואז <b>סיום</b> (Done).<br><br>לא נפתח כלום? <a href="' + googleUrl(k) + '" target="_blank" rel="noopener">לחצו כאן להוספה דרך Google</a>');
 }
-const win = window.open(GOOGLE_URLS[key], '_blank');
-if (!win || win.closed || typeof win.closed === 'undefined') {
-if (!IS_MOBILE) {
-showError('לא הצלחנו לפתוח את יומן Google. ודאו שחוסם החלונות הקופצים כבוי ונסו שוב, או פתחו את הקישור בלחיצה ארוכה.');
+function openGoogle(k) {
+hideMsgs();
+window.open(googleUrl(k), "_blank");
+showNote('<b>עוד לחיצה אחת</b><br>נפתח עכשו Google Calendar. אם מבקשים - התחברו לחשבון, ואז לחצו <b>הוספה</b> (Add).<br><br>תוך כמה דקות הלוז יופיע לבד גם באפליקציית היומן בטלפון.<br><br>לא נפתח כלום? <a href="' + googleUrl(k) + '" target="_blank" rel="noopener">לחצו כאן</a>');
 }
-}
-}
+function smartAdd(k) { if (NATIVE) { openWebcal(k); } else { openGoogle(k); } }
 
-let appleClickTime = 0;
-let appleHandled = false;
+document.querySelectorAll("[data-add]").forEach(function(b) { b.addEventListener("click", function() { smartAdd(b.getAttribute("data-add")); }); });
+document.querySelectorAll("[data-apple]").forEach(function(b) { b.addEventListener("click", function() { openWebcal(b.getAttribute("data-apple")); }); });
+document.querySelectorAll("[data-google]").forEach(function(b) { b.addEventListener("click", function() { openGoogle(b.getAttribute("data-google")); }); });
+document.querySelectorAll("[data-file]").forEach(function(a) { a.setAttribute("href", httpsUrl(a.getAttribute("data-file"))); });
+document.querySelectorAll("[data-toggle]").forEach(function(b) { b.addEventListener("click", function() { document.getElementById("alt-" + b.getAttribute("data-toggle")).classList.toggle("open"); }); });
 
-function addToApple(key) {
-hideError();
-appleHandled = false;
-appleClickTime = Date.now();
-const u = APPLE_URLS[key];
-const a = document.createElement('a');
-a.href = u;
-a.style.display = 'none';
-document.body.appendChild(a);
-a.click();
-setTimeout(function(){ document.body.removeChild(a); }, 50);
-setTimeout(function(){
-if (!appleHandled) {
-showNote('לא הצלחנו לפתוח את אפליקציית היומן של המכשיר.<br><br>אם נפתח לכם יומן Google בדפדפן במקום אפליקציית היומן - הדפדפן מוגדר לפתוח קישורי webcal ביומן Google. ב-Chrome ניתן לשנות זאת בהגדרות: chrome://settings/handlers<br><br>באייפון, באייפד ובמק מומלץ לפתוח את הדף ב-Safari ולנסות שוב.');
-}
-}, 1500);
-}
-
-function markAppleHandled(){
-if (Date.now() - appleClickTime < 4000) {
-appleHandled = true;
-hideError();
-}
-}
-window.addEventListener('blur', markAppleHandled);
-document.addEventListener('visibilitychange', function(){
-if (document.hidden) markAppleHandled();
-});
-
-document.querySelectorAll('[data-google]').forEach(function(btn){
-btn.addEventListener('click', function(){
-addToGoogle(btn.getAttribute('data-google'));
-});
-});
-document.querySelectorAll('[data-apple]').forEach(function(btn){
-btn.addEventListener('click', function(){
-addToApple(btn.getAttribute('data-apple'));
-});
-});
+var dev, how;
+if (IS_IOS) { dev = '<b>זיהינו אייפון / אייפד.</b><br>הכפתור הכוחל יפתח את אפליקציית היומן של המכשיר, ואתם רק מאשרים הרשמה. ללא צורך בחשבון Google.'; how = '<ol><li>נפתחת אפליקציית היומן עם חלונית הרשמה ליומן.</li><li>לוחצים <b>הרשמה</b> ואז <b>סיום</b>.</li><li>זה הכל - כל האירועים מופיעים ביומן ומתעדכנים לבד.</li></ol><p>אם לא נפתח כלום, פתחו את הדף ב-Safari ונסו שוב.</p>'; }
+else if (IS_MAC) { dev = '<b>זיהינו מק (Mac).</b><br>הכפתור הכוחל יפתח את אפליקציית היומן, ואתם רק מאשרים הרשמה.'; how = '<ol><li>נפתחת אפליקציית היומן עם חלונית הרשמה ליומן.</li><li>לוחצים <b>הרשמה</b> ואז <b>סיום</b>.</li><li>זה הכל - כל האירועים מופיעים ביומן ומתעדכנים לבד.</li></ol><p>אם לא נפתח כלום, פתחו את הדף ב-Safari ונסו שוב.</p>'; }
+else if (IS_ANDROID) { dev = '<b>זיהינו מכשיר אנדרואיד.</b><br>הכפתור הכוחל יפתח את Google Calendar, ואתם רק מאשרים הוספה. אחרי זה הלוז מופיע לבד באפליקציית היומן בטלפון.'; how = '<ol><li>נפתח Google Calendar - מתחברים לחשבון אם צריך.</li><li>לוחצים <b>הוספה</b> (Add).</li><li>תוך כמה דקות הלוז מופיע לבד באפליקציית היומן ומתעדכן לבד.</li></ol><p>אפליקציית יומן Google לא יודעת להוסיף יומן חדש בעצמה, ולכן ההוספה נעשית פעם אחת דרך האתר.</p>'; }
+else { dev = '<b>אתם במחשב.</b><br>הכפתור הכוחל יפתח את Google Calendar בכרטיסייה חדשה, ואתם רק מאשרים הוספה. עדיף לפתוח את הדף הזה בטלפון.'; how = '<ol><li>נפתח Google Calendar - מתחברים לחשבון אם צריך.</li><li>לוחצים <b>הוספה</b> (Add).</li><li>תוך כמה דקות הלוז מופיע לבד באפליקציית היומן ומתעדכן לבד.</li></ol><p>אפליקציית יומן Google לא יודעת להוסיף יומן חדש בעצמה, ולכן ההוספה נעשית פעם אחת דרך האתר.</p>'; }
+document.getElementById("deviceBox").innerHTML = dev;
+document.getElementById("howto").innerHTML = how;
 </script>
 </body>
 </html>
