@@ -3,16 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>הוספת לוז שבט פסגה 26-27 ליומן</title>
+<title>לוז שבט פסגה 26-27 | Shevet Pisga Schedule</title>
 <style>
 *{box-sizing:border-box}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center;padding:16px}
 .card{background:#fff;border-radius:18px;padding:26px 20px;max-width:560px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.25);text-align:center}
-h1{font-size:23px;margin:0 0 6px;color:#1e3c72}
-.subtitle{color:#666;font-size:15px;margin:0 0 14px}
-.device{background:#eef4ff;border:1px solid #cfe0ff;color:#1e3c72;border-radius:12px;padding:11px 13px;font-size:14px;line-height:1.6;text-align:right}
+h1{font-size:23px;margin:0 0 2px;color:#1e3c72}
+h2.en-title{font-size:18px;margin:0 0 10px;color:#3b6cb7;direction:ltr;font-weight:700}
+.subtitle{color:#666;font-size:15px;margin:0}
+.subtitle.en{direction:ltr;font-size:14px;color:#888;margin:0 0 14px}
+.device{background:#eef4ff;border:1px solid #cfe0ff;color:#1e3c72;border-radius:12px;padding:12px 13px;font-size:14px;line-height:1.6}
+.he{direction:rtl;text-align:right}
+.en{direction:ltr;text-align:left}
+.device .en{margin-top:8px;padding-top:8px;border-top:1px dashed #b9d2ff;color:#33518c}
 .section{border-top:1px solid #eee;padding-top:16px;margin-top:16px}
-.section-title{font-size:19px;font-weight:700;color:#1e3c72;margin:0 0 4px}
+.section-title{font-size:19px;font-weight:700;color:#1e3c72;margin:0}
+.section-title-en{font-size:15px;font-weight:600;color:#7a8aa0;direction:ltr;margin:0 0 6px}
 .langlbl{font-size:14px;font-weight:700;color:#555;text-align:right;margin:12px 0 6px}
 .btns{display:flex;gap:8px}
 .btn{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;height:56px;border:0;border-radius:12px;padding:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none;line-height:1.25}
@@ -20,23 +26,28 @@ h1{font-size:23px;margin:0 0 6px;color:#1e3c72}
 .btn-a{background:#111;color:#fff}
 .dl{margin-top:10px;font-size:13px;color:#999}
 .dl a{color:#1a73e8;text-decoration:underline}
-.msg{display:none;border-radius:12px;padding:14px;font-size:14px;line-height:1.7;text-align:right;margin-top:16px;background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.msg{display:none;border-radius:12px;padding:14px;font-size:14px;line-height:1.7;margin-top:16px;background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.msg .en{margin-top:8px;padding-top:8px;border-top:1px dashed #e6c86a}
 .msg.show{display:block}
+.foot{margin-top:18px;font-size:12px;color:#aaa;line-height:1.6}
 </style>
 </head>
 <body>
 <div class="card">
 <h1>לוז שבט פסגה 2026-2027</h1>
-<p class="subtitle">בחרו קבוצה, שפה וסוג יומן</p>
-<div class="device" id="dev"></div>
+<h2 class="en-title">Shevet Pisga Schedule 2026-2027</h2>
+<p class="subtitle">בחרו קבוצה, שפה וסוג יומן - וזהו</p>
+<p class="subtitle en">Choose your group, language and calendar type</p>
+<div class="device"><div class="he" id="devHe"></div><div class="en" id="devEn"></div></div>
 <div class="section">
 <div class="section-title">לוז חניכים ג׳-ח׳</div>
-<div class="langlbl">עברית</div>
+<div class="section-title-en">Hanichim Schedule (Grades 3-8)</div>
+<div class="langlbl">עברית / Hebrew</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-pisga.ics">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-pisga.ics">יומן אייפון / Mac</a>
+<a class="btn btn-a" data-a="unique-pisga.ics">יומן אייפון / Apple</a>
 </div>
-<div class="langlbl">English</div>
+<div class="langlbl">English / אנגלית</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-pisga-en.ics">Google Calendar</a>
 <a class="btn btn-a" data-a="unique-pisga-en.ics">Apple / iPhone</a>
@@ -45,12 +56,13 @@ h1{font-size:23px;margin:0 0 6px;color:#1e3c72}
 </div>
 <div class="section">
 <div class="section-title">לוז ט׳</div>
-<div class="langlbl">עברית</div>
+<div class="section-title-en">Tet Schedule (Grade 9)</div>
+<div class="langlbl">עברית / Hebrew</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-tet.ics">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-tet.ics">יומן אייפון / Mac</a>
+<a class="btn btn-a" data-a="unique-tet.ics">יומן אייפון / Apple</a>
 </div>
-<div class="langlbl">English</div>
+<div class="langlbl">English / אנגלית</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-tet-en.ics">Google Calendar</a>
 <a class="btn btn-a" data-a="unique-tet-en.ics">Apple / iPhone</a>
@@ -59,19 +71,21 @@ h1{font-size:23px;margin:0 0 6px;color:#1e3c72}
 </div>
 <div class="section">
 <div class="section-title">לוז שכב״ג</div>
-<div class="langlbl">עברית</div>
+<div class="section-title-en">Shachbag Schedule</div>
+<div class="langlbl">עברית / Hebrew</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-shchavag.ics">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-shchavag.ics">יומן אייפון / Mac</a>
+<a class="btn btn-a" data-a="unique-shchavag.ics">יומן אייפון / Apple</a>
 </div>
-<div class="langlbl">English</div>
+<div class="langlbl">English / אנגלית</div>
 <div class="btns">
 <a class="btn btn-g" data-g="unique-shchavag-en.ics">Google Calendar</a>
 <a class="btn btn-a" data-a="unique-shchavag-en.ics">Apple / iPhone</a>
 </div>
 <div class="dl"><a data-f="unique-shchavag.ics">הורדת קובץ עברית</a> | <a data-f="unique-shchavag-en.ics">Download English file</a></div>
 </div>
-<div class="msg" id="note"></div>
+<div class="msg" id="note"><div class="he" id="noteHe"></div><div class="en" id="noteEn"></div></div>
+<div class="foot">היומן מתעדכן אוטומטית - אין צורך להוסיף שוב<br>The calendar updates automatically - no need to add it again</div>
 </div>
 <script>
 (function(){
@@ -81,21 +95,24 @@ var ua=navigator.userAgent||'';
 var isIOS=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
 var isMac=/Macintosh/.test(ua);
 var isAnd=/Android/.test(ua);
-var t;
-if(isIOS){t='זיהינו אייפון/אייפד. אם היומן שלכם הוא Google Calendar - לחצו על הכפתור הכחול. אם אתם משתמשים ביומן של אפל - לחצו על הכפתור השחור.';}
-else if(isAnd){t='זיהינו אנדרואיד. לחצו על הכפתור הכחול (Google Calendar).';}
-else if(isMac){t='זיהינו מק. הכפתור הכחול מוסיף ל-Google Calendar, השחור ליומן של אפל.';}
-else{t='הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל.';}
-document.getElementById('dev').textContent=t;
-var note=document.getElementById('note');
-function show(m){note.textContent=m;note.className='msg show';}
-var GN='נפתח Google Calendar - אשרו הוספה / Add. אם אתם בטלפון ולא נפתח כלום, פתחו את הקישור בדפדפן והתחברו לחשבון הגוגל שלכם. מספיק לעשות זאת פעם אחת - הלוז יופיע אוטומטית גם באפליקציה בטלפון ויתעדכן לבד.';
-var AN='אשרו הרשמה / Subscribe ואז אישור - הלוז ייכנס ליומן ויתעדכן אוטומטית.';
+var h,e;
+if(isIOS){h='זיהינו אייפון/אייפד. אם היומן שלכם הוא Google Calendar - לחצו על הכפתור הכחול. אם אתם משתמשים ביומן של אפל - לחצו על הכפתור השחור.';e='We detected an iPhone/iPad. If you use Google Calendar, tap the blue button. If you use the Apple Calendar app, tap the black button.';}
+else if(isAnd){h='זיהינו אנדרואיד. לחצו על הכפתור הכחול (Google Calendar).';e='We detected an Android device. Tap the blue Google Calendar button.';}
+else if(isMac){h='זיהינו מק. הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל.';e='We detected a Mac. The blue button adds to Google Calendar, the black one to Apple Calendar.';}
+else{h='הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל.';e='The blue button adds to Google Calendar, the black button adds to Apple Calendar.';}
+document.getElementById('devHe').textContent=h;
+document.getElementById('devEn').textContent=e;
+var note=document.getElementById('note'),nh=document.getElementById('noteHe'),ne=document.getElementById('noteEn');
+function show(a,b){nh.textContent=a;ne.textContent=b;note.className='msg show';}
+var GH='נפתח Google Calendar - אשרו הוספה / Add. אם אתם בטלפון ולא נפתח כלום, פתחו את הקישור בדפדפן והתחברו לחשבון הגוגל שלכם. מספיק לעשות זאת פעם אחת - הלוז יופיע אוטומטית גם באפליקציה בטלפון ויתעדכן לבד.';
+var GE='Google Calendar will open - confirm Add. If nothing opens on your phone, open the link in a browser and sign in to your Google account. You only need to do this once - the schedule will then show up in the phone app too and stay up to date.';
+var AH='אשרו הרשמה / Subscribe ואז אישור - הלוז ייכנס ליומן ויתעדכן אוטומטית.';
+var AE='Tap Subscribe and then OK - the schedule will be added to your calendar and update automatically.';
 var i,a,f,el;
 el=document.querySelectorAll('a[data-g]');
-for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-g');a.href='https://calendar.google.com/calendar/r?cid='+encodeURIComponent(WEB+f);a.target='_blank';a.rel='noopener';a.addEventListener('click',function(){show(GN);});}
+for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-g');a.href='https://calendar.google.com/calendar/r?cid='+encodeURIComponent(WEB+f);a.target='_blank';a.rel='noopener';a.addEventListener('click',function(){show(GH,GE);});}
 el=document.querySelectorAll('a[data-a]');
-for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-a');a.href=WEB+f;a.addEventListener('click',function(){show(AN);});}
+for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-a');a.href=WEB+f;a.addEventListener('click',function(){show(AH,AE);});}
 el=document.querySelectorAll('a[data-f]');
 for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-f');a.href=BASE+f;}
 })();
