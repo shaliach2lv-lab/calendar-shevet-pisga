@@ -1,0 +1,4588 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-05T04:43:40Z",
+  "generator": "migration-from-ics-v1",
+  "timezone": "America/Los_Angeles",
+  "legacyDtstamp": "20260831T000000Z",
+  "uidDomain": "shaliach2lv-lab.github.io",
+  "lineEnding": "CRLF",
+  "schedules": [
+    {
+      "key": "pisga",
+      "name": {
+        "he": "לוז חניכים ג׳-ח׳",
+        "en": "Hanichim Schedule (Grades 3-8)"
+      },
+      "color": "#2563eb",
+      "feeds": {
+        "he": {
+          "file": "unique-pisga.ics",
+          "prodid": "-//Shevet Pisga//Unique Pisga Events//HE"
+        },
+        "en": {
+          "file": "unique-pisga-en.ics",
+          "prodid": "-//Shevet Pisga//Unique Pisga Events EN//EN"
+        }
+      }
+    },
+    {
+      "key": "tet",
+      "name": {
+        "he": "לוז ט׳",
+        "en": "Tet Schedule"
+      },
+      "color": "#059669",
+      "feeds": {
+        "he": {
+          "file": "unique-tet.ics",
+          "prodid": "-//Shevet Pisga//Unique Tet Events//HE"
+        },
+        "en": {
+          "file": "unique-tet-en.ics",
+          "prodid": "-//Shevet Pisga//Unique Tet Events EN//EN"
+        }
+      }
+    },
+    {
+      "key": "shchavag",
+      "name": {
+        "he": "לוז שכב״ג",
+        "en": "Shachbag Schedule"
+      },
+      "color": "#d97706",
+      "feeds": {
+        "he": {
+          "file": "unique-shchavag.ics",
+          "prodid": "-//Shevet Pisga//Unique Shchavag Events//HE"
+        },
+        "en": {
+          "file": "unique-shchavag-en.ics",
+          "prodid": "-//Shevet Pisga//Unique Shchavag Events EN//EN"
+        }
+      }
+    }
+  ],
+  "events": [
+    {
+      "id": "evt_0001",
+      "title": {
+        "he": "הכשרת צוות מוביל",
+        "en": "Tzevet Movil Training"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-09-09T17:00:00",
+      "end": "2026-09-09T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-001@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0002",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-09-16",
+      "end": "2026-09-17",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-002@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0003",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-09-23T17:00:00",
+      "end": "2026-09-23T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-003@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0004",
+      "title": {
+        "he": "אירוע פתיחת שנה",
+        "en": "Opening of the Year Event"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-09-27T13:00:00",
+      "end": "2026-09-27T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-004@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0005",
+      "title": {
+        "he": "הפנינג פתיחת שנה",
+        "en": "Opening of the Year Event"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-09-27T14:00:00",
+      "end": "2026-09-27T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-001@shaliach2lv-lab.github.io",
+        "tet": "tet-001@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0006",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-09-30T17:00:00",
+      "end": "2026-09-30T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-006@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0007",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-04T13:00:00",
+      "end": "2026-10-04T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-007@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0008",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-04T14:00:00",
+      "end": "2026-10-04T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-003@shaliach2lv-lab.github.io",
+        "tet": "tet-004@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0009",
+      "title": {
+        "he": "ערב הגשמה",
+        "en": "Hagshama Evening"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-10-05",
+      "end": "2026-10-06",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-008@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0010",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-07T17:00:00",
+      "end": "2026-10-07T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-009@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0011",
+      "title": {
+        "he": "פעולת 7 באוקטובר",
+        "en": "October 7th peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-11T14:00:00",
+      "end": "2026-10-11T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-004@shaliach2lv-lab.github.io",
+        "tet": "tet-005@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-010@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2026-10-11T13:00:00",
+          "end": "2026-10-11T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0012",
+      "title": {
+        "he": "אסיפת הורי ט׳",
+        "en": "Tet Parents' meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-10-12",
+      "end": "2026-10-13",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-003@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0013",
+      "title": {
+        "he": "אסיפת הורים שבטית",
+        "en": "Shevet Parents' meeting - mandatory"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-10-12",
+      "end": "2026-10-13",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-002@shaliach2lv-lab.github.io",
+        "tet": "tet-002@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-005@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "title": {
+            "he": "אסיפת הורים שבטית - חובת הגעה!",
+            "en": "Mandatory Shevet Parents' meeting"
+          }
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0014",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-14T17:00:00",
+      "end": "2026-10-14T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-011@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0015",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-10-18",
+      "end": "2026-10-19",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-005@shaliach2lv-lab.github.io",
+        "tet": "tet-006@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-012@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0016",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-21T17:00:00",
+      "end": "2026-10-21T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-013@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0017",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-25T13:00:00",
+      "end": "2026-10-25T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-014@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0018",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-25T14:00:00",
+      "end": "2026-10-25T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-006@shaliach2lv-lab.github.io",
+        "tet": "tet-007@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0019",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-10-28T17:00:00",
+      "end": "2026-10-28T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-015@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0020",
+      "title": {
+        "he": "טיול ענבות",
+        "en": "Anivot Hike"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-01T14:00:00",
+      "end": "2026-11-01T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-007@shaliach2lv-lab.github.io",
+        "tet": "tet-008@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-016@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2026-11-01T13:00:00",
+          "end": "2026-11-01T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0021",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-04T17:00:00",
+      "end": "2026-11-04T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-017@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0022",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-08T13:00:00",
+      "end": "2026-11-08T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-018@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0023",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-08T14:00:00",
+      "end": "2026-11-08T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-008@shaliach2lv-lab.github.io",
+        "tet": "tet-009@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0024",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-11T17:00:00",
+      "end": "2026-11-11T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-019@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0025",
+      "title": {
+        "he": "מחנה חורף",
+        "en": "Machane Choref"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-11-13",
+      "end": "2026-11-16",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-009@shaliach2lv-lab.github.io",
+        "tet": "tet-010@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-020@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0026",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-18T17:00:00",
+      "end": "2026-11-18T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-021@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0027",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-22T13:00:00",
+      "end": "2026-11-22T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-022@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0028",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-22T14:00:00",
+      "end": "2026-11-22T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-010@shaliach2lv-lab.github.io",
+        "tet": "tet-011@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0029",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-25T17:00:00",
+      "end": "2026-11-25T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-023@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0030",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-29T13:00:00",
+      "end": "2026-11-29T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-024@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0031",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-11-29T14:00:00",
+      "end": "2026-11-29T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-011@shaliach2lv-lab.github.io",
+        "tet": "tet-012@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0032",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-02T17:00:00",
+      "end": "2026-12-02T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-025@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0033",
+      "title": {
+        "he": "טיול חנוכה בלילה",
+        "en": "Hannukah Light night hike"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-06T14:00:00",
+      "end": "2026-12-06T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-012@shaliach2lv-lab.github.io",
+        "tet": "tet-013@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-026@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2026-12-06T13:00:00",
+          "end": "2026-12-06T16:30:00",
+          "title": {
+            "en": "Hannukah night hike"
+          }
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0034",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-09T17:00:00",
+      "end": "2026-12-09T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-027@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0035",
+      "title": {
+        "he": "סמינר ט׳",
+        "en": "Seminar Tet"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-11",
+      "end": "2026-12-13",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-014@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0036",
+      "title": {
+        "he": "אירוע גיוס כספים",
+        "en": "Fundraiser"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-12",
+      "end": "2026-12-13",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-014@shaliach2lv-lab.github.io",
+        "tet": "tet-016@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-029@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0037",
+      "title": {
+        "he": "פעולת יום ישראל",
+        "en": "Israel Day peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-13T14:00:00",
+      "end": "2026-12-13T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-013@shaliach2lv-lab.github.io",
+        "tet": "tet-015@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-028@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2026-12-13T13:00:00",
+          "end": "2026-12-13T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0038",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-16",
+      "end": "2026-12-17",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-030@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0039",
+      "title": {
+        "he": "סמינר שכב״ג",
+        "en": "Shachbag seminar"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-19",
+      "end": "2026-12-20",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-031@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0040",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-20T13:00:00",
+      "end": "2026-12-20T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-032@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0041",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-20T14:00:00",
+      "end": "2026-12-20T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-015@shaliach2lv-lab.github.io",
+        "tet": "tet-017@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0042",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-23",
+      "end": "2026-12-24",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-033@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0043",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-27",
+      "end": "2026-12-28",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-016@shaliach2lv-lab.github.io",
+        "tet": "tet-018@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-034@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0044",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2026-12-30",
+      "end": "2026-12-31",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-035@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0045",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-01-03",
+      "end": "2027-01-04",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-017@shaliach2lv-lab.github.io",
+        "tet": "tet-019@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-036@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0046",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-06T17:00:00",
+      "end": "2027-01-06T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-037@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0047",
+      "title": {
+        "he": "מסיבת נעורים",
+        "en": "Neurim Party"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-01-09",
+      "end": "2027-01-10",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-018@shaliach2lv-lab.github.io",
+        "tet": "tet-020@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-038@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0048",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-10T13:00:00",
+      "end": "2027-01-10T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-039@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0049",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-10T14:00:00",
+      "end": "2027-01-10T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-019@shaliach2lv-lab.github.io",
+        "tet": "tet-021@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0050",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-13T17:00:00",
+      "end": "2027-01-13T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-040@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0051",
+      "title": {
+        "he": "מחנה ט׳",
+        "en": "Machane Tet"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-01-14",
+      "end": "2027-01-18",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-022@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0052",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-01-17",
+      "end": "2027-01-18",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-020@shaliach2lv-lab.github.io",
+        "tet": "tet-023@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-041@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0053",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-20T17:00:00",
+      "end": "2027-01-20T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-042@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0054",
+      "title": {
+        "he": "פיקניק ט\"ו בשבט",
+        "en": "Tu BiShvat Picnic"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-24T14:00:00",
+      "end": "2027-01-24T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-021@shaliach2lv-lab.github.io",
+        "tet": "tet-024@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-043@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-01-24T13:00:00",
+          "end": "2027-01-24T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0055",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-27T17:00:00",
+      "end": "2027-01-27T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-044@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0056",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-31T13:00:00",
+      "end": "2027-01-31T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-045@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0057",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-01-31T14:00:00",
+      "end": "2027-01-31T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-022@shaliach2lv-lab.github.io",
+        "tet": "tet-025@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0058",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-03T17:00:00",
+      "end": "2027-02-03T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-046@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0059",
+      "title": {
+        "he": "פעולה בנושא יום המשפחה",
+        "en": "Family day peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-07T13:00:00",
+      "end": "2027-02-07T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-047@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0060",
+      "title": {
+        "he": "פעולת יום המשפחה",
+        "en": "Family day peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-07T14:00:00",
+      "end": "2027-02-07T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-023@shaliach2lv-lab.github.io",
+        "tet": "tet-026@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0061",
+      "title": {
+        "he": "ישיבת שכב״ג (יום שלישי)",
+        "en": "Shachbag meeting (Tuesday)"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-09T17:00:00",
+      "end": "2027-02-09T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-048@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0062",
+      "title": {
+        "he": "מחנה שכב״ג",
+        "en": "Machane Shachbag"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-02-11",
+      "end": "2027-02-16",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-049@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0063",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-02-14",
+      "end": "2027-02-15",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-024@shaliach2lv-lab.github.io",
+        "tet": "tet-027@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-050@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0064",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-02-17",
+      "end": "2027-02-18",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-051@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0065",
+      "title": {
+        "he": "פעולת יום ספורט",
+        "en": "Yom Sport Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-21T13:00:00",
+      "end": "2027-02-21T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-052@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0066",
+      "title": {
+        "he": "יום ספורט שבטי",
+        "en": "Yom Sport Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-21T14:00:00",
+      "end": "2027-02-21T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-025@shaliach2lv-lab.github.io",
+        "tet": "tet-028@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0067",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-24T17:00:00",
+      "end": "2027-02-24T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-053@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0068",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-28T13:00:00",
+      "end": "2027-02-28T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-054@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0069",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-02-28T14:00:00",
+      "end": "2027-02-28T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-026@shaliach2lv-lab.github.io",
+        "tet": "tet-029@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0070",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-03T17:00:00",
+      "end": "2027-03-03T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-055@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0071",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-07T13:00:00",
+      "end": "2027-03-07T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-056@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0072",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-07T14:00:00",
+      "end": "2027-03-07T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-027@shaliach2lv-lab.github.io",
+        "tet": "tet-030@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0073",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-10T17:00:00",
+      "end": "2027-03-10T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-057@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0074",
+      "title": {
+        "he": "סמינר ט׳",
+        "en": "Seminar Tet"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-03-13",
+      "end": "2027-03-14",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-031@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0075",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-03-14",
+      "end": "2027-03-15",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-028@shaliach2lv-lab.github.io",
+        "tet": "tet-032@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-058@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "tet": {
+          "title": {
+            "en": "No peula"
+          }
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0076",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-03-17",
+      "end": "2027-03-18",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-059@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0077",
+      "title": {
+        "he": "עדלאידע (IAC)",
+        "en": "Adloyada (IAC)"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-21T14:00:00",
+      "end": "2027-03-21T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-029@shaliach2lv-lab.github.io",
+        "tet": "tet-033@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-060@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-03-21T13:00:00",
+          "end": "2027-03-21T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0078",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-24T17:00:00",
+      "end": "2027-03-24T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-061@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0079",
+      "title": {
+        "he": "פורימון",
+        "en": "Purimon"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-03-26",
+      "end": "2027-03-27",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-030@shaliach2lv-lab.github.io",
+        "tet": "tet-034@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-062@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0080",
+      "title": {
+        "he": "פעולת צופיות",
+        "en": "Zofiut Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-28T14:00:00",
+      "end": "2027-03-28T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-031@shaliach2lv-lab.github.io",
+        "tet": "tet-035@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-063@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "tet": {
+          "title": {
+            "en": "Zofiut peula"
+          }
+        },
+        "shchavag": {
+          "start": "2027-03-28T13:00:00",
+          "end": "2027-03-28T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0081",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-03-31T17:00:00",
+      "end": "2027-03-31T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-064@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0082",
+      "title": {
+        "he": "יום צופה",
+        "en": "Yom Tzofe"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-04T14:00:00",
+      "end": "2027-04-04T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-032@shaliach2lv-lab.github.io",
+        "tet": "tet-036@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-065@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-04-04T13:00:00",
+          "end": "2027-04-04T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0083",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-07T17:00:00",
+      "end": "2027-04-07T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-066@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0084",
+      "title": {
+        "he": "קמפינג שכב״ג?",
+        "en": "Shachbag camping?"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-04-09",
+      "end": "2027-04-11",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-067@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0085",
+      "title": {
+        "he": "פעולה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-11T13:00:00",
+      "end": "2027-04-11T16:30:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-068@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0086",
+      "title": {
+        "he": "פעולה רגילה",
+        "en": "Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-11T14:00:00",
+      "end": "2027-04-11T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-033@shaliach2lv-lab.github.io",
+        "tet": "tet-037@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0087",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-14T17:00:00",
+      "end": "2027-04-14T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-069@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0088",
+      "title": {
+        "he": "פעולת יום המעשים הטובים",
+        "en": "Good deeds day peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-18T14:00:00",
+      "end": "2027-04-18T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-034@shaliach2lv-lab.github.io",
+        "tet": "tet-038@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-070@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-04-18T13:00:00",
+          "end": "2027-04-18T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0089",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-04-21",
+      "end": "2027-04-22",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-071@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0090",
+      "title": {
+        "he": "אין פעולה",
+        "en": "No Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-04-25",
+      "end": "2027-04-26",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-035@shaliach2lv-lab.github.io",
+        "tet": "tet-039@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-072@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0091",
+      "title": {
+        "he": "טיול אתגר לט׳",
+        "en": "Tet Challenge hike"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-04-25T14:00:00",
+      "end": "2027-04-25T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-040@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0092",
+      "title": {
+        "he": "אין ישיבת שכב״ג",
+        "en": "No Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-04-28",
+      "end": "2027-04-29",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-073@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0093",
+      "title": {
+        "he": "יום אגם לשכב״ג",
+        "en": "Shachbag Lake Day"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-05-01",
+      "end": "2027-05-02",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-074@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0094",
+      "title": {
+        "he": "פעולת יום השואה",
+        "en": "Yom HaShoa Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-02T14:00:00",
+      "end": "2027-05-02T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-036@shaliach2lv-lab.github.io",
+        "tet": "tet-041@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-075@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-05-02T13:00:00",
+          "end": "2027-05-02T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0095",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-05T17:00:00",
+      "end": "2027-05-05T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-076@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0096",
+      "title": {
+        "he": "טקס יום הזיכרון",
+        "en": "Yom Hazikaron Ceremony"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-09T14:00:00",
+      "end": "2027-05-09T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-037@shaliach2lv-lab.github.io",
+        "tet": "tet-042@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-077@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-05-09T13:00:00",
+          "end": "2027-05-09T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0097",
+      "title": {
+        "he": "צופרום",
+        "en": "Tzofprom"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-12T17:00:00",
+      "end": "2027-05-12T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-078@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0098",
+      "title": {
+        "he": "יום העצמאות (IAC)",
+        "en": "Yom Haatzmaut (IAC)"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-16T14:00:00",
+      "end": "2027-05-16T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-038@shaliach2lv-lab.github.io",
+        "tet": "tet-043@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-079@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-05-16T13:00:00",
+          "end": "2027-05-16T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0099",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-19T17:00:00",
+      "end": "2027-05-19T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-080@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0100",
+      "title": {
+        "he": "פעולה אחרונה",
+        "en": "Last Peula"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-23T14:00:00",
+      "end": "2027-05-23T16:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-039@shaliach2lv-lab.github.io",
+        "tet": "tet-044@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-081@shaliach2lv-lab.github.io"
+      },
+      "overrides": {
+        "shchavag": {
+          "start": "2027-05-23T13:00:00",
+          "end": "2027-05-23T16:30:00"
+        }
+      },
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0101",
+      "title": {
+        "he": "ישיבת שכב״ג",
+        "en": "Shachbag meeting"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2027-05-26T17:00:00",
+      "end": "2027-05-26T19:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-082@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0102",
+      "title": {
+        "he": "מחנה קיץ",
+        "en": "Machane Kaitz"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-05-28",
+      "end": "2027-06-01",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-040@shaliach2lv-lab.github.io",
+        "tet": "tet-045@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-083@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0103",
+      "title": {
+        "he": "אירוע סיום שנה",
+        "en": "End of the year ceremony"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-06-02",
+      "end": "2027-06-03",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "shchavag": "shchavag-084@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0104",
+      "title": {
+        "he": "טקס סוף שנה",
+        "en": "End of the year ceremony"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-06-02",
+      "end": "2027-06-03",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": true,
+          "en": true
+        },
+        "tet": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-041@shaliach2lv-lab.github.io",
+        "tet": "tet-046@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0105",
+      "title": {
+        "he": "שיבוצים",
+        "en": "Shibutzim"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-06-03",
+      "end": "2027-06-04",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "tet": {
+          "he": true,
+          "en": true
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "tet": "tet-047@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-085@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 0,
+      "createdAt": "2026-09-05T04:43:40Z",
+      "updatedAt": "2026-09-05T04:43:40Z",
+      "updatedBy": "migration"
+    }
+  ]
+}
