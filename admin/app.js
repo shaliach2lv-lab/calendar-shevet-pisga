@@ -56,6 +56,57 @@
   var LS_DRAFT = 'pisga.admin.draft.v1';
   var LS_PREFS = 'pisga.admin.prefs.v1';
 
+  /* ------------------------------------------------- publishing guardrails */
+  /* Live publishing is deliberately narrow. One repository, one branch, six
+     file names. Anything outside this list is refused locally, before a
+     request is ever made, so neither a bug nor a bad paste can touch another
+     file in the repo. */
+
+  var PUBLISH_REPO = 'shaliach2lv-lab/calendar-shevet-pisga';
+  var PUBLISH_BRANCH = 'main';
+  var PUBLISH_ALLOW = [
+    'unique-pisga.ics', 'unique-pisga-en.ics',
+    'unique-tet.ics', 'unique-tet-en.ics',
+    'unique-shchavag.ics', 'unique-shchavag-en.ics'
+  ];
+  function allowedFile(name) { return PUBLISH_ALLOW.indexOf(String(name)) >= 0; }
+
+  /* --------------------------------------------------- credential hygiene */
+  /* The GitHub token lives in exactly one place: S.token, in memory, for the
+     life of this tab. It is never written to localStorage or sessionStorage,
+     never placed in a URL, never saved into events.json, never committed and
+     never printed. scrub() is the last line of defence: anything that comes
+     back from the API and is shown to the operator goes through it first. */
+
+  function scrub(s) {
+    return String(s == null ? '' : s)
+      .replace(/gh[pousr]_[A-Za-z0-9]{6,}/g, '[redacted]')
+      .replace(/github_pat_[A-Za-z0-9_]{6,}/g, '[redacted]');
+  }
+
+  /* Older tools left credential-looking entries in this browser's storage.
+     We only ever look at the key NAMES so the value is never read, never
+     shown and never reusable by this app, and we offer to forget them. */
+  var CRED_KEY_HINT = /(tok|pat|secret|passwd|password|auth|cred)/i;
+  function foreignCredKeys() {
+    var out = [];
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var k = localStorage.key(i);
+        if (k && k.indexOf('pisga.admin.') !== 0 && CRED_KEY_HINT.test(k)) { out.push(k); }
+      }
+      for (var j = 0; j < sessionStorage.length; j++) {
+        var sk = sessionStorage.key(j);
+        if (sk && CRED_KEY_HINT.test(sk)) { out.push(sk); }
+      }
+    } catch (e) { /* storage unavailable - nothing to report */ }
+    return out;
+  }
+  function forgetCredKey(k) {
+    try { localStorage.removeItem(k); } catch (e) {}
+    try { sessionStorage.removeItem(k); } catch (e) {}
+  }
+
   var DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   var DOWL = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MON = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -139,7 +190,8 @@
     gen: null,
     live: null,
     token: '',
-    publishEnabled: false
+    publishEnabled: false,
+    tokenKind: ''
   };
 
   /* --------------------------------------------------------- undo history */
@@ -968,6 +1020,7 @@
 
   function renderAll() {
     computeSolo();
+    renderPubState();
     renderSidebar();
     renderMini();
     renderToolbar();
@@ -1902,17 +1955,23 @@
     clear(host);
 
     var n = dirtyCount();
-    var top = el('div', 'card');
+    var banner = el('div', '');
+  banner.innerHTML = pubbarHtml();
+  host.appendChild(banner);
+
+  var top = el('div', 'card');
     top.innerHTML =
       '<div class="card-h"><span class="card-t">' +
       (n ? n + (n === 1 ? ' event has' : ' events have') + ' unpublished changes' : 'Everything is published') +
       '</span></div>' +
       '<div class="kv"><span>Master events</span><b>' + (S.db.events || []).length + '</b></div>' +
       '<div class="kv"><span>Feed files</span><b>6</b></div>' +
-      '<div class="kv"><span>Live publishing</span><b>' + (S.publishEnabled ? 'enabled' : 'off') + '</b></div>' +
+      '<div class="kv"><span>Live publishing</span><b>' +
+        (S.publishEnabled ? 'ON - a confirmed publish reaches subscribers' : 'OFF - preview only') + '</b></div>' +
       '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
       '<button class="btn btn-primary btn-sm" id="btnGen">Generate &amp; compare</button>' +
       '<button class="btn btn-outline btn-sm" id="btnDl">Download all six</button>' +
+        '<button class="btn btn-danger btn-sm" id="btnReviewSync">Review and publish&hellip;</button>' +
       '</div>';
     host.appendChild(top);
 
@@ -1923,6 +1982,7 @@
 
     on($('#btnGen'), 'click', function () { runCompare(); });
     on($('#btnDl'), 'click', function () { downloadAll(); });
+    on($('#btnReviewSync'), 'click', function () { reviewAndPublish(); });
 
     var note = el('div', 'card');
     note.style.marginTop = '14px';
@@ -1990,9 +2050,12 @@
       on(b, 'click', function () { showDiff(b.getAttribute('data-diff')); });
     });
 
-    var foot = el('div', anyChange ? 'warn' : 'ok');
+    var foot = el('div', 'note ' + (anyChange ? 'warn' : 'ok'));
+    foot.style.marginTop = '10px';
     foot.textContent = anyChange
-      ? 'These files are ready. Publishing is off, so nothing has been written to the live feeds.'
+      ? ('These files are ready. ' + (S.publishEnabled
+        ? 'Live publishing is ON - use Review and publish for the confirmation screen.'
+        : 'Preview mode, so nothing has been written to the live feeds.'))
       : 'No event in any of the six feeds differs from what subscribers already have. Only the refresh headers are new.';
     res.appendChild(foot);
   }
@@ -2052,42 +2115,231 @@
 
   /* ------------------------------------------------------------- settings */
 
+  /* ------------------------------------------------------ publish state ui */
+  /* The current mode is impossible to miss: a pill in the top bar, a banner
+     on the sync and settings screens, a red hairline under the top bar and a
+     marker in the tab title. */
+
+  var PUB_CSS =
+    '#pubState{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 11px;border-radius:99px;' +
+    'font-size:11.5px;font-weight:700;letter-spacing:.03em;white-space:nowrap;border:1px solid var(--line-strong);' +
+    'background:var(--surface-3);color:var(--ink-2)}' +
+    '#pubState.live{background:var(--danger-soft);border-color:#f97066;color:var(--danger)}' +
+    '#pubState .short{display:none}' +
+    '@media (max-width:1240px){#pubState .long{display:none}#pubState .short{display:inline}}' +
+    'body.live-pub .topbar{box-shadow:inset 0 3px 0 0 var(--danger)}' +
+    '.pubbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 13px;margin-bottom:14px;' +
+    'border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface-3);' +
+    'font-size:13.5px;font-weight:650}' +
+    '.pubbar.live{background:var(--danger-soft);border-color:#f97066;color:var(--danger)}' +
+    '.pubbar .why{font-weight:450;font-size:12.5px;color:var(--ink-2)}' +
+    '.pubbar.live .why{color:var(--danger)}';
+
+  function installPubState() {
+    if (!document.getElementById('pubStateCss')) {
+      var st = el('style');
+      st.id = 'pubStateCss';
+      st.textContent = PUB_CSS;
+      document.head.appendChild(st);
+    }
+    var host = $('.topbar-right');
+    if (host && !$('#pubState')) {
+      var b = el('button', '');
+      b.id = 'pubState';
+      b.type = 'button';
+      b.title = 'Publishing state - click to open Settings';
+      on(b, 'click', function () { gotoScreen('settings'); renderAll(); });
+      host.insertBefore(b, host.firstChild);
+    }
+    renderPubState();
+  }
+
+  function renderPubState() {
+    var live = !!S.publishEnabled;
+    document.body.classList.toggle('live-pub', live);
+    document.title = (live ? '🟢 LIVE - ' : '⚪ Preview - ') + 'Calendar Admin · Shevet Pisga';
+    var b = $('#pubState');
+    if (!b) { return; }
+    b.className = live ? 'live' : '';
+    b.innerHTML = (live ? '🟢' : '⚪') +
+      '<span class="long">' + (live ? 'LIVE PUBLISHING ON' : 'PREVIEW MODE - NOTHING WILL BE PUBLISHED') + '</span>' +
+      '<span class="short">' + (live ? 'LIVE' : 'PREVIEW') + '</span>';
+  }
+
+  function pubbarHtml() {
+    var live = !!S.publishEnabled;
+    return '<div class="pubbar' + (live ? ' live' : '') + '">' +
+      '<span>' + (live ? '🟢 LIVE PUBLISHING ON' : '⚪ PREVIEW MODE - NOTHING WILL BE PUBLISHED') + '</span>' +
+      '<span class="why">' + (live
+        ? 'A confirmed publish overwrites the six live feeds that subscribers read.'
+        : 'Generate, diff and download freely. The six live .ics files are untouched.') +
+      '</span></div>';
+  }
+
+  /* --------------------------------------------------------------- settings */
+
   function renderSettings() {
     var host = $('#settingsPanel');
     if (!host) { return; }
     clear(host);
 
+    var live = !!S.publishEnabled;
+
+    /* ---- the switch --------------------------------------------------- */
+    var c0 = el('div', 'card');
+    c0.style.borderColor = live ? '#f97066' : 'var(--line-strong)';
+    c0.innerHTML =
+      '<div class="card-h"><span class="card-t" style="letter-spacing:.06em">LIVE PUBLISHING</span>' +
+      (live ? '<span class="pill pill-danger">ON</span>' : '<span class="pill pill-mute">OFF</span>') + '</div>' +
+      '<div class="seg" id="pubSeg" style="max-width:220px;margin:2px 0 12px">' +
+      '<button data-pubmode="off"' + (live ? '' : ' class="on"') + '>OFF</button>' +
+      '<button data-pubmode="on"' + (live ? ' class="on"' : '') + '>ON</button>' +
+      '</div>' +
+      (live
+        ? '<p class="note warn"><b>Changes you publish will reach real subscribers.</b> A confirmed publish ' +
+          'overwrites the six live .ics files on ' + esc(PUBLISH_BRANCH) + '. Filenames and subscription URLs never ' +
+          'change and every UID is preserved, so entries update in place instead of duplicating.</p>'
+        : '<p class="note">Preview mode is the default. Edit, generate the six feeds and read every diff as much ' +
+          'as you like - nothing is written to the live .ics files while this is off.</p>') +
+      '<div class="kv" style="margin-top:12px"><span>Repository it may write to</span><b class="mono">' +
+      esc(PUBLISH_REPO) + '</b></div>' +
+      '<div class="kv"><span>Branch</span><b class="mono">' + esc(PUBLISH_BRANCH) + '</b></div>' +
+      '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files, nothing else</b></div>' +
+      '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
+      '<button class="btn ' + (live ? 'btn-danger' : 'btn-outline') + ' btn-sm" id="btnReview">' +
+      (live ? 'Review and publish&hellip;' : 'Review changes (preview)') + '</button>' +
+      '</div>';
+    host.appendChild(c0);
+
+    $$('[data-pubmode]', c0).forEach(function (b) {
+      on(b, 'click', function () {
+        var want = b.getAttribute('data-pubmode') === 'on';
+        if (want === live) { return; }
+        if (!want) {
+          S.publishEnabled = false;
+          renderAll();
+          toast('⚪ Preview mode - nothing will be published', 'ok');
+          return;
+        }
+        confirmDialog(
+          'Turn LIVE PUBLISHING on?',
+          'From then on a confirmed publish affects real subscribers',
+          '<p class="note warn"><b>While this is on, publishing overwrites the six live .ics files.</b> ' +
+          'Everyone subscribed to the three schedules in Google, Apple or Outlook picks the change up on their ' +
+          'next refresh, usually between an hour and a day later.</p>' +
+          '<p class="note" style="margin-top:9px">Turning this on publishes nothing by itself. You will still get ' +
+          'a confirmation screen with the exact per-feed counts before a single byte is written.</p>' +
+          '<div class="kv" style="margin-top:11px"><span>Repository</span><b class="mono">' + esc(PUBLISH_REPO) + '</b></div>' +
+          '<div class="kv"><span>Branch</span><b class="mono">' + esc(PUBLISH_BRANCH) + '</b></div>' +
+          '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files, nothing else</b></div>',
+          'Turn it on', 'btn-danger',
+          function () {
+            S.publishEnabled = true;
+            renderAll();
+            toast('🟢 LIVE PUBLISHING ON - changes you confirm will reach subscribers', 'ok', 6000);
+          }
+        );
+      });
+    });
+    on($('#btnReview'), 'click', function () { reviewAndPublish(); });
+
+    /* ---- token -------------------------------------------------------- */
+    var kind = S.tokenKind;
     var c1 = el('div', 'card');
+    c1.style.marginTop = '14px';
     c1.innerHTML =
-      '<div class="card-h"><span class="card-t">Live publishing</span>' +
-      (S.publishEnabled ? '<span class="pill pill-warn">armed</span>' : '<span class="pill pill-mute">off</span>') + '</div>' +
-      '<p class="note">While this is off the admin never touches the six live files. ' +
-      'Generate, review the diff, and download instead.</p>' +
-      '<label class="switch" style="margin-top:12px"><input type="checkbox" id="setPub"' +
-        (S.publishEnabled ? ' checked' : '') + '><span class="track"></span>' +
-        '<span class="switch-l">Allow publishing to the live feeds</span></label>' +
-      '<div class="field" style="margin-top:14px"><label class="flabel">GitHub token</label>' +
-      '<input class="input mono" id="setTok" type="password" placeholder="paste your own token here" autocomplete="off">' +
+      '<div class="card-h"><span class="card-t">GitHub access</span>' +
+      (S.token
+        ? '<span class="pill pill-ok">token loaded for this tab</span>'
+        : '<span class="pill pill-mute">no token</span>') + '</div>' +
+      '<div class="field"><label class="flabel">Fine-grained personal access token</label>' +
+      '<input class="input mono" id="setTok" type="password" autocomplete="off" autocapitalize="off" ' +
+      'autocorrect="off" spellcheck="false" placeholder="github_pat_&hellip;">' +
       '<div class="note" style="margin-top:6px">Held in memory for this tab only. It is never written to ' +
-      'localStorage, never logged and never sent anywhere except api.github.com.</div></div>' +
-      '<button class="btn btn-danger btn-sm" id="btnPublish"' + (S.publishEnabled ? '' : ' disabled') + '>Publish six files</button>';
+      'localStorage or sessionStorage, never put in a URL, never saved into events.json, never committed and ' +
+      'never logged. Closing or reloading this tab forgets it.</div></div>' +
+      (kind === 'classic'
+        ? '<p class="note warn">That looks like a classic token, which can reach every repository you own. ' +
+          'A fine-grained token limited to this one repository is strongly preferred.</p>'
+        : '') +
+      (kind === 'unknown'
+        ? '<p class="note warn">That does not look like a GitHub token. Publishing will fail with 401.</p>'
+        : '') +
+      '<div class="flabel" style="margin-top:14px">Minimum permission this app needs</div>' +
+      '<div class="kv"><span>Token type</span><b>Fine-grained</b></div>' +
+      '<div class="kv"><span>Repository access</span><b>Only <span class="mono">' + esc(PUBLISH_REPO) + '</span></b></div>' +
+      '<div class="kv"><span>Repository permissions</span><b>Contents: Read and write</b></div>' +
+      '<div class="kv"><span>Everything else</span><b>No access</b></div>' +
+      '<div class="kv"><span>Account permissions</span><b>None</b></div>' +
+      '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
+      '<button class="btn btn-ghost btn-sm" id="btnTokClear"' + (S.token ? '' : ' disabled') + '>' +
+      'Clear token from memory</button>' +
+      '<a class="btn btn-outline btn-sm" target="_blank" rel="noopener noreferrer" ' +
+      'href="https://github.com/settings/personal-access-tokens/new">Create a token on GitHub</a>' +
+      '</div>';
     host.appendChild(c1);
 
-    on($('#setPub'), 'change', function (e) { S.publishEnabled = e.target.checked; renderSettings(); });
-    on($('#setTok'), 'input', function (e) { S.token = e.target.value.trim(); });
-    on($('#btnPublish'), 'click', function () { publishFlow(); });
+    on($('#setTok'), 'input', function (e) {
+      var v = String(e.target.value || '').trim();
+      S.token = v;
+      var was = S.tokenKind;
+      S.tokenKind = !v ? '' : (/^github_pat_/.test(v) ? 'fine' : (/^gh[pous]_/.test(v) ? 'classic' : 'unknown'));
+      var cb = $('#btnTokClear');
+      if (cb) { cb.disabled = !v; }
+      if (S.tokenKind !== was && (S.tokenKind === 'classic' || S.tokenKind === 'unknown' || was === 'classic' || was === 'unknown')) {
+        var keep = v;
+        renderSettings();
+        var f = $('#setTok');
+        if (f) { f.value = keep; f.focus(); }
+      }
+    });
+    on($('#btnTokClear'), 'click', function () {
+      S.token = '';
+      S.tokenKind = '';
+      renderSettings();
+      toast('Token cleared from memory', 'ok');
+    });
 
-    var c2 = el('div', 'card');
-    c2.style.marginTop = '14px';
-    c2.innerHTML =
+    /* ---- leftovers from older tools ----------------------------------- */
+    var stale = foreignCredKeys();
+    if (stale.length) {
+      var c2 = el('div', 'card');
+      c2.style.marginTop = '14px';
+      c2.innerHTML =
+        '<div class="card-h"><span class="card-t">Credentials left in this browser</span>' +
+        '<span class="pill pill-warn">' + stale.length + '</span></div>' +
+        '<p class="note warn">An older tool stored these entries. This app never reads them and cannot use ' +
+        'them - only their names are listed here, never their contents. Revoke the credential on GitHub first, ' +
+        'then forget the entry.</p>' +
+        '<div class="impact" style="margin-top:10px">' + stale.map(function (k) {
+          return '<div class="impact-row"><span class="mono" style="flex:1">' + esc(k) + '</span>' +
+            '<button class="btn btn-danger btn-sm" data-forget="' + esc(k) + '">Forget</button></div>';
+        }).join('') + '</div>';
+      host.appendChild(c2);
+      $$('[data-forget]', c2).forEach(function (b) {
+        on(b, 'click', function () {
+          forgetCredKey(b.getAttribute('data-forget'));
+          renderSettings();
+          toast('Entry removed from this browser', 'ok');
+        });
+      });
+    }
+
+    /* ---- working copy -------------------------------------------------- */
+    var c3 = el('div', 'card');
+    c3.style.marginTop = '14px';
+    c3.innerHTML =
       '<div class="card-h"><span class="card-t">Working copy</span></div>' +
       '<div class="kv"><span>Unpublished changes</span><b>' + dirtyCount() + '</b></div>' +
       '<div class="kv"><span>Undo steps</span><b>' + S.history.length + '</b></div>' +
+      '<p class="note" style="margin-top:10px">Edits live in this browser until you publish. Export ' +
+      'events.json and commit it now and then so the master database and the SEQUENCE counters survive a ' +
+      'cleared browser.</p>' +
       '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
       '<button class="btn btn-outline btn-sm" id="btnExport">Export events.json</button>' +
       '<button class="btn btn-ghost btn-sm" id="btnReload">Discard and reload from disk</button>' +
       '</div>';
-    host.appendChild(c2);
+    host.appendChild(c3);
 
     on($('#btnExport'), 'click', function () {
       var db = preparedDb();
@@ -2109,73 +2361,238 @@
     });
   }
 
-  function publishFlow() {
-    if (!S.token) { toast('Paste a GitHub token first', 'err'); return; }
-    var out = S.gen || generate();
-    var files = Object.keys(out);
-    confirmDialog(
-      'Publish ' + files.length + ' files to the live feeds?',
-      'This writes directly to main and subscribers will start receiving it',
-      '<div class="impact">' + files.map(function (f) {
-        return '<div class="impact-row"><span class="mono" style="flex:1">' + esc(f) + '</span>' +
-          '<span style="color:var(--ink-3)">' + out[f].length + ' bytes</span></div>';
-      }).join('') + '</div>' +
-      '<p class="note" style="margin-top:11px">Filenames and subscription URLs stay exactly the same. ' +
-      'Every UID is preserved, so existing entries update in place rather than duplicating.</p>',
-      'Publish', 'btn-danger', function () { doPublish(out); }
-    );
+  /* ------------------------------------------------------- publish preview */
+  /* One master event can appear in up to six feeds, so the confirmation
+     screen reports both numbers: how many events the operator changed, and
+     how many feed entries that actually produces. */
+
+  function uidIndex() {
+    var m = {};
+    ((S.db && S.db.events) || []).forEach(function (ev) {
+      Object.keys(ev.uids || {}).forEach(function (k) { m[ev.uids[k]] = ev; });
+    });
+    return m;
   }
 
-  function doPublish(out) {
-    var repo = 'shaliach2lv-lab/calendar-shevet-pisga';
-    var files = Object.keys(out);
+  function publishSummary() {
+    var gen = S.gen || generate();
+    var live = S.live || {};
+    var idx = uidIndex();
+    var perFeed = [];
+    var touched = {}, addedIds = {}, removedIds = {}, changedIds = {};
+
+    ICS.feedFiles(S.db).forEach(function (f) {
+      var text = gen[f.file] || '';
+      var before = live[f.file] || '';
+      var d = before ? ICS.diff(before, text) : null;
+      var counts = d ? d.counts : { added: 0, removed: 0, changed: 0 };
+      perFeed.push({
+        file: f.file, schedule: f.schedule, lang: f.lang, name: f.name, color: f.color,
+        counts: counts, changes: counts.added + counts.removed + counts.changed,
+        fresh: !before, valid: ICS.validate(text)
+      });
+      if (!d) { return; }
+      [['added', d.added], ['removed', d.removed], ['changed', d.changed]].forEach(function (pair) {
+        (pair[1] || []).forEach(function (x) {
+          var ev = idx[x.uid];
+          var id = ev ? ev.id : ('uid:' + x.uid);
+          touched[id] = (touched[id] || 0) + 1;
+          if (pair[0] === 'removed' || (ev && archived(ev))) { removedIds[id] = 1; }
+          else if (pair[0] === 'added') { addedIds[id] = 1; }
+          else { changedIds[id] = 1; }
+        });
+      });
+    });
+
+    var events = { added: 0, changed: 0, removed: 0 };
+    Object.keys(touched).forEach(function (id) {
+      if (removedIds[id]) { events.removed++; }
+      else if (addedIds[id] && !changedIds[id]) { events.added++; }
+      else { events.changed++; }
+    });
+
+    return {
+      gen: gen,
+      perFeed: perFeed,
+      events: events,
+      multi: Object.keys(touched).filter(function (id) { return touched[id] > 1; }).length,
+      feedChanges: perFeed.reduce(function (a, f) { return a + f.changes; }, 0),
+      files: perFeed.filter(function (f) { return f.changes > 0; }).map(function (f) { return f.file; }),
+      invalid: perFeed.filter(function (f) { return !f.valid.ok; })
+    };
+  }
+
+  function reviewAndPublish() {
+    var btns = [$('#btnReview'), $('#btnReviewSync')];
+    btns.forEach(function (b) { if (b) { b.disabled = true; } });
+    toast('Generating the six files and reading what is live right now…');
+    generate();
+    S.live = null;
+    fetchLive().then(function () {
+      btns.forEach(function (b) { if (b) { b.disabled = false; } });
+      showPublishPreview();
+    }).catch(function () {
+      btns.forEach(function (b) { if (b) { b.disabled = false; } });
+      toast('Could not read the live feeds to compare against - nothing was published', 'err');
+    });
+  }
+
+  function showPublishPreview() {
+    var sum = publishSummary();
+    var live = !!S.publishEnabled;
+    var total = sum.events.added + sum.events.changed + sum.events.removed;
+
+    if (!sum.files.length) {
+      modal({
+        title: 'Nothing to publish',
+        sub: 'Every feed already matches what subscribers have',
+        body: '<p class="note ok">All six generated files are identical to the live ones at event level. ' +
+          'Only the refresh headers would change, which is not worth a commit.</p>',
+        actions: [{ label: 'Close', cls: 'btn-ghost' }]
+      });
+      return;
+    }
+
+    var sel = {};
+    sum.files.forEach(function (f) { sel[f] = true; });
+
+    var h = '';
+    h += '<div class="flabel">You are about to publish</div>';
+    h += '<div class="impact">' +
+      '<div class="impact-row"><span class="pill pill-warn">CHANGED</span>' +
+      '<span style="flex:1">events changed</span><b>' + sum.events.changed + '</b></div>' +
+      '<div class="impact-row"><span class="pill pill-ok">ADDED</span>' +
+      '<span style="flex:1">events added</span><b>' + sum.events.added + '</b></div>' +
+      '<div class="impact-row"><span class="pill pill-danger">REMOVED</span>' +
+      '<span style="flex:1">events removed or cancelled</span><b>' + sum.events.removed + '</b></div>' +
+      '</div>';
+    if (sum.multi) {
+      h += '<p class="note warn" style="margin-top:10px"><b>' + sum.multi +
+        (sum.multi === 1 ? ' event appears' : ' events appear') + ' in more than one feed.</b> That is why ' +
+        total + (total === 1 ? ' event edit produces ' : ' event edits produce ') + sum.feedChanges +
+        ' feed entries below - one change, several calendars.</p>';
+    }
+    h += '<div class="flabel" style="margin-top:14px">Per feed - tick what to write</div><div class="impact">';
+    sum.perFeed.forEach(function (f) {
+      var can = f.changes > 0;
+      var right = can ? (f.changes + (f.changes === 1 ? ' change' : ' changes')) : 'no change';
+      h += '<div class="impact-row">' +
+        '<label class="switch" title="' + esc(f.file) + '">' +
+        '<input type="checkbox" data-pv="' + esc(f.file) + '"' + (can ? ' checked' : ' disabled') + '>' +
+        '<span class="track"></span></label>' +
+        '<span class="pub-dot" style="background:' + f.color + '"></span>' +
+        '<span style="flex:1" dir="auto">' + esc(f.name) + ' — ' + (f.lang === 'he' ? 'Hebrew' : 'English') + '</span>' +
+        '<span class="mono" style="color:var(--ink-3);font-size:11px">' + esc(f.file) + '</span>' +
+        '<b style="min-width:86px;text-align:right">' + right + '</b></div>';
+    });
+    h += '</div>';
+    if (sum.invalid.length) {
+      h += '<p class="note warn" style="margin-top:10px">' + sum.invalid.length +
+        ' generated file(s) failed iCalendar validation. Publishing is blocked until that is fixed.</p>';
+    }
+    h += live
+      ? '<p class="note warn" style="margin-top:12px">🟢 Live publishing is ON. Publishing overwrites the ticked ' +
+        'files on ' + esc(PUBLISH_BRANCH) + ' and subscribers receive them on their next refresh. UIDs are ' +
+        'preserved and SEQUENCE is bumped, so entries update in place.</p>'
+      : '<p class="note" style="margin-top:12px">⚪ Preview mode. This is exactly what would be written. ' +
+        'Nothing can be published until live publishing is switched on in Settings.</p>';
+
+    var box = el('div', '');
+    box.innerHTML = h;
+
+    var acts = live
+      ? [{ label: 'Cancel', cls: 'btn-ghost' },
+         { label: 'Publish changes', cls: 'btn-danger', close: false, fn: function () {
+             var picked = Object.keys(sel).filter(function (f) { return sel[f]; });
+             if (!picked.length) { toast('Tick at least one feed first', 'err'); return; }
+             if (sum.invalid.length) { toast('Invalid files - nothing was published', 'err'); return; }
+             closeModal();
+             doPublish(sum.gen, picked, picked.length === sum.files.length);
+           } }]
+      : [{ label: 'Close', cls: 'btn-ghost' },
+         { label: 'Open Settings', cls: 'btn-outline', fn: function () { gotoScreen('settings'); renderAll(); } }];
+
+    var m = modal({
+      title: live ? 'Publish changes' : 'Preview - nothing will be published',
+      sub: total + (total === 1 ? ' event' : ' events') + ' · ' + sum.feedChanges + ' feed entries · ' +
+        sum.files.length + ' of 6 files',
+      wide: true, body: box, actions: acts
+    });
+    $$('[data-pv]', m).forEach(function (cb) {
+      on(cb, 'change', function () { sel[cb.getAttribute('data-pv')] = cb.checked; });
+    });
+  }
+
+  /* ------------------------------------------------------------- publishing */
+  /* Every gate is checked again here, immediately before the network call,
+     so no UI path can bypass them. */
+
+  function doPublish(out, names, full) {
+    if (!S.publishEnabled) { toast('Live publishing is OFF - nothing was published', 'err'); return; }
+    if (!S.token) { toast('Enter a GitHub token in Settings first', 'err'); return; }
+    var files = (names || []).filter(allowedFile);
+    if (!files.length) { toast('Nothing to publish', 'err'); return; }
+
     var okCount = 0, failed = [];
-    toast('Publishing...', 'ok');
+    toast('Publishing ' + files.length + (files.length === 1 ? ' file…' : ' files…'));
     var chain = Promise.resolve();
     files.forEach(function (name) {
-      chain = chain.then(function () { return putFile(repo, name, out[name]); })
+      chain = chain.then(function () { return putFile(name, out[name]); })
         .then(function () { okCount++; })
-        .catch(function (e) { failed.push(name + ': ' + e.message); });
+        .catch(function (e) { failed.push(name + ': ' + scrub(e && e.message)); });
     });
     chain.then(function () {
-      if (!failed.length) {
-        S.dirty = {};
-        S.live = null;
-        S.gen = null;
+      S.live = null;
+      S.gen = null;
+      if (okCount) {
+        (S.db.events || []).forEach(function (ev) {
+          if (S.dirty[ev.id]) { ev.sequence = (ev.sequence || 0) + 1; }
+        });
+        if (full && !failed.length) { S.dirty = {}; }
         saveDraft();
-        renderAll();
-        toast('Published ' + okCount + ' files. Clients will refresh on their own schedule.', 'ok', 6000);
+      }
+      renderAll();
+      if (!failed.length) {
+        toast('Published ' + okCount + (okCount === 1 ? ' file' : ' files') +
+          '. Clients refresh on their own schedule. Remember to export events.json.', 'ok', 7000);
       } else {
         modal({
-          title: 'Publish incomplete', sub: okCount + ' succeeded, ' + failed.length + ' failed',
+          title: 'Publish incomplete',
+          sub: okCount + ' succeeded, ' + failed.length + ' failed',
           body: '<div class="impact">' + failed.map(function (f) {
             return '<div class="impact-row">' + esc(f) + '</div>';
-          }).join('') + '</div>',
-          actions: [
-            { label: 'Close', cls: 'btn-ghost' },
-            { label: 'Try all six again', cls: 'btn-accent', fn: function () { doPublish(out); } }
-          ]
+          }).join('') + '</div>' +
+          '<p class="note warn" style="margin-top:10px">The feeds that did succeed are already live. Fix the ' +
+          'cause and run Review and publish again - re-publishing the same content is harmless.</p>',
+          actions: [{ label: 'Close', cls: 'btn-ghost' }]
         });
       }
     });
   }
 
-  function putFile(repo, path, text) {
-    var api = 'https://api.github.com/repos/' + repo + '/contents/' + path;
+  function putFile(path, text) {
+    if (!S.publishEnabled) { return Promise.reject(new Error('live publishing is off')); }
+    if (!allowedFile(path)) { return Promise.reject(new Error('refused: ' + path + ' is not one of the six feed files')); }
+    if (!S.token) { return Promise.reject(new Error('no token in this tab')); }
+    if (typeof text !== 'string' || !text.length) { return Promise.reject(new Error('refused: empty file')); }
+
+    var api = 'https://api.github.com/repos/' + PUBLISH_REPO + '/contents/' + encodeURIComponent(path);
     var hdr = { Authorization: 'Bearer ' + S.token, Accept: 'application/vnd.github+json' };
-    return fetch(api + '?ref' + '=' + 'main', { headers: hdr })
+    return fetch(api + '?ref' + '=' + PUBLISH_BRANCH, { headers: hdr, cache: 'no-store' })
       .then(function (r) { return r.ok ? r.json() : { sha: undefined }; })
       .then(function (meta) {
         return fetch(api, {
           method: 'PUT', headers: hdr,
           body: JSON.stringify({
             message: 'Update ' + path + ' from admin calendar',
-            content: b64(text), sha: meta.sha, branch: 'main'
+            content: b64(text), sha: meta.sha, branch: PUBLISH_BRANCH
           })
         });
       })
       .then(function (r) {
-        if (!r.ok) { return r.text().then(function (t) { throw new Error(r.status + ' ' + t.slice(0, 120)); }); }
+        if (!r.ok) {
+          return r.text().then(function (tx) { throw new Error(r.status + ' ' + scrub(tx).slice(0, 140)); });
+        }
       });
   }
 
@@ -2189,6 +2606,7 @@
   /* ----------------------------------------------------------------- wiring */
 
   function wire() {
+    installPubState();
     $$('.nav-item').forEach(function (b) {
       on(b, 'click', function () { gotoScreen(b.getAttribute('data-screen')); renderAll(); });
     });
