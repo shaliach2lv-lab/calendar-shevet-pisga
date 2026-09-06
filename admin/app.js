@@ -886,7 +886,7 @@
       date.innerHTML =
         '<div class="ag-dow">' + DOW[dow(k)] + '</div>' +
         '<div class="ag-dnum">' + p.d + '</div>' +
-        '<div class="ag-mon">' + MONS[p.m - 1] + ' ' + String(p.y).slice(2) + '</div>';
+        '<div class="ag-mon">' + MONS[p.m - 1] + " '" + String(p.y).slice(2) + '</div>';
       day.appendChild(date);
       var list = el('div', 'ag-list');
       groups[k].sort(sortEv).forEach(function (ev) {
@@ -1274,7 +1274,7 @@
     $('#editor').hidden = false;
     requestAnimationFrame(function () {
       $('#scrim').classList.add('show');
-      $('#editor').classList.add('open');
+      $('#editor').classList.add('show');
     });
     renderEditor();
     renderCal();
@@ -1289,7 +1289,7 @@
     S.draft = null;
     var sc = $('#scrim'), ed = $('#editor');
     if (sc) { sc.classList.remove('show'); }
-    if (ed) { ed.classList.remove('open'); }
+    if (ed) { ed.classList.remove('show'); }
     setTimeout(function () {
       if (sc) { sc.hidden = true; }
       if (ed) { ed.hidden = true; }
@@ -1334,8 +1334,8 @@
     /* when -------------------------------------------------------------- */
     h += '<div class="field">' +
       '<label class="flabel">When</label>' +
-      '<label class="switch" style="margin-bottom:9px"><input type="checkbox" id="fAllDay"' + (d.allDay ? ' checked' : '') +
-      '><span class="track"></span><span class="switch-l">All-day event</span></label>';
+      '<div style="margin-bottom:10px"><label class="switch"><input type="checkbox" id="fAllDay"' + (d.allDay ? ' checked' : '') +
+      '><span class="track"></span><span class="switch-l">All-day event</span></label></div>';
 
     if (d.allDay) {
       h += '<div class="row2">' +
@@ -1344,11 +1344,11 @@
           addDays(endKey, -1) + '"></div>' +
         '</div>';
     } else {
-      h += '<div class="row-when">' +
-        '<input class="input" type="date" id="fDate" value="' + startKey + '">' +
-        '<input class="input w3" type="time" id="fStart" step="300" value="' + tpart(d.start) + '">' +
+      h += '<input class="input" type="date" id="fDate" style="margin-bottom:8px" value="' + startKey + '">' +
+        '<div class="row-when">' +
+        '<input class="input" type="time" id="fStart" step="300" value="' + tpart(d.start) + '">' +
         '<span class="arrow-sep">to</span>' +
-        '<input class="input w3" type="time" id="fEnd" step="300" value="' + tpart(d.end) + '">' +
+        '<input class="input" type="time" id="fEnd" step="300" value="' + tpart(d.end) + '">' +
         '</div>' +
         '<div class="note" id="whenHint" style="margin-top:6px"></div>';
     }
