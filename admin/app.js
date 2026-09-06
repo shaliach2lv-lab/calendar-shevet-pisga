@@ -29,7 +29,10 @@
   }
   function on(n, e, f, o) { if (n) { n.addEventListener(e, f, o); } }
   function clear(n) { while (n && n.firstChild) { n.removeChild(n.firstChild); } }
-  function ico(d) { return '<svg viewBox="0 0 24 24">' + d + '</svg>'; }
+  function ico(d) {
+    return '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" ' +
+      'stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + d + '</svg>';
+  }
 
   /* ------------------------------------------------------- colour helpers */
 
@@ -1158,6 +1161,7 @@
     ev.status = 'published';
     touch(ev);
     saveDraft();
+    if (S.editingId === id) { S.draft = JSON.parse(JSON.stringify(ev)); renderEditor(); }
     renderAll();
     toast('Restored', 'ok');
   }
@@ -1415,6 +1419,8 @@
       fieldRow('Category', '<input class="input" id="fCat" value="' + esc(d.category || '') + '" placeholder="none">') +
       fieldRow('Repeat rule (RRULE)', '<input class="input mono" id="fRec" value="' + esc(d.recurrence || '') +
         '" placeholder="none  -  e.g. FREQ' + '=' + 'WEEKLY;BYDAY' + '=' + 'SU">') +
+      (d.recurrence ? '<p class="note">A repeating event is drawn once here, on its first date. ' +
+        'Every occurrence is written into the six feeds, so subscribers see the whole series.</p>' : '') +
       fieldRow('Status', '<select class="input" id="fStatus">' +
         ['published', 'draft', 'archived'].map(function (v) {
           return '<option value="' + v + '"' + (d.status === v ? ' selected' : '') + '>' + v + '</option>';
@@ -1441,6 +1447,7 @@
     arc.textContent = archived(d) ? 'Restore' : 'Archive';
     arc.className = archived(d) ? 'btn btn-outline' : 'btn btn-danger';
     $('#soSave').disabled = false;
+    markEditorDirty();
   }
 
   function setDraft(path, value) {
@@ -1669,11 +1676,18 @@
         t2.setAttribute('dir', isRtl(altOf(ev)) ? 'rtl' : 'ltr');
         t.appendChild(t2);
       }
+      if (archived(ev)) {
+        var t3 = el('div', 'lsub');
+        t3.innerHTML = '<span class="pill pill-warn">archived</span>';
+        t.appendChild(t3);
+        r.style.opacity = '.62';
+      }
       r.appendChild(t);
 
       var w = el('div', 'lwhen');
       w.innerHTML = prettyShort(dkey(v.start)) + ', ' + dnum(dkey(v.start)).y +
-        '<div class="lsub">' + (v.allDay ? 'All day' : fmtT2(mins(v.start)) + ' - ' + fmtT2(mins(v.end))) + '</div>';
+        '<div class="lsub">' + (v.allDay ? 'All day' : fmtT2(mins(v.start)) + ' - ' + fmtT2(mins(v.end))) +
+        (ev.recurrence ? '  -  repeats' : '') + '</div>';
       r.appendChild(w);
 
       var p = el('div', '');
@@ -1691,7 +1705,7 @@
 
     var n = Object.keys(S.selected).length;
     var info = $('#selInfo');
-    if (info) { info.textContent = n ? n + ' selected' : rows.length + ' events'; }
+    if (info) { info.textContent = n ? n + ' selected' : rows.length + (rows.length === 1 ? ' event' : ' events'); }
     var mb = $('#btnMerge');
     if (mb) { mb.disabled = n < 2; }
   }
@@ -2006,7 +2020,7 @@
       if (!arr.length) { return ''; }
       var s = '<div class="flabel" style="margin-top:11px">' + title + ' (' + arr.length + ')</div><div class="impact">';
       arr.slice(0, 60).forEach(function (x) {
-        s += '<div class="impact-row"><span class="pill ' + cls + '">' + title.slice(0, 3) + '</span>' +
+        s += '<div class="impact-row"><span class="pill ' + cls + '">' + title.toUpperCase() + '</span>' +
           '<span class="mono" style="flex:1;font-size:11px">' + esc(x.uid || '') + '</span>' +
           '<span style="color:var(--ink-3);font-size:11.5px" dir="auto">' + esc(x.summary || '') + '</span></div>';
       });
@@ -2091,7 +2105,7 @@
       confirmDialog('Discard all local changes?', dirtyCount() + ' events have unpublished edits',
         '<p class="note">The working copy in this browser is thrown away and the published ' +
         'data/events.json is loaded again. The live feeds are untouched either way.</p>',
-        'Discard', 'btn-danger', function () { dropDraft(); location.reload(); });
+        'Discard', 'btn-danger', function () { dropDraft(); S.leaving = true; location.reload(); });
     });
   }
 
@@ -2139,7 +2153,7 @@
           }).join('') + '</div>',
           actions: [
             { label: 'Close', cls: 'btn-ghost' },
-            { label: 'Retry failed', cls: 'btn-accent', fn: function () { doPublish(out); } }
+            { label: 'Try all six again', cls: 'btn-accent', fn: function () { doPublish(out); } }
           ]
         });
       }
@@ -2250,7 +2264,7 @@
     });
 
     window.addEventListener('beforeunload', function (e) {
-      if (dirtyCount()) { e.preventDefault(); e.returnValue = ''; }
+      if (!S.leaving && dirtyCount()) { e.preventDefault(); e.returnValue = ''; }
     });
     window.addEventListener('resize', function () {
       if (S.screen === 'calendar' && S.view === 'month') {
@@ -2283,8 +2297,10 @@
 
   function applyPrefs() {
     var p = readPrefs();
+    var narrow = window.innerWidth <= 860;
+    if (p && p.view) { S.view = p.view; } else if (narrow) { S.view = 'agenda'; }
+    if (narrow && S.view === 'week') { S.view = 'agenda'; }
     if (!p) { return; }
-    if (p.view) { S.view = p.view; }
     if (p.lang) { S.lang = p.lang; }
     if (p.sched) { S.sched = p.sched; }
     if (p.flags) { S.flags = p.flags; }
