@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-05T04:43:40Z",
-  "generator": "migration-from-ics-v1",
+  "generatedAt": "2026-09-07T23:10:18Z",
+  "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
   "uidDomain": "shaliach2lv-lab.github.io",
@@ -4583,6 +4583,55 @@
       "createdAt": "2026-09-05T04:43:40Z",
       "updatedAt": "2026-09-05T04:43:40Z",
       "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0106",
+      "title": {
+        "he": "TEST — בדיקת פרסום (למחיקה)",
+        "en": "TEST - Publish Verification (DELETE ME)"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": false,
+      "start": "2026-12-31T10:00:00",
+      "end": "2026-12-31T11:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": false,
+          "en": false
+        },
+        "tet": {
+          "he": false,
+          "en": false
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-042@shaliach2lv-lab.github.io",
+        "tet": "tet-048@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-086@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 1,
+      "createdAt": "2026-09-07T22:11:12Z",
+      "updatedAt": "2026-09-07T22:12:34Z",
+      "updatedBy": "admin-ui"
     }
   ]
 }
