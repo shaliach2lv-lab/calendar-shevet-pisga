@@ -71,6 +71,13 @@
   ];
   function allowedFile(name) { return PUBLISH_ALLOW.indexOf(String(name)) >= 0; }
 
+  /* The master database is written by the very same commit as the feeds, so a
+     bumped SEQUENCE can never be lost with a cleared browser. It is the only
+     path outside the six feeds this app may ever write, and it is spelled out
+     here so the whole write surface stays readable in one place. */
+  var PUBLISH_DB = 'data/events.json';
+  function writablePath(p) { return allowedFile(p) || String(p) === PUBLISH_DB; }
+
   /* --------------------------------------------------- credential hygiene */
   /* The GitHub token lives in exactly one place: S.token, in memory, for the
      life of this tab. It is never written to localStorage or sessionStorage,
@@ -211,6 +218,7 @@
     S.db.events = st.e;
     S.dirty = st.d;
     S.gen = null;
+    S.genDb = null;
     if (S.editingId && !byId(S.editingId)) { closeEditor(); }
     else if (S.editingId) { S.draft = JSON.parse(JSON.stringify(byId(S.editingId))); renderEditor(); }
     saveDraft();
@@ -219,7 +227,7 @@
   }
 
   function dirtyCount() { return Object.keys(S.dirty).length; }
-  function markDirty(id) { S.dirty[id] = true; S.gen = null; }
+  function markDirty(id) { S.dirty[id] = true; S.gen = null; S.genDb = null; }
 
   function syncBadges() {
     var u = $('#btnUndo'); if (u) { u.disabled = S.history.length === 0; }
@@ -1929,7 +1937,20 @@
     var db = preparedDb();
     var out = ICS.generateAll(db, { extraHeaders: true });
     S.gen = out;
+    /* Hold on to the exact database these bytes came from. Publishing commits
+       this object, so the SEQUENCE inside a feed and the number stored in
+       data/events.json are always the same number. */
+    S.genDb = db;
     return out;
+  }
+
+  /* Byte-for-byte the shape the repository already uses - two-space JSON with a
+     trailing newline - so a published database produces a reviewable diff. */
+  function dbJson(db) {
+    var copy = JSON.parse(JSON.stringify(db));
+    copy.generatedAt = nowStamp();
+    copy.generator = 'admin-ui';
+    return JSON.stringify(copy, null, 2) + '\n';
   }
 
   function fetchLive() {
@@ -2197,14 +2218,15 @@
       '</div>' +
       (live
         ? '<p class="note warn"><b>Changes you publish will reach real subscribers.</b> A confirmed publish ' +
-          'overwrites the six live .ics files on ' + esc(PUBLISH_BRANCH) + '. Filenames and subscription URLs never ' +
+          'overwrites the ticked live .ics files on ' + esc(PUBLISH_BRANCH) + ', and rewrites ' + PUBLISH_DB + ' in the ' +
+          'same commit so the SEQUENCE counters are stored with them. Filenames and subscription URLs never ' +
           'change and every UID is preserved, so entries update in place instead of duplicating.</p>'
         : '<p class="note">Preview mode is the default. Edit, generate the six feeds and read every diff as much ' +
           'as you like - nothing is written to the live .ics files while this is off.</p>') +
       '<div class="kv" style="margin-top:12px"><span>Repository it may write to</span><b class="mono">' +
       esc(PUBLISH_REPO) + '</b></div>' +
       '<div class="kv"><span>Branch</span><b class="mono">' + esc(PUBLISH_BRANCH) + '</b></div>' +
-      '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files, nothing else</b></div>' +
+      '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files + ' + PUBLISH_DB + '</b></div>' +
       '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
       '<button class="btn ' + (live ? 'btn-danger' : 'btn-outline') + ' btn-sm" id="btnReview">' +
       (live ? 'Review and publish&hellip;' : 'Review changes (preview)') + '</button>' +
@@ -2229,9 +2251,12 @@
           'next refresh, usually between an hour and a day later.</p>' +
           '<p class="note" style="margin-top:9px">Turning this on publishes nothing by itself. You will still get ' +
           'a confirmation screen with the exact per-feed counts before a single byte is written.</p>' +
+          '<p class="note" style="margin-top:9px">Every publish is one commit containing the ticked feeds and ' +
+          esc(PUBLISH_DB) + '. That is what keeps the SEQUENCE counters in the repository instead of in this ' +
+          'browser, so you never have to export anything by hand.</p>' +
           '<div class="kv" style="margin-top:11px"><span>Repository</span><b class="mono">' + esc(PUBLISH_REPO) + '</b></div>' +
           '<div class="kv"><span>Branch</span><b class="mono">' + esc(PUBLISH_BRANCH) + '</b></div>' +
-          '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files, nothing else</b></div>',
+          '<div class="kv"><span>Files it may write</span><b>' + PUBLISH_ALLOW.length + ' feed files + ' + PUBLISH_DB + '</b></div>',
           'Turn it on', 'btn-danger',
           function () {
             S.publishEnabled = true;
@@ -2332,9 +2357,9 @@
       '<div class="card-h"><span class="card-t">Working copy</span></div>' +
       '<div class="kv"><span>Unpublished changes</span><b>' + dirtyCount() + '</b></div>' +
       '<div class="kv"><span>Undo steps</span><b>' + S.history.length + '</b></div>' +
-      '<p class="note" style="margin-top:10px">Edits live in this browser until you publish. Export ' +
-      'events.json and commit it now and then so the master database and the SEQUENCE counters survive a ' +
-      'cleared browser.</p>' +
+      '<p class="note" style="margin-top:10px">Edits live in this browser until you publish. Publishing then ' +
+      'commits ' + PUBLISH_DB + ' alongside the feeds, so the master database and the SEQUENCE counters ' +
+      'survive a cleared browser without you exporting anything. The export below is only a manual backup.</p>' +
       '<div style="display:flex;gap:8px;margin-top:13px;flex-wrap:wrap">' +
       '<button class="btn btn-outline btn-sm" id="btnExport">Export events.json</button>' +
       '<button class="btn btn-ghost btn-sm" id="btnReload">Discard and reload from disk</button>' +
@@ -2493,9 +2518,11 @@
     h += live
       ? '<p class="note warn" style="margin-top:12px">🟢 Live publishing is ON. Publishing overwrites the ticked ' +
         'files on ' + esc(PUBLISH_BRANCH) + ' and subscribers receive them on their next refresh. UIDs are ' +
-        'preserved and SEQUENCE is bumped, so entries update in place.</p>'
-      : '<p class="note" style="margin-top:12px">⚪ Preview mode. This is exactly what would be written. ' +
-        'Nothing can be published until live publishing is switched on in Settings.</p>';
+        'preserved and SEQUENCE is bumped, so entries update in place. ' + esc(PUBLISH_DB) + ' is written by the ' +
+        'same commit, which is what makes the new SEQUENCE numbers permanent.</p>'
+      : '<p class="note" style="margin-top:12px">⚪ Preview mode. This is exactly what would be written, and ' +
+        esc(PUBLISH_DB) + ' would travel in the same commit. Nothing can be published until live publishing ' +
+        'is switched on in Settings.</p>';
 
     var box = el('div', '');
     box.innerHTML = h;
@@ -2533,66 +2560,133 @@
     var files = (names || []).filter(allowedFile);
     if (!files.length) { toast('Nothing to publish', 'err'); return; }
 
-    var okCount = 0, failed = [];
-    toast('Publishing ' + files.length + (files.length === 1 ? ' file…' : ' files…'));
-    var chain = Promise.resolve();
-    files.forEach(function (name) {
-      chain = chain.then(function () { return putFile(name, out[name]); })
-        .then(function () { okCount++; })
-        .catch(function (e) { failed.push(name + ': ' + scrub(e && e.message)); });
+    /* The exact database the .ics files were generated from. Committing this
+       same object in the same commit is what makes the bumped SEQUENCE
+       numbers permanent instead of living only in this browser. */
+    var genDb = S.genDb;
+    if (!genDb) { toast('Run Review and publish again first', 'err'); return; }
+
+    var map = {};
+    files.forEach(function (name) { map[name] = out[name]; });
+    map[PUBLISH_DB] = dbJson(genDb);
+
+    var bad = Object.keys(map).filter(function (p) {
+      return typeof map[p] !== 'string' || !map[p].length;
     });
-    chain.then(function () {
+    if (bad.length) { toast('Generated content is missing - nothing was published', 'err'); return; }
+
+    var msg = 'calendar: publish ' + files.length +
+      (files.length === 1 ? ' feed' : ' feeds') + ' and the master database\n\n' +
+      files.map(function (f) { return '- ' + f; }).join('\n') + '\n- ' + PUBLISH_DB +
+      '\n\nOne commit, so the SEQUENCE counters in ' + PUBLISH_DB +
+      ' can never drift from the published feeds.';
+
+    toast('Writing ' + files.length + (files.length === 1 ? ' feed' : ' feeds') +
+      ' and ' + PUBLISH_DB + ' in a single commit…');
+
+    commitFiles(map, msg).then(function (info) {
       S.live = null;
       S.gen = null;
-      if (okCount) {
-        (S.db.events || []).forEach(function (ev) {
-          if (S.dirty[ev.id]) { ev.sequence = (ev.sequence || 0) + 1; }
-        });
-        if (full && !failed.length) { S.dirty = {}; }
-        saveDraft();
-      }
+      S.genDb = null;
+      (S.db.events || []).forEach(function (ev) {
+        if (S.dirty[ev.id]) { ev.sequence = (ev.sequence || 0) + 1; }
+      });
+      if (full) { S.dirty = {}; }
+      saveDraft();
       renderAll();
-      if (!failed.length) {
-        toast('Published ' + okCount + (okCount === 1 ? ' file' : ' files') +
-          '. Clients refresh on their own schedule. Remember to export events.json.', 'ok', 7000);
-      } else {
-        modal({
-          title: 'Publish incomplete',
-          sub: okCount + ' succeeded, ' + failed.length + ' failed',
-          body: '<div class="impact">' + failed.map(function (f) {
-            return '<div class="impact-row">' + esc(f) + '</div>';
-          }).join('') + '</div>' +
-          '<p class="note warn" style="margin-top:10px">The feeds that did succeed are already live. Fix the ' +
-          'cause and run Review and publish again - re-publishing the same content is harmless.</p>',
-          actions: [{ label: 'Close', cls: 'btn-ghost' }]
-        });
-      }
+      toast('Published ' + files.length + (files.length === 1 ? ' feed' : ' feeds') + ' and ' +
+        PUBLISH_DB + ' in commit ' + String(info.sha).slice(0, 7) +
+        '. The SEQUENCE counters are now stored in the repository.', 'ok', 8000);
+    }).catch(function (e) {
+      S.live = null;
+      S.gen = null;
+      S.genDb = null;
+      renderAll();
+      modal({
+        title: 'Nothing was published',
+        sub: 'The commit was refused, so every live file is unchanged',
+        body: '<div class="impact"><div class="impact-row">' + esc(scrub(e && e.message)) + '</div></div>' +
+          '<p class="note ok" style="margin-top:10px">All ' + Object.keys(map).length +
+          ' files travel in one commit and the branch pointer is moved once, at the very end. ' +
+          'A failure before that point leaves the live feeds and the master database exactly as they ' +
+          'were, so there is no half-published state to repair. Fix the cause and run Review and ' +
+          'publish again - re-publishing identical content is harmless.</p>',
+        actions: [{ label: 'Close', cls: 'btn-ghost' }]
+      });
     });
   }
 
-  function putFile(path, text) {
-    if (!S.publishEnabled) { return Promise.reject(new Error('live publishing is off')); }
-    if (!allowedFile(path)) { return Promise.reject(new Error('refused: ' + path + ' is not one of the six feed files')); }
-    if (!S.token) { return Promise.reject(new Error('no token in this tab')); }
-    if (typeof text !== 'string' || !text.length) { return Promise.reject(new Error('refused: empty file')); }
+  /* ------------------------------------------------- one atomic commit */
+  /* The contents API writes one file per request, which cannot keep six feeds
+     and the master database in step - a mid-way failure would leave a feed
+     carrying a SEQUENCE the database has never heard of. The git data API can
+     do it properly: blobs and a tree are staged first, a commit object is
+     built on top of the current head, and only the last call moves the branch
+     pointer. Either every file lands or none of them do. */
 
-    var api = 'https://api.github.com/repos/' + PUBLISH_REPO + '/contents/' + encodeURIComponent(path);
-    var hdr = { Authorization: 'Bearer ' + S.token, Accept: 'application/vnd.github+json' };
-    return fetch(api + '?ref' + '=' + PUBLISH_BRANCH, { headers: hdr, cache: 'no-store' })
-      .then(function (r) { return r.ok ? r.json() : { sha: undefined }; })
-      .then(function (meta) {
-        return fetch(api, {
-          method: 'PUT', headers: hdr,
-          body: JSON.stringify({
-            message: 'Update ' + path + ' from admin calendar',
-            content: b64(text), sha: meta.sha, branch: PUBLISH_BRANCH
-          })
+  function ghApi(path, method, payload) {
+    var o = {
+      method: method,
+      cache: 'no-store',
+      headers: {
+        Authorization: 'Bearer ' + S.token,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'X-GitHub-Api-Version': '2022-11-28'
+      }
+    };
+    if (payload) { o.body = JSON.stringify(payload); }
+    return fetch('https://api.github.com/repos/' + PUBLISH_REPO + path, o).then(function (r) {
+      if (!r.ok) {
+        return r.text().then(function (tx) {
+          throw new Error(r.status + ' ' + path + ' - ' + scrub(tx).slice(0, 160));
         });
-      })
+      }
+      return r.status === 204 ? null : r.json();
+    });
+  }
+
+  function commitFiles(map, message) {
+    if (!S.publishEnabled) { return Promise.reject(new Error('live publishing is off')); }
+    if (!S.token) { return Promise.reject(new Error('no token in this tab')); }
+
+    var paths = Object.keys(map);
+    if (!paths.length) { return Promise.reject(new Error('refused: nothing to write')); }
+    for (var i = 0; i < paths.length; i++) {
+      if (!writablePath(paths[i])) {
+        return Promise.reject(new Error('refused: ' + paths[i] + ' is not a file this app may write'));
+      }
+      if (typeof map[paths[i]] !== 'string' || !map[paths[i]].length) {
+        return Promise.reject(new Error('refused: empty content for ' + paths[i]));
+      }
+    }
+
+    var head = '', baseTree = '', tree = [];
+
+    return ghApi('/git/ref/heads/' + PUBLISH_BRANCH, 'GET')
       .then(function (r) {
-        if (!r.ok) {
-          return r.text().then(function (tx) { throw new Error(r.status + ' ' + scrub(tx).slice(0, 140)); });
-        }
+        head = r.object.sha;
+        return ghApi('/git/commits/' + head, 'GET');
+      })
+      .then(function (c) {
+        baseTree = c.tree.sha;
+        return paths.reduce(function (chain, p) {
+          return chain.then(function () {
+            return ghApi('/git/blobs', 'POST', { content: b64(map[p]), encoding: 'base64' })
+              .then(function (b) { tree.push({ path: p, mode: '100644', type: 'blob', sha: b.sha }); });
+          });
+        }, Promise.resolve());
+      })
+      .then(function () {
+        return ghApi('/git/trees', 'POST', { base_tree: baseTree, tree: tree });
+      })
+      .then(function (t) {
+        return ghApi('/git/commits', 'POST', { message: message, tree: t.sha, parents: [head] });
+      })
+      .then(function (c) {
+        /* The only call that changes anything a subscriber could see. */
+        return ghApi('/git/refs/heads/' + PUBLISH_BRANCH, 'PATCH', { sha: c.sha, force: false })
+          .then(function () { return { sha: c.sha }; });
       });
   }
 
