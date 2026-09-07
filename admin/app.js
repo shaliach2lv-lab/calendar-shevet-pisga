@@ -2126,7 +2126,7 @@
     'background:var(--surface-3);color:var(--ink-2)}' +
     '#pubState.live{background:var(--danger-soft);border-color:#f97066;color:var(--danger)}' +
     '#pubState .short{display:none}' +
-    '@media (max-width:1240px){#pubState .long{display:none}#pubState .short{display:inline}}' +
+    '@media (max-width:1040px){#pubState .long{display:none}#pubState .short{display:inline}}' +
     'body.live-pub .topbar{box-shadow:inset 0 3px 0 0 var(--danger)}' +
     '.pubbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:11px 13px;margin-bottom:14px;' +
     'border:1px solid var(--line-strong);border-radius:var(--r-lg);background:var(--surface-3);' +
@@ -2163,7 +2163,7 @@
     b.className = live ? 'live' : '';
     b.innerHTML = (live ? '🟢' : '⚪') +
       '<span class="long">' + (live ? 'LIVE PUBLISHING ON' : 'PREVIEW MODE - NOTHING WILL BE PUBLISHED') + '</span>' +
-      '<span class="short">' + (live ? 'LIVE' : 'PREVIEW') + '</span>';
+      '<span class="short">' + (live ? 'LIVE' : 'PREVIEW MODE') + '</span>';
   }
 
   function pubbarHtml() {
