@@ -1935,7 +1935,7 @@
 
   function generate() {
     var db = preparedDb();
-    var out = ICS.generateAll(db, { extraHeaders: true });
+    var out = ICS.generateAll(db, { extraHeaders: false });
     S.gen = out;
     /* Hold on to the exact database these bytes came from. Publishing commits
        this object, so the SEQUENCE inside a feed and the number stored in
