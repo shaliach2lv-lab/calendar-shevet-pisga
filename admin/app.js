@@ -1252,8 +1252,9 @@
         var mine = (S.db && S.db.events) || [];
         var live = (liveDb && liveDb.events) || [];
         if (dirtyCount()) {
-          reasons.push(dirtyCount() + ' unpublished change' + (dirtyCount() === 1 ? '' : 's') +
-            ' are waiting in this browser. Publish them, or undo them, before removing anything.');
+          reasons.push(dirtyCount() === 1
+            ? '1 unpublished change is waiting in this browser. Publish it, or undo it, before removing anything.'
+            : dirtyCount() + ' unpublished changes are waiting in this browser. Publish them, or undo them, before removing anything.');
         }
         if (mine.length !== live.length) {
           reasons.push('This browser holds ' + mine.length + ' master events and the live ' +
@@ -1263,8 +1264,8 @@
           live.forEach(function (e) { liveJson[e.id] = JSON.stringify(e); });
           var drift = mine.filter(function (e) { return liveJson[e.id] !== JSON.stringify(e); }).length;
           if (drift) {
-            reasons.push(drift + ' master event' + (drift === 1 ? '' : 's') +
-              ' in this browser differ from the live ' + PUBLISH_DB + '.');
+            reasons.push(drift + ' master event' + (drift === 1 ? ' in this browser differs' : 's in this browser differ') +
+              ' from the live ' + PUBLISH_DB + '.');
           }
         }
         return reasons;
