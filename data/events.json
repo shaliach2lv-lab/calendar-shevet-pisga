@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-08T20:07:41Z",
+  "generatedAt": "2026-09-08T20:13:30Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -70,15 +70,15 @@
         "en": "Tzevet Movil Training"
       },
       "description": {
-        "he": null,
-        "en": null
+        "he": "הכשרה לרשג״דים",
+        "en": "rashgad training"
       },
       "location": {
-        "he": null,
-        "en": null
+        "he": "הבית של אגם ",
+        "en": "agam's"
       },
       "allDay": false,
-      "start": "2026-09-09T17:00:00",
+      "start": "2026-09-09T16:00:00",
       "end": "2026-09-09T19:00:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
@@ -97,10 +97,10 @@
         "shchavag": "shchavag-001@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-08T20:13:12Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0002",
