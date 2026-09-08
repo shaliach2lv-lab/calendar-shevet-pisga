@@ -1,4 +1,4 @@
-/* ============================================================================
+undefined/* ============================================================================
  *  Shevet Pisga  -  Admin Calendar
  *  admin/app.js
  *
@@ -1227,7 +1227,253 @@
     toast('Restored', 'ok');
   }
 
-  /* ---------------------------------------------------------- drag engine */
+    /* -------------------------------------------------- permanent removal */
+  /* Archive and Remove permanently are two different things on purpose.
+
+     Archive keeps the master row, keeps every UID and publishes the event
+     one last time as STATUS:CANCELLED. That cancelled entry is the only
+     sentence a subscribed calendar understands as "drop this one".
+
+     Remove permanently is the step after that. The master row leaves
+     the master database, so the event is no longer generated into any feed
+     at all and its UIDs simply stop existing. Nothing is left to publish a
+     cancellation with, so it is offered only from a working copy that
+     matches the live database exactly, and only behind a typed
+     confirmation. Archive and Restore are untouched by any of this. */
+
+  function removeReadiness() {
+    return fetch(DATA_URL + '?cb=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) {
+        if (!r.ok) { throw new Error(PUBLISH_DB + ' responded ' + r.status); }
+        return r.json();
+      })
+      .then(function (liveDb) {
+        var reasons = [];
+        var mine = (S.db && S.db.events) || [];
+        var live = (liveDb && liveDb.events) || [];
+        if (dirtyCount()) {
+          reasons.push(dirtyCount() + ' unpublished change' + (dirtyCount() === 1 ? '' : 's') +
+            ' are waiting in this browser. Publish them, or undo them, before removing anything.');
+        }
+        if (mine.length !== live.length) {
+          reasons.push('This browser holds ' + mine.length + ' master events and the live ' +
+            PUBLISH_DB + ' holds ' + live.length + '.');
+        } else {
+          var liveJson = {};
+          live.forEach(function (e) { liveJson[e.id] = JSON.stringify(e); });
+          var drift = mine.filter(function (e) { return liveJson[e.id] !== JSON.stringify(e); }).length;
+          if (drift) {
+            reasons.push(drift + ' master event' + (drift === 1 ? '' : 's') +
+              ' in this browser differ from the live ' + PUBLISH_DB + '.');
+          }
+        }
+        return reasons;
+      });
+  }
+
+  /* A real dry run: generate the six files from a database that no longer
+     contains the event and diff them against what is live right now. The
+     rows below are whatever ICS.diff actually reports, so a removal can
+     never be dressed up as a cancellation or the other way round. */
+  function removalPlan(ev) {
+    var db = JSON.parse(JSON.stringify(S.db));
+    db.events = db.events.filter(function (e) { return e.id !== ev.id; });
+    var gen = ICS.generateAll(db, { extraHeaders: false });
+    var live = S.live || {};
+    var uids = Object.keys(ev.uids || {}).map(function (k) { return ev.uids[k]; }).filter(Boolean);
+    var plan = { gen: gen, changed: [], untouched: [], removed: [], strays: 0, ghosts: [] };
+    ICS.feedFiles(S.db).forEach(function (f) {
+      var before = live[f.file] || '';
+      var after = gen[f.file] || '';
+      if (uids.some(function (u) { return after.indexOf(u) >= 0; })) { plan.ghosts.push(f.file); }
+      var d = before ? ICS.diff(before, after) : null;
+      if (!d || d.identical) {
+        plan.untouched.push({ file: f.file, color: f.color });
+        return;
+      }
+      plan.changed.push({ file: f.file, color: f.color, counts: d.counts });
+      (d.removed || []).forEach(function (x) {
+        plan.removed.push({ file: f.file, color: f.color, uid: x.uid, summary: x.summary });
+      });
+      plan.strays += d.counts.added + d.counts.changed;
+    });
+    return plan;
+  }
+
+  function showRemoveBlocked(ev, reasons) {
+    modal({
+      title: 'Remove permanently is blocked',
+      sub: titleOf(ev),
+      body: '<p class="note warn">A master event may only be removed from a working copy that matches the live ' +
+        esc(PUBLISH_DB) + ' exactly. Anything else and the preview would be describing a database the ' +
+        'repository does not have.</p>' +
+        '<div class="impact" style="margin-top:11px">' +
+        reasons.map(function (t) {
+          return '<div class="impact-row"><span class="pill pill-warn">BLOCKED</span>' +
+            '<span style="flex:1">' + esc(t) + '</span></div>';
+        }).join('') + '</div>',
+      actions: [{ label: 'Close', cls: 'btn-ghost' }]
+    });
+  }
+
+  function showRemovePreview(ev) {
+    var plan = removalPlan(ev);
+    var stop = [];
+    if (plan.ghosts.length) {
+      stop.push('A UID of this event is still present in ' + plan.ghosts.join(', ') + '.');
+    }
+    if (plan.strays) {
+      stop.push(plan.strays + ' unrelated event change' + (plan.strays === 1 ? '' : 's') +
+        ' appeared in the generated files.');
+    }
+    if (feedsOf(ev).length && !plan.changed.length) {
+      stop.push('The generated feeds do not differ from the live ones, so this removal cannot be verified.');
+    }
+
+    var h = '';
+    h += '<p class="note warn"><b>This is not Archive.</b> Archive keeps the row in ' + esc(PUBLISH_DB) +
+      ' and publishes it one more time as STATUS:CANCELLED. Remove permanently deletes the row, so the event ' +
+      'is generated into no feed at all and its UIDs stop existing. Once that has been published the admin ' +
+      'cannot bring it back.</p>';
+    if (!archived(ev)) {
+      h += '<p class="note warn" style="margin-top:10px">This event has never been published as cancelled. ' +
+        'Anyone already subscribed may keep a copy of it for ever. Archive it and publish that first if that ' +
+        'matters.</p>';
+    }
+
+    h += '<div class="flabel" style="margin-top:14px">Master event to remove</div><div class="impact">' +
+      '<div class="impact-row"><span class="pill pill-danger">REMOVED</span>' +
+      '<span style="flex:1" dir="auto">' + esc(titleOf(ev)) + '</span>' +
+      '<span class="mono" style="font-size:11px">' + esc(ev.id) + '</span></div>' +
+      '<div class="impact-row"><span style="flex:1">' + esc(prettyDate(dkey(ev.start))) + '</span>' +
+      '<span class="mono" style="font-size:11px">status ' + esc(ev.status || 'published') + '</span></div>' +
+      '</div>';
+
+    h += '<div class="flabel" style="margin-top:14px">Feed entries that disappear (' + plan.removed.length +
+      ')</div><div class="impact">' + (plan.removed.length
+        ? plan.removed.map(function (x) {
+            return '<div class="impact-row"><span class="pill pill-danger">REMOVED</span>' +
+              '<span class="pub-dot" style="background:' + x.color + '"></span>' +
+              '<span class="mono" style="flex:1;font-size:11px">' + esc(x.file) + '</span>' +
+              '<span class="mono" style="font-size:11px">' + esc(x.uid || '') + '</span></div>';
+          }).join('')
+        : '<div class="impact-row">This event is in no feed, so only ' + esc(PUBLISH_DB) +
+          ' changes.</div>') + '</div>';
+
+    h += '<div class="flabel" style="margin-top:14px">Files this will change (' + (plan.changed.length + 1) +
+      ')</div><div class="impact">' +
+      plan.changed.map(function (f) {
+        return '<div class="impact-row"><span class="pub-dot" style="background:' + f.color + '"></span>' +
+          '<span class="mono" style="flex:1;font-size:11px">' + esc(f.file) + '</span>' +
+          '<b>' + f.counts.removed + ' removed</b></div>';
+      }).join('') +
+      '<div class="impact-row"><span class="pub-dot" style="background:var(--ink-3)"></span>' +
+      '<span class="mono" style="flex:1;font-size:11px">' + esc(PUBLISH_DB) + '</span>' +
+      '<b>1 master row</b></div></div>';
+
+    h += '<div class="flabel" style="margin-top:14px">Files that stay untouched (' + plan.untouched.length +
+      ')</div><div class="impact">' + (plan.untouched.length
+        ? plan.untouched.map(function (f) {
+            return '<div class="impact-row"><span class="pub-dot" style="background:' + f.color + '"></span>' +
+              '<span class="mono" style="flex:1;font-size:11px">' + esc(f.file) + '</span>' +
+              '<span style="color:var(--ink-3);font-size:11.5px">no event change</span></div>';
+          }).join('')
+        : '<div class="impact-row">None.</div>') + '</div>';
+
+    if (stop.length) {
+      h += '<div class="flabel" style="margin-top:14px">Refused</div><div class="impact">' +
+        stop.map(function (t) {
+          return '<div class="impact-row"><span class="pill pill-warn">STOP</span>' +
+            '<span style="flex:1">' + esc(t) + '</span></div>';
+        }).join('') + '</div>';
+    } else {
+      h += '<div class="field" style="margin-top:14px">' +
+        '<label class="flabel">Type REMOVE to confirm</label>' +
+        '<input class="input mono" id="fRemoveConfirm" autocomplete="off" spellcheck="false" placeholder="REMOVE">' +
+        '</div>' +
+        '<p class="note">Nothing is written anywhere by this dialog. It only drops the row from the copy in ' +
+        'this browser; the live files change on the next publish, in the same single commit as always.</p>';
+    }
+
+    var m = modal({
+      title: 'Remove permanently?',
+      sub: plan.removed.length + (plan.removed.length === 1 ? ' feed entry' : ' feed entries') + ' \u00b7 ' +
+        plan.changed.length + ' of 6 feeds \u00b7 ' + PUBLISH_DB,
+      wide: true, body: h,
+      actions: stop.length
+        ? [{ label: 'Close', cls: 'btn-ghost' }]
+        : [{ label: 'Cancel', cls: 'btn-ghost' },
+           {
+             label: 'Remove permanently', cls: 'btn-danger', close: false,
+             fn: function () {
+               var i = $('#fRemoveConfirm', m);
+               if (!i || i.value.trim().toUpperCase() !== 'REMOVE') {
+                 toast('Type REMOVE to confirm', 'err');
+                 return;
+               }
+               closeModal();
+               performRemove(ev);
+             }
+           }]
+    });
+
+    var ok = $('.modal-f .btn-danger', m);
+    var inp = $('#fRemoveConfirm', m);
+    if (ok && inp) {
+      ok.disabled = true;
+      on(inp, 'input', function () {
+        ok.disabled = inp.value.trim().toUpperCase() !== 'REMOVE';
+      });
+      setTimeout(function () { inp.focus(); }, 60);
+    }
+  }
+
+  function performRemove(ev) {
+    var i = (S.db.events || []).indexOf(ev);
+    if (i < 0) { return; }
+    commit('remove event permanently');
+    S.db.events.splice(i, 1);
+    delete S.selected[ev.id];
+    markDirty(ev.id);
+    S.live = null;
+    saveDraft();
+    closeEditor();
+    renderAll();
+    toast('Removed from the master database - it is in no feed now. Publish to write that to the repository.',
+      'ok', 6000);
+  }
+
+  function removeEventPermanently(id) {
+    var ev = byId(id);
+    if (!ev) { return; }
+    toast('Checking this working copy against the live database\u2026');
+    S.live = null;
+    Promise.all([removeReadiness(), fetchLive()]).then(function (r) {
+      if (r[0].length) { showRemoveBlocked(ev, r[0]); return; }
+      showRemovePreview(ev);
+    }).catch(function (e) {
+      modal({
+        title: 'Remove permanently is not available',
+        sub: 'Nothing was changed',
+        body: '<div class="impact"><div class="impact-row">' + esc(scrub(e && e.message)) + '</div></div>' +
+          '<p class="note" style="margin-top:10px">The live master database and the six live feeds have to be ' +
+          'readable before a removal can be previewed honestly.</p>',
+        actions: [{ label: 'Close', cls: 'btn-ghost' }]
+      });
+    });
+  }
+
+  function syncRemoveButton() {
+    var b = $('#soRemove');
+    if (!b) { return; }
+    var blocked = dirtyCount() > 0;
+    b.disabled = blocked;
+    b.title = blocked
+      ? 'Publish or undo the unpublished changes first - a removal needs a clean working copy'
+      : 'Delete this master event from ' + PUBLISH_DB + ' so that it exists in no feed at all';
+  }
+
+/* ---------------------------------------------------------- drag engine */
   /*  One pointer handler for month chips, week/day blocks and resize grips.
       Nothing moves until the pointer has travelled a few pixels, so a plain
       click still opens the editor.                                        */
@@ -1508,6 +1754,7 @@
     arc.textContent = archived(d) ? 'Restore' : 'Archive';
     arc.className = archived(d) ? 'btn btn-outline' : 'btn btn-danger';
     $('#soSave').disabled = false;
+    syncRemoveButton();
     markEditorDirty();
   }
 
@@ -2736,6 +2983,19 @@
       if (archived(byId(S.editingId))) { restoreEvent(S.editingId); renderEditor(); }
       else { archiveEvent(S.editingId); }
     });
+        var soFoot = $('.so-foot');
+    if (soFoot && !$('#soRemove')) {
+      var rmBtn = el('button', 'btn btn-outline', 'Remove permanently');
+      rmBtn.id = 'soRemove';
+      rmBtn.style.borderColor = '#dc2626';
+      rmBtn.style.color = '#dc2626';
+      soFoot.appendChild(rmBtn);
+    }
+    on($('#soRemove'), 'click', function () {
+      if (!S.editingId) { return; }
+      removeEventPermanently(S.editingId);
+    });
+
     on($('#scrim'), 'click', function () { closeEditor(); $('#sidebar').classList.remove('open'); });
 
     on($('#btnSelAll'), 'click', function () {
