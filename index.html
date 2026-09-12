@@ -4,56 +4,95 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>לוז שבט פסגה 26-27 | Shevet Pisga Schedule</title>
+<meta name="theme-color" content="#14130f">
 <style>
+:root{
+--gold:#c9982f;--gold-lt:#e0b451;--gold-dp:#8a6519;--gold-tint:#fbf6e9;--gold-line:#ead9b4;
+--ink:#141414;--ink-2:#2c2c2c;--ink-soft:#5a5a5a;--ink-mute:#6f6f6f;--paper:#fff;--hair:#efeae0;
+}
 *{box-sizing:border-box}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:linear-gradient(135deg,#1e3c72,#2a5298);min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center;padding:16px}
-.card{background:#fff;border-radius:18px;padding:26px 20px;max-width:560px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.25);text-align:center}
-h1{font-size:23px;margin:0 0 2px;color:#1e3c72}
-h2.en-title{font-size:18px;margin:0 0 10px;color:#3b6cb7;direction:ltr;font-weight:700}
-.subtitle{color:#666;font-size:15px;margin:0}
-.subtitle.en{direction:ltr;font-size:14px;color:#888;margin:0 0 14px}
-.device{background:#eef4ff;border:1px solid #cfe0ff;color:#1e3c72;border-radius:12px;padding:12px 13px;font-size:14px;line-height:1.6}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Heebo","Assistant",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);line-height:1.55;background-color:#14130f;background-image:radial-gradient(115% 70% at 50% 0%,rgba(201,152,47,.22) 0%,rgba(201,152,47,0) 62%),url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27124%27%20height%3D%27124%27%3E%3Cg%20fill%3D%27none%27%20stroke%3D%27rgba(255%2C255%2C255%2C0.055)%27%20stroke-width%3D%271%27%3E%3Cpath%20d%3D%27M62%2038%20L81%2071%20L43%2071%20Z%27%2F%3E%3Cpath%20d%3D%27M62%2084%20L81%2051%20L43%2051%20Z%27%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");background-repeat:no-repeat,repeat;background-position:center top,center top;min-height:100vh;margin:0;display:flex;align-items:center;justify-content:center;padding:22px 14px}
+.card{background:var(--paper);border-radius:18px;border-top:4px solid var(--gold);padding:24px 20px 26px;max-width:560px;width:100%;box-shadow:0 22px 55px rgba(0,0,0,.38);text-align:center}
+.brand{display:block}
+.brand-mark{display:inline-flex;align-items:center;justify-content:center;padding:4px 16px;background:radial-gradient(58% 56% at 50% 48%,rgba(201,152,47,.14) 0%,rgba(201,152,47,0) 72%)}
+.brand-logo{display:block;height:132px;width:auto}
+.brand-rule{display:flex;align-items:center;justify-content:center;gap:9px;max-width:220px;margin:13px auto 15px}
+.brand-rule span{flex:1 1 auto;height:1px;background:linear-gradient(90deg,rgba(201,152,47,0),var(--gold-line),rgba(201,152,47,0))}
+.brand-rule i{flex:none;width:7px;height:7px;background:var(--gold);transform:rotate(45deg);border-radius:1px}
+h1{font-size:24px;line-height:1.25;margin:0 0 4px;color:var(--ink);font-weight:800;letter-spacing:-.2px}
+h2.en-title{font-size:14px;margin:0 0 12px;color:var(--gold-dp);direction:ltr;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+.subtitle{color:var(--ink-soft);font-size:15px;margin:0}
+.subtitle.en{direction:ltr;font-size:13.5px;color:var(--ink-mute);margin:0 0 16px}
+.device{background:var(--gold-tint);border:1px solid var(--gold-line);color:#4a3c1c;border-radius:12px;padding:12px 14px;font-size:14px;line-height:1.6}
 .he{direction:rtl;text-align:right}
 .en{direction:ltr;text-align:left}
-.device .en{margin-top:8px;padding-top:8px;border-top:1px dashed #b9d2ff;color:#33518c}
-.section{border-top:1px solid #eee;padding-top:16px;margin-top:16px}
-.section-title{font-size:19px;font-weight:700;color:#1e3c72;margin:0}
-.section-title-en{font-size:15px;font-weight:600;color:#7a8aa0;direction:ltr;margin:0 0 6px}
-.langlbl{font-size:14px;font-weight:700;color:#555;text-align:right;margin:12px 0 6px}
+.device .en{margin-top:8px;padding-top:8px;border-top:1px dashed var(--gold-line);color:#6b5624}
+.section{border-top:1px solid var(--hair);padding-top:18px;margin-top:18px}
+.section-title{font-size:19px;font-weight:800;color:var(--ink);margin:0;letter-spacing:-.2px}
+.section-title-en{font-size:12.5px;font-weight:700;color:var(--gold-dp);direction:ltr;margin:3px 0 8px;letter-spacing:1.1px;text-transform:uppercase}
+.langlbl{font-size:12.5px;font-weight:800;color:var(--ink-mute);text-align:right;margin:14px 0 7px;letter-spacing:.4px}
 .btns{display:flex;gap:8px}
-.btn{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;height:56px;border:0;border-radius:12px;padding:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none;line-height:1.25}
-.btn-g{background:#1a73e8;color:#fff}
-.btn-a{background:#111;color:#fff}
-.btn-atc{background:#0b8043;color:#fff;width:100%}
-.btn-more{background:none;color:#1a73e8;height:auto;padding:9px 0 0;font-size:13px;font-weight:600;text-decoration:underline;width:100%}
-.dl{margin-top:10px;font-size:13px;color:#999}
-.dl a{color:#1a73e8;text-decoration:underline}
-.foot{margin-top:18px;font-size:12px;color:#aaa;line-height:1.6}
+.btn{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;height:56px;border:0;border-radius:12px;padding:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none;line-height:1.25;transition:background-color .13s ease,color .13s ease,box-shadow .13s ease,transform .13s ease}
+.btn:active{transform:translateY(1px)}
+.btn-g{background:#1a73e8;color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.14)}
+.btn-g:hover{background:#1668d1}
+.btn-a{background:var(--ink);color:#fff;box-shadow:0 2px 0 rgba(0,0,0,.2)}
+.btn-a:hover{background:#000}
+.btn-atc{background:linear-gradient(180deg,var(--gold-lt),var(--gold));color:#2a2007;width:100%;font-weight:800;letter-spacing:.2px;box-shadow:0 3px 0 var(--gold-dp)}
+.btn-atc:hover{background:linear-gradient(180deg,#e6bd5f,#d0a136)}
+.btn-atc:active{box-shadow:0 1px 0 var(--gold-dp)}
+.btn-more{background:none;color:var(--gold-dp);height:auto;padding:10px 0 0;font-size:13px;font-weight:700;text-decoration:underline;text-underline-offset:3px;width:100%}
+.dl{margin-top:12px;font-size:12.5px;color:var(--ink-mute)}
+.dl a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+.dl a:hover{color:var(--gold-dp)}
+.foot{margin-top:22px;padding-top:15px;border-top:1px solid var(--hair);font-size:12px;color:var(--ink-mute);line-height:1.65}
 .hide{display:none!important}
-.ovl{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(201,152,47,.55);outline-offset:2px}
+.ovl{position:fixed;inset:0;background:rgba(14,13,10,.62);z-index:50;display:flex;align-items:flex-end;justify-content:center}
 .ovl[hidden]{display:none}
-.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:18px 16px 24px;position:relative;text-align:right}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:18px 18px 0 0;border-top:3px solid var(--gold);padding:18px 16px 24px;position:relative;text-align:right}
 @media(min-width:620px){.ovl{align-items:center}.sheet{border-radius:16px}}
-.sh-x{position:absolute;top:6px;left:8px;background:none;border:0;font-size:28px;line-height:1;color:#999;cursor:pointer;padding:2px 8px;font-family:inherit}
-.sh-title{font-size:17px;font-weight:700;color:#1e3c72;margin:0 30px 2px 0}
-.sh-sub{font-size:13px;color:#666;margin:0 0 4px}
-.sh-step{font-size:12px;font-weight:700;color:#7a8aa0;margin:16px 0 7px;text-align:right}
-.box{border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.65;margin-top:10px}
+.sh-x{position:absolute;top:6px;left:8px;background:none;border:0;font-size:28px;line-height:1;color:#7a756a;cursor:pointer;padding:2px 8px;font-family:inherit}
+.sh-x:hover{color:var(--ink)}
+.sh-title{font-size:17px;font-weight:800;color:var(--ink);margin:0 30px 2px 0}
+.sh-sub{font-size:13px;color:var(--ink-soft);margin:0 0 4px}
+.sh-step{font-size:11.5px;font-weight:800;color:var(--gold-dp);margin:16px 0 8px;text-align:right;letter-spacing:.5px}
+.box{border-radius:10px;padding:11px 13px;font-size:13px;line-height:1.65;margin-top:10px}
 .box .en{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(0,0,0,.12)}
-.box-ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;font-weight:700}
-.box-warn{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
-.box-info{background:#f5f7fb;border:1px solid #dde3ee;color:#33518c}
-.box-hint{background:#fafbfd;border:1px solid #eceff5;color:#444}
-.btn-copy{background:#eef4ff;color:#1e3c72;border:1px solid #cfe0ff;width:100%;height:50px}
-.btn-ob{background:#f3f4f6;color:#333;border:1px solid #dcdfe4;width:100%;height:50px;margin-top:8px}
+.box-ok{background:#eaf6ee;border:1px solid #b6dcc3;color:#12613a;font-weight:700}
+.box-warn{background:#fdf6e3;border:1px solid #ebd69b;color:#6b5119}
+.box-info{background:#f7f5f0;border:1px solid #e6e1d6;color:#3a352a}
+.box-hint{background:#fbfaf7;border:1px solid var(--hair);color:#4a4a4a}
+.btn-copy{background:var(--gold-tint);color:#6b5119;border:1.5px solid var(--gold-line);width:100%;height:50px}
+.btn-copy:hover{background:#f7efdc}
+.btn-ob{background:#f7f6f3;color:var(--ink-2);border:1.5px solid #e4e0d7;width:100%;height:50px;margin-top:8px}
+.btn-ob:hover{background:#f0eee8}
 .urlbox{margin-top:8px}
-.urlbox input{width:100%;font-size:12px;padding:9px;border:1px solid #ccc;border-radius:8px;direction:ltr;background:#fff;font-family:inherit}
-.sh-dl{margin-top:14px;font-size:13px;color:#999}
-.sh-dl a{color:#1a73e8}
+.urlbox input{width:100%;font-size:12px;padding:10px;border:1.5px solid var(--gold-line);border-radius:8px;direction:ltr;background:#fffdf8;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.sh-dl{margin-top:16px;font-size:12.5px;color:var(--ink-mute)}
+.sh-dl a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:2px}
+.sh-dl a:hover{color:var(--gold-dp)}
+@media(max-width:480px){
+body{padding:14px 10px}
+.card{border-radius:16px;padding:20px 14px 22px}
+.brand-logo{height:110px}
+h1{font-size:21px}
+h2.en-title{font-size:12.5px;letter-spacing:1.2px;margin-bottom:10px}
+.subtitle{font-size:14px}
+.subtitle.en{font-size:13px}
+.section-title{font-size:17px}
+.btn{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){.btn{transition:none}.btn:active{transform:none}}
 </style>
 </head>
 <body>
 <div class="card">
+<header class="brand">
+<div class="brand-mark"><img class="brand-logo" width="160" height="264" alt="שבט פסגה / Shevet Pisga" src="assets/logo.png"></div>
+<div class="brand-rule" aria-hidden="true"><span></span><i></i><span></span></div>
+</header>
 <h1>לוז שבט פסגה 2026-2027</h1>
 <h2 class="en-title">Shevet Pisga Schedule 2026-2027</h2>
 <p class="subtitle">בחרו קבוצה, שפה וסוג יומן - וזהו</p>
