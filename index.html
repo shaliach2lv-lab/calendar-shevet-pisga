@@ -24,12 +24,32 @@ h2.en-title{font-size:18px;margin:0 0 10px;color:#3b6cb7;direction:ltr;font-weig
 .btn{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;height:56px;border:0;border-radius:12px;padding:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none;line-height:1.25}
 .btn-g{background:#1a73e8;color:#fff}
 .btn-a{background:#111;color:#fff}
+.btn-atc{background:#0b8043;color:#fff;width:100%}
+.btn-more{background:none;color:#1a73e8;height:auto;padding:9px 0 0;font-size:13px;font-weight:600;text-decoration:underline;width:100%}
 .dl{margin-top:10px;font-size:13px;color:#999}
 .dl a{color:#1a73e8;text-decoration:underline}
-.msg{display:none;border-radius:12px;padding:14px;font-size:14px;line-height:1.7;margin-top:16px;background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
-.msg .en{margin-top:8px;padding-top:8px;border-top:1px dashed #e6c86a}
-.msg.show{display:block}
 .foot{margin-top:18px;font-size:12px;color:#aaa;line-height:1.6}
+.hide{display:none!important}
+.ovl{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.ovl[hidden]{display:none}
+.sheet{background:#fff;width:100%;max-width:560px;max-height:92vh;overflow-y:auto;border-radius:16px 16px 0 0;padding:18px 16px 24px;position:relative;text-align:right}
+@media(min-width:620px){.ovl{align-items:center}.sheet{border-radius:16px}}
+.sh-x{position:absolute;top:6px;left:8px;background:none;border:0;font-size:28px;line-height:1;color:#999;cursor:pointer;padding:2px 8px;font-family:inherit}
+.sh-title{font-size:17px;font-weight:700;color:#1e3c72;margin:0 30px 2px 0}
+.sh-sub{font-size:13px;color:#666;margin:0 0 4px}
+.sh-step{font-size:12px;font-weight:700;color:#7a8aa0;margin:16px 0 7px;text-align:right}
+.box{border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.65;margin-top:10px}
+.box .en{margin-top:7px;padding-top:7px;border-top:1px dashed rgba(0,0,0,.12)}
+.box-ok{background:#e8f5e9;border:1px solid #a5d6a7;color:#1b5e20;font-weight:700}
+.box-warn{background:#fff8e1;border:1px solid #ffe082;color:#5d4037}
+.box-info{background:#f5f7fb;border:1px solid #dde3ee;color:#33518c}
+.box-hint{background:#fafbfd;border:1px solid #eceff5;color:#444}
+.btn-copy{background:#eef4ff;color:#1e3c72;border:1px solid #cfe0ff;width:100%;height:50px}
+.btn-ob{background:#f3f4f6;color:#333;border:1px solid #dcdfe4;width:100%;height:50px;margin-top:8px}
+.urlbox{margin-top:8px}
+.urlbox input{width:100%;font-size:12px;padding:9px;border:1px solid #ccc;border-radius:8px;direction:ltr;background:#fff;font-family:inherit}
+.sh-dl{margin-top:14px;font-size:13px;color:#999}
+.sh-dl a{color:#1a73e8}
 </style>
 </head>
 <body>
@@ -43,78 +63,222 @@ h2.en-title{font-size:18px;margin:0 0 10px;color:#3b6cb7;direction:ltr;font-weig
 <div class="section-title">לוז חניכים ג׳-ח׳</div>
 <div class="section-title-en">Hanichim Schedule (Grades 3-8)</div>
 <div class="langlbl">עברית / Hebrew</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-pisga.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-pisga.ics?v=la2">יומן אייפון / Apple</a>
+<div class="feed" data-feed="unique-pisga.ics?v=la2" data-label="לוז חניכים ג׳-ח׳ · עברית / Hanichim · Hebrew">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-pisga.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga.ics?v=la2">יומן אייפון / Apple</a>
+</div>
 </div>
 <div class="langlbl">English / אנגלית</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-pisga-en.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-pisga-en.ics?v=la2">Apple / iPhone</a>
+<div class="feed" data-feed="unique-pisga-en.ics?v=la2" data-label="Hanichim (Grades 3-8) · English">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-pisga-en.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga-en.ics?v=la2">Apple / iPhone</a>
 </div>
-<div class="dl"><a data-f="unique-pisga.ics?v=la2">הורדת קובץ עברית</a> | <a data-f="unique-pisga-en.ics?v=la2">Download English file</a></div>
+</div>
+<div class="dl"><a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga.ics?v=la2">הורדת קובץ עברית</a> | <a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-pisga-en.ics?v=la2">Download English file</a></div>
 </div>
 <div class="section">
 <div class="section-title">לוז ט׳</div>
 <div class="section-title-en">Tet Schedule (Grade 9)</div>
 <div class="langlbl">עברית / Hebrew</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-tet.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-tet.ics?v=la2">יומן אייפון / Apple</a>
+<div class="feed" data-feed="unique-tet.ics?v=la2" data-label="לוז ט׳ · עברית / Tet · Hebrew">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-tet.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet.ics?v=la2">יומן אייפון / Apple</a>
+</div>
 </div>
 <div class="langlbl">English / אנגלית</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-tet-en.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-tet-en.ics?v=la2">Apple / iPhone</a>
+<div class="feed" data-feed="unique-tet-en.ics?v=la2" data-label="Tet (Grade 9) · English">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-tet-en.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet-en.ics?v=la2">Apple / iPhone</a>
 </div>
-<div class="dl"><a data-f="unique-tet.ics?v=la2">הורדת קובץ עברית</a> | <a data-f="unique-tet-en.ics?v=la2">Download English file</a></div>
+</div>
+<div class="dl"><a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet.ics?v=la2">הורדת קובץ עברית</a> | <a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-tet-en.ics?v=la2">Download English file</a></div>
 </div>
 <div class="section">
 <div class="section-title">לוז שכב״ג</div>
 <div class="section-title-en">Shachbag Schedule</div>
 <div class="langlbl">עברית / Hebrew</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-shchavag.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-shchavag.ics?v=la2">יומן אייפון / Apple</a>
+<div class="feed" data-feed="unique-shchavag.ics?v=la2" data-label="לוז שכב״ג · עברית / Shachbag · Hebrew">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-shchavag.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag.ics?v=la2">יומן אייפון / Apple</a>
+</div>
 </div>
 <div class="langlbl">English / אנגלית</div>
-<div class="btns">
-<a class="btn btn-g" data-g="unique-shchavag-en.ics?v=la2">Google Calendar</a>
-<a class="btn btn-a" data-a="unique-shchavag-en.ics?v=la2">Apple / iPhone</a>
+<div class="feed" data-feed="unique-shchavag-en.ics?v=la2" data-label="Shachbag · English">
+<div class="btns direct">
+<a class="btn btn-g" href="https://calendar.google.com/calendar/r?cid=webcal%3A%2F%2Fshaliach2lv-lab.github.io%2Fcalendar-shevet-pisga%2Funique-shchavag-en.ics%3Fv%3Dla2" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" href="webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag-en.ics?v=la2">Apple / iPhone</a>
 </div>
-<div class="dl"><a data-f="unique-shchavag.ics?v=la2">הורדת קובץ עברית</a> | <a data-f="unique-shchavag-en.ics?v=la2">Download English file</a></div>
 </div>
-<div class="msg" id="note"><div class="he" id="noteHe"></div><div class="en" id="noteEn"></div></div>
+<div class="dl"><a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag.ics?v=la2">הורדת קובץ עברית</a> | <a href="https://shaliach2lv-lab.github.io/calendar-shevet-pisga/unique-shchavag-en.ics?v=la2">Download English file</a></div>
+</div>
 <div class="foot">היומן מתעדכן אוטומטית - אין צורך להוסיף שוב<br>The calendar updates automatically - no need to add it again</div>
+</div>
+<div class="ovl" id="ovl" hidden>
+<div class="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+<button class="sh-x" type="button" id="shX" aria-label="סגירה / Close">&times;</button>
+<div class="sh-title" id="shTitle">הוספה ליומן / Add to Calendar</div>
+<div class="sh-sub" id="shSub"></div>
+<div class="box box-warn" id="shIab" hidden></div>
+<div class="sh-step">1 · הדרך המהירה / The quick way</div>
+<div class="btns">
+<a class="btn btn-g" id="shG" target="_blank" rel="noopener">Google Calendar</a>
+<a class="btn btn-a" id="shA">Apple / iPhone</a>
+</div>
+<div class="box box-info" id="shStatus" hidden></div>
+<div class="sh-step">2 · עובד תמיד / Always works</div>
+<button class="btn btn-copy" type="button" id="shCopy">העתקת קישור היומן / Copy calendar link</button>
+<div class="box box-ok" id="shCopied" hidden></div>
+<div class="urlbox" id="shUrlBox" hidden><input id="shUrl" type="text" readonly></div>
+<button class="btn btn-ob" type="button" id="shOb">המשך בדפדפן / Continue in browser</button>
+<div class="box box-hint" id="shHint"></div>
+<div class="sh-dl"><a id="shDl" target="_blank" rel="noopener">הורדת קובץ ICS (הוספה חד-פעמית) / Download .ics file (one-time import)</a></div>
+</div>
 </div>
 <script>
 (function(){
 var BASE='https://shaliach2lv-lab.github.io/calendar-shevet-pisga/';
 var WEB='webcal://shaliach2lv-lab.github.io/calendar-shevet-pisga/';
+var SITE='shaliach2lv-lab.github.io/calendar-shevet-pisga/';
 var ua=navigator.userAgent||'';
-var isIOS=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
-var isMac=/Macintosh/.test(ua);
+var mtp=navigator.maxTouchPoints||0;
+var isIOS=/iPad|iPhone|iPod/.test(ua)||(/Macintosh/.test(ua)&&mtp>1);
+var isMac=/Macintosh/.test(ua)&&!isIOS;
 var isAnd=/Android/.test(ua);
-var h,e;
-if(isIOS){h='זיהינו אייפון/אייפד. אם היומן שלכם הוא Google Calendar - לחצו על הכפתור הכחול. אם אתם משתמשים ביומן של אפל - לחצו על הכפתור השחור.';e='We detected an iPhone/iPad. If you use Google Calendar, tap the blue button. If you use the Apple Calendar app, tap the black button.';}
-else if(isAnd){h='זיהינו אנדרואיד. לחצו על הכפתור הכחול (Google Calendar).';e='We detected an Android device. Tap the blue Google Calendar button.';}
-else if(isMac){h='זיהינו מק. הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל.';e='We detected a Mac. The blue button adds to Google Calendar, the black one to Apple Calendar.';}
-else{h='הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל.';e='The blue button adds to Google Calendar, the black button adds to Apple Calendar.';}
-document.getElementById('devHe').textContent=h;
-document.getElementById('devEn').textContent=e;
-var note=document.getElementById('note'),nh=document.getElementById('noteHe'),ne=document.getElementById('noteEn');
-function show(a,b){nh.textContent=a;ne.textContent=b;note.className='msg show';}
-var GH='נפתח Google Calendar - אשרו הוספה / Add. אם אתם בטלפון ולא נפתח כלום, פתחו את הקישור בדפדפן והתחברו לחשבון הגוגל שלכם. מספיק לעשות זאת פעם אחת - הלוז יופיע אוטומטית גם באפליקציה בטלפון ויתעדכן לבד.';
-var GE='Google Calendar will open - confirm Add. If nothing opens on your phone, open the link in a browser and sign in to your Google account. You only need to do this once - the schedule will then show up in the phone app too and stay up to date.';
-var AH='אשרו הרשמה / Subscribe ואז אישור - הלוז ייכנס ליומן ויתעדכן אוטומטית.';
-var AE='Tap Subscribe and then OK - the schedule will be added to your calendar and update automatically.';
-var i,a,f,el;
-el=document.querySelectorAll('a[data-g]');
-for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-g');a.href='https://calendar.google.com/calendar/r?cid='+encodeURIComponent(WEB+f);a.target='_blank';a.rel='noopener';a.addEventListener('click',function(){show(GH,GE);});}
-el=document.querySelectorAll('a[data-a]');
-for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-a');a.href=WEB+f;a.addEventListener('click',function(){show(AH,AE);});}
-el=document.querySelectorAll('a[data-f]');
-for(i=0;i<el.length;i++){a=el[i];f=a.getAttribute('data-f');a.href=BASE+f;}
+var isMobile=isIOS||isAnd||/Mobile|Tablet/i.test(ua);
+var isIAB=/FBAN|FBAV|FB_IAB|FBIOS|Instagram|Line\/|Twitter|TikTok|musical_ly|Snapchat|MicroMessenger|WhatsApp|GSA\//i.test(ua)||(isAnd&&/;\s?wv\)/.test(ua));
+function el(id){return document.getElementById(id);}
+function bi(node,he,en){
+  while(node.firstChild){node.removeChild(node.firstChild);}
+  var a=document.createElement('div');a.className='he';a.textContent=he;node.appendChild(a);
+  var b=document.createElement('div');b.className='en';b.textContent=en;node.appendChild(b);
+  node.hidden=false;
+}
+var HINTS={
+ios:['אייפון / אייפד: בכפתור Apple אשרו "הרשמה / Subscribe". בכפתור Google ייתכן שתיפתח אפליקציית היומן בלי מסך הוספה - זו מגבלה של האפליקציה. במקרה כזה: העתיקו את קישור היומן, פתחו calendar.google.com בספארי, בחרו בתפריט "בקש אתר למחשב", ואז: יומנים אחרים ← מכתובת URL ← הדבקה ← הוספה.','iPhone / iPad: with the Apple button, tap Subscribe to confirm. The Google button may open the Calendar app with no add screen - that is an app limitation. If so: copy the calendar link, open calendar.google.com in Safari, choose Request Desktop Website, then Other calendars > From URL > paste > Add.'],
+and:['אנדרואיד: אפליקציית Google Calendar לא תומכת בהוספת יומן מקישור, ולכן לחיצה יכולה לפתוח את האפליקציה בלי להוסיף כלום. הדרך שעובדת: העתיקו את קישור היומן, פתחו calendar.google.com ב-Chrome, בתפריט סמנו "אתר למחשב", ואז: יומנים אחרים ← מכתובת URL ← הדבקה ← הוספה.','Android: the Google Calendar app cannot add a calendar from a link, so a tap may open the app without adding anything. What works: copy the calendar link, open calendar.google.com in Chrome, turn on Desktop site in the menu, then Other calendars > From URL > paste > Add.'],
+mac:['מק: הכפתור הכחול מוסיף ל-Google Calendar (אשרו "הוספה"), הכפתור השחור מוסיף ליומן של אפל (אשרו "הרשמה"). אם כלום לא נפתח - העתיקו את קישור היומן והוסיפו אותו ידנית ביומן שלכם.','Mac: the blue button adds to Google Calendar (confirm Add), the black button adds to Apple Calendar (confirm Subscribe). If nothing opens, copy the calendar link and add it manually in your calendar app.'],
+desk:['מחשב: הכפתור הכחול פותח את Google Calendar - אשרו "הוספה". אם אינכם משתמשים ב-Google, העתיקו את קישור היומן והדביקו אותו ביומן שלכם (Outlook: הוספת יומן ← הרשמה מהאינטרנט).','Desktop: the blue button opens Google Calendar - confirm Add. If you do not use Google, copy the calendar link and paste it into your calendar (Outlook: Add calendar > Subscribe from web).']
+};
+var d=isIOS?['זיהינו אייפון/אייפד. לחצו "הוספה ליומן". אם המערכת פותחת אפליקציה במקום דפדפן - בתוך האתר תמיד יופיעו הוראות וכפתור להעתקת קישור היומן.','iPhone/iPad detected. Tap "Add to Calendar". If the system opens an app instead of the browser, in-page instructions and a Copy calendar link button are always available.']
+:isAnd?['זיהינו אנדרואיד. לחצו "הוספה ליומן". אם נפתחת אפליקציה ולא נוסף כלום - השתמשו בכפתור העתקת קישור היומן ובהוראות שבאתר.','Android detected. Tap "Add to Calendar". If an app opens without adding anything, use the Copy calendar link button and the in-page instructions.']
+:isMac?['זיהינו מק. הכפתור הכחול מוסיף ל-Google Calendar, השחור ליומן של אפל. תמיד אפשר להעתיק את קישור היומן במקום זאת.','Mac detected. The blue button adds to Google Calendar, the black one to Apple Calendar. You can always copy the calendar link instead.']
+:['הכפתור הכחול מוסיף ל-Google Calendar, הכפתור השחור ליומן של אפל. תמיד אפשר להעתיק את קישור היומן במקום זאת.','The blue button adds to Google Calendar, the black button adds to Apple Calendar. You can always copy the calendar link instead.'];
+el('devHe').textContent=d[0];
+el('devEn').textContent=d[1];
+var cur={u:'',w:''},watch=null;
+function stopWatch(){
+  if(watch){clearTimeout(watch.t);document.removeEventListener('visibilitychange',watch.h);window.removeEventListener('pagehide',watch.h);watch=null;}
+}
+function startWatch(name){
+  stopWatch();
+  var st={left:false};
+  var h=function(ev){if(ev&&ev.type==='pagehide'){st.left=true;return;}if(document.hidden){st.left=true;}};
+  document.addEventListener('visibilitychange',h);
+  window.addEventListener('pagehide',h);
+  var t=setTimeout(function(){
+    var left=st.left;stopWatch();
+    if(left){bi(el('shStatus'),'העברנו אותך אל '+name+'. אם לא הופיע מסך אישור, או שאחרי החזרה לא נוסף יומן - המשיכו לשלב 2 למטה: העתיקו את קישור היומן ופעלו לפי ההוראות.','We handed off to '+name+'. If no confirmation screen appeared, or nothing was added when you came back, continue with step 2 below: copy the calendar link and follow the instructions.');}
+    else{bi(el('shStatus'),'לא הצלחנו לפתוח את '+name+' מהמכשיר הזה. אין בעיה - השתמשו בשלב 2 למטה: העתקת קישור היומן וההוראות.','We could not open '+name+' on this device. No problem - use step 2 below: Copy calendar link and the instructions.');}
+  },2200);
+  watch={t:t,h:h};
+}
+function openSheet(feed,label){
+  cur.u=BASE+feed;cur.w=WEB+feed;
+  el('shSub').textContent=label||'';
+  el('shG').href='https://calendar.google.com/calendar/r?cid='+encodeURIComponent(cur.w);
+  var a=el('shA');a.href=cur.w;a.style.display=isAnd?'none':'';
+  el('shDl').href=cur.u;
+  el('shUrl').value=cur.u;
+  el('shUrlBox').hidden=true;
+  el('shCopied').hidden=true;el('shCopied').className='box box-ok';
+  el('shStatus').hidden=true;
+  var k=isIOS?'ios':isAnd?'and':isMac?'mac':'desk';
+  bi(el('shHint'),HINTS[k][0],HINTS[k][1]);
+  if(isIAB){bi(el('shIab'),'שימו לב: האתר נפתח כרגע בתוך אפליקציה ולא בדפדפן. במצב הזה ההוספה האוטומטית לא תמיד עובדת - אם היא נכשלת, לחצו "המשך בדפדפן" או העתיקו את קישור היומן.','Note: this page is open inside an app, not a real browser. Automatic adding does not always work here - if it fails, tap Continue in browser or copy the calendar link.');}
+  else{el('shIab').hidden=true;}
+  el('shOb').className=(isMobile||isIAB)?'btn btn-ob':'btn btn-ob hide';
+  el('ovl').hidden=false;
+  document.body.style.overflow='hidden';
+}
+function closeSheet(){stopWatch();el('ovl').hidden=true;document.body.style.overflow='';}
+function copied(){var c=el('shCopied');c.className='box box-ok';bi(c,'קישור היומן הועתק / Calendar link copied','Calendar link copied');setTimeout(function(){c.hidden=true;},8000);}
+function copyFailed(){
+  var c=el('shCopied');c.className='box box-warn';
+  bi(c,'ההעתקה האוטומטית נחסמה. הקישור מופיע למטה ומסומן - העתיקו אותו ידנית.','Automatic copy was blocked. The link is shown and selected below - please copy it manually.');
+  el('shUrlBox').hidden=false;
+  var inp=el('shUrl');
+  try{inp.focus();inp.setSelectionRange(0,inp.value.length);}catch(e){}
+}
+function legacyCopy(t){
+  var ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');
+  ta.style.position='fixed';ta.style.top='0';ta.style.opacity='0';
+  document.body.appendChild(ta);
+  var ok=false;
+  try{ta.select();ta.setSelectionRange(0,t.length);ok=document.execCommand('copy');}catch(e){ok=false;}
+  document.body.removeChild(ta);
+  if(ok){copied();}else{copyFailed();}
+}
+function doCopy(t){
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    try{navigator.clipboard.writeText(t).then(function(){copied();},function(){legacyCopy(t);});return;}catch(e){}
+  }
+  legacyCopy(t);
+}
+el('shG').addEventListener('click',function(){
+  bi(el('shStatus'),'מנסים לפתוח את Google Calendar...','Trying to open Google Calendar...');
+  startWatch('Google Calendar');
+});
+el('shA').addEventListener('click',function(ev){
+  if(isAnd){ev.preventDefault();bi(el('shStatus'),'יומן אפל אינו זמין באנדרואיד - השתמשו ב-Google Calendar או בשלב 2.','Apple Calendar is not available on Android - use Google Calendar or step 2.');return;}
+  bi(el('shStatus'),'מנסים לפתוח את יומן אפל...','Trying to open Apple Calendar...');
+  startWatch('Apple Calendar');
+});
+el('shCopy').addEventListener('click',function(){doCopy(cur.u);});
+el('shOb').addEventListener('click',function(){
+  if(isIAB&&isAnd){
+    bi(el('shStatus'),'מנסים לפתוח דפדפן. אם כלום לא נפתח - פתחו את תפריט האפליקציה ובחרו "פתיחה בדפדפן", או העתיקו את קישור היומן.','Trying to open a browser. If nothing opens, use the app menu and choose Open in browser, or copy the calendar link.');
+    try{window.location.href='intent://'+SITE+'#Intent;scheme=https;action=android.intent.action.VIEW;end';}catch(e){}
+    return;
+  }
+  if(isIAB&&isIOS){
+    bi(el('shStatus'),'מנסים לפתוח בספארי. אם כלום לא נפתח - לחצו על סמל השיתוף / ⋯ באפליקציה ובחרו "פתח בספארי", או העתיקו את קישור היומן.','Trying to open Safari. If nothing opens, tap the share or more icon inside the app and choose Open in Safari, or copy the calendar link.');
+    try{window.location.href='x-safari-https://'+SITE;}catch(e){}
+    return;
+  }
+  var w=null;
+  try{w=window.open(BASE,'_blank');}catch(e){}
+  if(w){bi(el('shStatus'),'האתר נפתח בלשונית חדשה.','The site opened in a new tab.');}
+  else{bi(el('shStatus'),'הדפדפן חסם פתיחת לשונית. פתחו ידנית: '+SITE,'The browser blocked the new tab. Open manually: '+SITE);}
+});
+el('shX').addEventListener('click',closeSheet);
+el('ovl').addEventListener('click',function(ev){if(ev.target===el('ovl')){closeSheet();}});
+document.addEventListener('keydown',function(ev){if((ev.key==='Escape'||ev.keyCode===27)&&!el('ovl').hidden){closeSheet();}});
+var rows=document.querySelectorAll('.feed');
+for(var i=0;i<rows.length;i++){wire(rows[i]);}
+function wire(row){
+  var feed=row.getAttribute('data-feed'),label=row.getAttribute('data-label');
+  var b=document.createElement('button');b.type='button';
+  if(isMobile){
+    var dir=row.querySelector('.direct');if(dir){dir.className='btns direct hide';}
+    b.className='btn btn-atc';b.textContent='הוספה ליומן / Add to Calendar';
+  }else{
+    b.className='btn btn-more';b.textContent='לא עבד? אפשרויות והוראות / Not working? Options and instructions';
+    var aa=row.querySelector('.btn-a');
+    if(aa){aa.addEventListener('click',function(){setTimeout(function(){
+      if(!document.hidden&&el('ovl').hidden){
+        openSheet(feed,label);
+        bi(el('shStatus'),'נראה שהמכשיר לא פתח את יומן אפל. אפשר להשתמש בשלב 2: העתקת קישור היומן.','It looks like the device did not open Apple Calendar. You can use step 2: copy the calendar link.');
+      }
+    },2500);});}
+  }
+  b.addEventListener('click',function(ev){ev.preventDefault();openSheet(feed,label);});
+  row.appendChild(b);
+}
 })();
 </script>
 </body>
