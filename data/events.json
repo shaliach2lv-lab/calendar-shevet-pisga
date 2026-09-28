@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T19:08:18Z",
+  "generatedAt": "2026-09-28T19:13:20Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -328,7 +328,7 @@
       "recurrence": null,
       "category": null,
       "color": null,
-      "status": "published",
+      "status": "archived",
       "link": null,
       "notes": null,
       "publications": {
@@ -341,10 +341,10 @@
         "shchavag": "shchavag-007@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T19:12:42Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0008",
@@ -367,7 +367,7 @@
       "recurrence": null,
       "category": null,
       "color": null,
-      "status": "published",
+      "status": "archived",
       "link": null,
       "notes": null,
       "publications": {
@@ -385,10 +385,10 @@
         "tet": "tet-004@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T19:12:53Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0009",
