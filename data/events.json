@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T18:26:04Z",
+  "generatedAt": "2026-09-28T19:08:18Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -156,8 +156,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-09-23T17:00:00",
-      "end": "2026-09-23T19:00:00",
+      "start": "2026-09-23T17:30:00",
+      "end": "2026-09-23T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -175,10 +175,10 @@
         "shchavag": "shchavag-003@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:32:18Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0004",
@@ -278,8 +278,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-09-30T17:00:00",
-      "end": "2026-09-30T19:00:00",
+      "start": "2026-09-30T17:30:00",
+      "end": "2026-09-30T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -302,9 +302,9 @@
           "end": "2026-09-30T19:30:00"
         }
       },
-      "sequence": 1,
+      "sequence": 2,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-28T18:25:30Z",
+      "updatedAt": "2026-09-28T18:33:12Z",
       "updatedBy": "admin-ui"
     },
     {
@@ -444,8 +444,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-10-07T17:00:00",
-      "end": "2026-10-07T19:00:00",
+      "start": "2026-10-07T17:30:00",
+      "end": "2026-10-07T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -463,10 +463,10 @@
         "shchavag": "shchavag-009@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:42:33Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0011",
@@ -632,8 +632,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-10-14T17:00:00",
-      "end": "2026-10-14T19:00:00",
+      "start": "2026-10-14T17:30:00",
+      "end": "2026-10-14T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -651,10 +651,10 @@
         "shchavag": "shchavag-011@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0015",
@@ -720,8 +720,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-10-21T17:00:00",
-      "end": "2026-10-21T19:00:00",
+      "start": "2026-10-21T17:30:00",
+      "end": "2026-10-21T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -739,10 +739,10 @@
         "shchavag": "shchavag-013@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0017",
@@ -842,8 +842,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-10-28T17:00:00",
-      "end": "2026-10-28T19:00:00",
+      "start": "2026-10-28T17:30:00",
+      "end": "2026-10-28T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -861,10 +861,10 @@
         "shchavag": "shchavag-015@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0020",
@@ -935,8 +935,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-11-04T17:00:00",
-      "end": "2026-11-04T19:00:00",
+      "start": "2026-11-04T17:30:00",
+      "end": "2026-11-04T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -954,10 +954,10 @@
         "shchavag": "shchavag-017@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0022",
@@ -1057,8 +1057,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-11-11T17:00:00",
-      "end": "2026-11-11T19:00:00",
+      "start": "2026-11-11T17:30:00",
+      "end": "2026-11-11T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1076,10 +1076,10 @@
         "shchavag": "shchavag-019@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0025",
@@ -1145,8 +1145,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-11-18T17:00:00",
-      "end": "2026-11-18T19:00:00",
+      "start": "2026-11-18T17:30:00",
+      "end": "2026-11-18T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1164,10 +1164,10 @@
         "shchavag": "shchavag-021@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0027",
@@ -1267,8 +1267,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-11-25T17:00:00",
-      "end": "2026-11-25T19:00:00",
+      "start": "2026-11-25T17:30:00",
+      "end": "2026-11-25T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1286,10 +1286,10 @@
         "shchavag": "shchavag-023@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0030",
@@ -1389,8 +1389,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-12-02T17:00:00",
-      "end": "2026-12-02T19:00:00",
+      "start": "2026-12-02T17:30:00",
+      "end": "2026-12-02T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1408,10 +1408,10 @@
         "shchavag": "shchavag-025@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0033",
@@ -1485,8 +1485,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2026-12-09T17:00:00",
-      "end": "2026-12-09T19:00:00",
+      "start": "2026-12-09T17:30:00",
+      "end": "2026-12-09T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1504,10 +1504,10 @@
         "shchavag": "shchavag-027@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0035",
@@ -2003,8 +2003,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-01-06T17:00:00",
-      "end": "2027-01-06T19:00:00",
+      "start": "2027-01-06T17:30:00",
+      "end": "2027-01-06T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2022,10 +2022,10 @@
         "shchavag": "shchavag-037@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0047",
@@ -2174,8 +2174,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-01-13T17:00:00",
-      "end": "2027-01-13T19:00:00",
+      "start": "2027-01-13T17:30:00",
+      "end": "2027-01-13T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2193,10 +2193,10 @@
         "shchavag": "shchavag-040@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0051",
@@ -2301,8 +2301,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-01-20T17:00:00",
-      "end": "2027-01-20T19:00:00",
+      "start": "2027-01-20T17:30:00",
+      "end": "2027-01-20T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2320,10 +2320,10 @@
         "shchavag": "shchavag-042@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0054",
@@ -2394,8 +2394,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-01-27T17:00:00",
-      "end": "2027-01-27T19:00:00",
+      "start": "2027-01-27T17:30:00",
+      "end": "2027-01-27T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2413,10 +2413,10 @@
         "shchavag": "shchavag-044@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0056",
@@ -2516,8 +2516,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-02-03T17:00:00",
-      "end": "2027-02-03T19:00:00",
+      "start": "2027-02-03T17:30:00",
+      "end": "2027-02-03T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2535,10 +2535,10 @@
         "shchavag": "shchavag-046@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0059",
@@ -2638,8 +2638,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-02-09T17:00:00",
-      "end": "2027-02-09T19:00:00",
+      "start": "2027-02-09T17:30:00",
+      "end": "2027-02-09T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2657,10 +2657,10 @@
         "shchavag": "shchavag-048@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0062",
@@ -2887,8 +2887,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-02-24T17:00:00",
-      "end": "2027-02-24T19:00:00",
+      "start": "2027-02-24T17:30:00",
+      "end": "2027-02-24T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -2906,10 +2906,10 @@
         "shchavag": "shchavag-053@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0068",
@@ -3009,8 +3009,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-03-03T17:00:00",
-      "end": "2027-03-03T19:00:00",
+      "start": "2027-03-03T17:30:00",
+      "end": "2027-03-03T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3028,10 +3028,10 @@
         "shchavag": "shchavag-055@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0071",
@@ -3131,8 +3131,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-03-10T17:00:00",
-      "end": "2027-03-10T19:00:00",
+      "start": "2027-03-10T17:30:00",
+      "end": "2027-03-10T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3150,10 +3150,10 @@
         "shchavag": "shchavag-057@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0074",
@@ -3357,8 +3357,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-03-24T17:00:00",
-      "end": "2027-03-24T19:00:00",
+      "start": "2027-03-24T17:30:00",
+      "end": "2027-03-24T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3376,10 +3376,10 @@
         "shchavag": "shchavag-061@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0079",
@@ -3504,8 +3504,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-03-31T17:00:00",
-      "end": "2027-03-31T19:00:00",
+      "start": "2027-03-31T17:30:00",
+      "end": "2027-03-31T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3523,10 +3523,10 @@
         "shchavag": "shchavag-064@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0082",
@@ -3597,8 +3597,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-04-07T17:00:00",
-      "end": "2027-04-07T19:00:00",
+      "start": "2027-04-07T17:30:00",
+      "end": "2027-04-07T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3616,10 +3616,10 @@
         "shchavag": "shchavag-066@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0084",
@@ -3758,8 +3758,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-04-14T17:00:00",
-      "end": "2027-04-14T19:00:00",
+      "start": "2027-04-14T17:30:00",
+      "end": "2027-04-14T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -3777,10 +3777,10 @@
         "shchavag": "shchavag-069@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0088",
@@ -4110,8 +4110,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-05-05T17:00:00",
-      "end": "2027-05-05T19:00:00",
+      "start": "2027-05-05T17:30:00",
+      "end": "2027-05-05T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -4129,10 +4129,10 @@
         "shchavag": "shchavag-076@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0096",
@@ -4296,8 +4296,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-05-19T17:00:00",
-      "end": "2027-05-19T19:00:00",
+      "start": "2027-05-19T17:30:00",
+      "end": "2027-05-19T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -4315,10 +4315,10 @@
         "shchavag": "shchavag-080@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0100",
@@ -4389,8 +4389,8 @@
         "en": null
       },
       "allDay": false,
-      "start": "2027-05-26T17:00:00",
-      "end": "2027-05-26T19:00:00",
+      "start": "2027-05-26T17:30:00",
+      "end": "2027-05-26T19:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -4408,10 +4408,10 @@
         "shchavag": "shchavag-082@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:43:34Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0102",
