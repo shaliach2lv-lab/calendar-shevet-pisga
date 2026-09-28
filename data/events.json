@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-08T20:13:30Z",
+  "generatedAt": "2026-09-28T18:26:04Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -296,11 +296,16 @@
       "uids": {
         "shchavag": "shchavag-006@shaliach2lv-lab.github.io"
       },
-      "overrides": {},
-      "sequence": 0,
+      "overrides": {
+        "shchavag": {
+          "start": "2026-09-30T17:30:00",
+          "end": "2026-09-30T19:30:00"
+        }
+      },
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-28T18:25:30Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0007",
