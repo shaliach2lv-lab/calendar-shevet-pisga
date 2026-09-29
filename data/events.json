@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-28T19:13:20Z",
+  "generatedAt": "2026-09-29T20:24:20Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -543,7 +543,7 @@
       "recurrence": null,
       "category": null,
       "color": null,
-      "status": "published",
+      "status": "archived",
       "link": null,
       "notes": null,
       "publications": {
@@ -556,10 +556,10 @@
         "tet": "tet-003@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-29T20:24:04Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0013",
@@ -582,7 +582,7 @@
       "recurrence": null,
       "category": null,
       "color": null,
-      "status": "published",
+      "status": "archived",
       "link": null,
       "notes": null,
       "publications": {
@@ -612,10 +612,10 @@
           }
         }
       },
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-09-29T20:24:08Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0014",
