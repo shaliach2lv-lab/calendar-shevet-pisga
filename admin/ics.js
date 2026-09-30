@@ -56,6 +56,21 @@
 
   var LANGS = ['he', 'en'];
 
+  /* Prefix used only for the SUMMARY of a cancelled/archived VEVENT. The master
+     title in data/events.json is never touched, so Restore brings the original
+     wording back untouched. Several clients ignore STATUS:CANCELLED and keep
+     showing the entry; this keeps the cancellation readable there too. */
+  var CANCELLED_PREFIX = { he: '❌ מבוטל — ', en: '❌ CANCELLED — ' };
+
+  function isCancelled(eff) {
+    return eff.status === 'cancelled' || eff.status === 'archived';
+  }
+
+  function cancelledSummary(summary, lang) {
+    var pfx = CANCELLED_PREFIX[lang] || CANCELLED_PREFIX.en;
+    return summary.indexOf(pfx) === 0 ? summary : pfx + summary;
+  }
+
   /* ----------------------------------------------------------------- utils */
 
   function pad(n, w) {
@@ -278,6 +293,7 @@
 
     var other = lang === 'he' ? 'en' : 'he';
     var summary = eff.title[lang] || eff.title[other] || '';
+    if (isCancelled(eff)) { summary = cancelledSummary(summary, lang); }
     lines.push('SUMMARY:' + esc(summary));
 
     var desc = eff.description[lang];
@@ -288,7 +304,7 @@
     if (eff.category) { lines.push('CATEGORIES:' + esc(eff.category)); }
     if (eff.recurrence) { lines.push('RRULE:' + eff.recurrence); }
     if (seq > 0) { lines.push('SEQUENCE:' + seq); }
-    if (eff.status === 'cancelled' || eff.status === 'archived') { lines.push('STATUS:CANCELLED'); }
+    if (isCancelled(eff)) { lines.push('STATUS:CANCELLED'); }
     if (seq > 0 && ev.updatedAt) { lines.push('LAST-MODIFIED:' + icsStamp(ev.updatedAt)); }
 
     lines.push('END:VEVENT');
