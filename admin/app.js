@@ -78,6 +78,94 @@
   var PUBLISH_DB = 'data/events.json';
   function writablePath(p) { return allowedFile(p) || String(p) === PUBLISH_DB; }
 
+  /* --------------------------------------------- stale tab freshness locks */
+  /* The one failure mode that can silently undo good work is a long-lived
+     admin tab. The generator is fetched once, when the page loads, and then
+     lives in memory for as long as the tab stays open, so a tab opened before
+     a fix to ics.js keeps producing the old bytes and a publish from it
+     quietly overwrites feeds that were generated from newer code. The very
+     same tab also holds a snapshot of the master database, so publishing from
+     it can roll back somebody else's edits.
+
+     Two things are therefore captured while this tab loads, and both are
+     re-checked immediately before the first write of every publish:
+
+       genText / genSize  the exact ics.js this tab is running
+       baseHead           the main commit this tab read its data from
+
+     A mismatch refuses the publish. There is no force, no retry and no
+     automatic merge - the tab is told to reload, which is the only thing that
+     can actually make it current. */
+
+  var GEN_URL = 'ics.js';
+  var GEN_PATH = 'admin/ics.js';
+  var genText = null;
+  var genSize = -1;
+  var baseHead = null;
+
+  var STALE_GEN = 'This admin tab is running an older generator than main. ' +
+    'Reload the admin and run Generate & compare again.';
+  var STALE_HEAD = 'The repository changed since this tab loaded its data. ' +
+    'Reload the admin and run Sync before publishing.';
+  var NO_BASIS = 'This tab could not establish which generator and which commit ' +
+    'it is based on. Reload the admin before publishing.';
+
+  function utf8Len(s) { return new TextEncoder().encode(String(s)).length; }
+
+  function unb64(s) {
+    var bin = atob(String(s).replace(/\s+/g, ''));
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) { bytes[i] = bin.charCodeAt(i); }
+    return new TextDecoder().decode(bytes);
+  }
+
+  /* decodedBodySize belongs to the script the browser actually executed, so it
+     cannot be fooled by a cache that later hands out a newer file. */
+  function executedGeneratorSize() {
+    if (!window.performance || !performance.getEntriesByType) { return -1; }
+    var hit = -1;
+    performance.getEntriesByType('resource').forEach(function (e) {
+      if (e.initiatorType === 'script' && /\/ics\.js($|[?])/.test(e.name)) {
+        hit = e.decodedBodySize || -1;
+      }
+    });
+    return hit;
+  }
+
+  function captureFreshnessBasis() {
+    genSize = executedGeneratorSize();
+    fetch(GEN_URL)
+      .then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (t) {
+        /* Trust the text only if it is the same size as the script that ran. */
+        genText = (t && genSize > 0 && utf8Len(t) === genSize) ? t : null;
+      })
+      .catch(function () { genText = null; });
+    fetch('https://api.github.com/repos/' + PUBLISH_REPO + '/git/ref/heads/' + PUBLISH_BRANCH,
+      { cache: 'no-store', headers: { Accept: 'application/vnd.github+json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { baseHead = (j && j.object && j.object.sha) || null; })
+      .catch(function () { baseHead = null; });
+  }
+
+  /* Runs after HEAD is known and before a single blob exists, so a refusal
+     leaves main byte-for-byte untouched. */
+  function guardFreshness(head) {
+    if (!baseHead || !genText || genSize <= 0) {
+      return Promise.reject(new Error(NO_BASIS));
+    }
+    if (head !== baseHead) {
+      return Promise.reject(new Error(STALE_HEAD));
+    }
+    return ghApi('/contents/' + GEN_PATH + '?ref=' + head, 'GET').then(function (f) {
+      var onMain = unb64(f && f.content);
+      if (utf8Len(onMain) !== genSize || onMain !== genText) {
+        return Promise.reject(new Error(STALE_GEN));
+      }
+      return null;
+    });
+  }
+
   /* --------------------------------------------------- credential hygiene */
   /* The GitHub token lives in exactly one place: S.token, in memory, for the
      life of this tab. It is never written to localStorage or sessionStorage,
@@ -2272,6 +2360,9 @@
     var res = $('#syncResult');
     res.innerHTML = '<div class="card"><div class="spinner spin-sm"></div> Generating six files and comparing with what is live...</div>';
     generate();
+    /* Never compare against a snapshot. A tab that has been open for a while
+       may have had the live feeds changed under it by somebody else. */
+    S.live = null;
     fetchLive().then(function () { paintCompare(); });
   }
 
@@ -2833,6 +2924,8 @@
       ' and ' + PUBLISH_DB + ' in a single commit…');
 
     commitFiles(map, msg).then(function (info) {
+      /* This tab is now based on the commit it just created. */
+      baseHead = info.sha;
       S.live = null;
       S.gen = null;
       S.genDb = null;
@@ -2914,6 +3007,10 @@
     return ghApi('/git/ref/heads/' + PUBLISH_BRANCH, 'GET')
       .then(function (r) {
         head = r.object.sha;
+        /* Fail closed before the first write: this tab must be current. */
+        return guardFreshness(head);
+      })
+      .then(function () {
         return ghApi('/git/commits/' + head, 'GET');
       })
       .then(function (c) {
@@ -3080,6 +3177,7 @@
   }
 
   function boot() {
+    captureFreshnessBasis();
     fetch(DATA_URL + '?cb=' + Date.now(), { cache: 'no-store' })
       .then(function (r) {
         if (!r.ok) { throw new Error('events.json ' + r.status); }
