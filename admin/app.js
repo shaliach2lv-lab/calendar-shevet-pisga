@@ -500,7 +500,9 @@
   }
 
   function matches(ev) {
-    if (!S.flags.archived && archived(ev)) { return false; }
+    /* Archived events stay visible in the list. The chip narrows the list
+       down to them instead of being what makes them appear at all. */
+    if (S.flags.archived && !archived(ev)) { return false; }
     if (S.flags.dirtyOnly && !S.dirty[ev.id]) { return false; }
     var list = pubScheds(ev);
     if (S.flags.multiOnly && list.length < 2) { return false; }
@@ -594,7 +596,7 @@
 
     var flags = $('#fFlags');
     clear(flags);
-    [['archived', 'Archived'], ['dirtyOnly', 'Unpublished changes'], ['multiOnly', 'In 2 or more schedules']]
+    [['archived', 'Archived only'], ['dirtyOnly', 'Unpublished changes'], ['multiOnly', 'In 2 or more schedules']]
       .forEach(function (f) {
         var lab = el('label', 'frow');
         lab.innerHTML =
@@ -2075,8 +2077,11 @@
       }
       if (archived(ev)) {
         var t3 = el('div', 'lsub');
-        t3.innerHTML = '<span class="pill pill-warn">archived</span>';
+        t3.innerHTML = '<span class="pill pill-danger">❌ מבוטל</span>' +
+          '<span class="pill pill-mute" style="margin-inline-start:6px">Archived</span>';
         t.appendChild(t3);
+        t1.style.textDecoration = 'line-through';
+        t1.style.textDecorationThickness = '1px';
         r.style.opacity = '.62';
       }
       r.appendChild(t);
@@ -2102,7 +2107,15 @@
 
     var n = Object.keys(S.selected).length;
     var info = $('#selInfo');
-    if (info) { info.textContent = n ? n + ' selected' : rows.length + (rows.length === 1 ? ' event' : ' events'); }
+    if (info) {
+      if (n) { info.textContent = n + ' selected'; }
+      else {
+        var nArc = rows.filter(archived).length;
+        info.textContent = nArc
+          ? (rows.length - nArc) + ' active · ' + nArc + ' archived'
+          : rows.length + (rows.length === 1 ? ' event' : ' events');
+      }
+    }
     var mb = $('#btnMerge');
     if (mb) { mb.disabled = n < 2; }
   }
@@ -2317,11 +2330,14 @@
   host.appendChild(banner);
 
   var top = el('div', 'card');
+    var allEv = (S.db.events || []);
+    var nArcEv = allEv.filter(archived).length;
     top.innerHTML =
       '<div class="card-h"><span class="card-t">' +
       (n ? n + (n === 1 ? ' event has' : ' events have') + ' unpublished changes' : 'Everything is published') +
       '</span></div>' +
-      '<div class="kv"><span>Master events</span><b>' + (S.db.events || []).length + '</b></div>' +
+      '<div class="kv"><span>Master events</span><b>' + allEv.length +
+        (nArcEv ? ' (' + (allEv.length - nArcEv) + ' active · ' + nArcEv + ' archived)' : '') + '</b></div>' +
       '<div class="kv"><span>Feed files</span><b>6</b></div>' +
       '<div class="kv"><span>Live publishing</span><b>' +
         (S.publishEnabled ? 'ON - a confirmed publish reaches subscribers' : 'OFF - preview only') + '</b></div>' +
@@ -2827,8 +2843,8 @@
       '<span style="flex:1">events changed</span><b>' + sum.events.changed + '</b></div>' +
       '<div class="impact-row"><span class="pill pill-ok">ADDED</span>' +
       '<span style="flex:1">events added</span><b>' + sum.events.added + '</b></div>' +
-      '<div class="impact-row"><span class="pill pill-danger">REMOVED</span>' +
-      '<span style="flex:1">events removed or cancelled</span><b>' + sum.events.removed + '</b></div>' +
+      '<div class="impact-row"><span class="pill pill-danger">ARCHIVED / CANCELLED</span>' +
+      '<span style="flex:1">events archived, cancelled or removed</span><b>' + sum.events.removed + '</b></div>' +
       '</div>';
     if (sum.multi) {
       h += '<p class="note warn" style="margin-top:10px"><b>' + sum.multi +
