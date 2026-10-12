@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-06T21:29:13Z",
+  "generatedAt": "2026-10-12T21:37:26Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -404,9 +404,9 @@
         "he": null,
         "en": null
       },
-      "allDay": true,
-      "start": "2026-10-20",
-      "end": "2026-10-21",
+      "allDay": false,
+      "start": "2026-10-20T21:00:00",
+      "end": "2026-10-20T22:00:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -424,9 +424,9 @@
         "shchavag": "shchavag-008@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 1,
+      "sequence": 2,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-10-03T16:47:23Z",
+      "updatedAt": "2026-10-12T21:34:00Z",
       "updatedBy": "admin-ui"
     },
     {
@@ -536,9 +536,9 @@
         "he": null,
         "en": null
       },
-      "allDay": true,
-      "start": "2026-10-20",
-      "end": "2026-10-21",
+      "allDay": false,
+      "start": "2026-10-20T21:00:00",
+      "end": "2026-10-20T21:30:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -556,9 +556,9 @@
         "tet": "tet-003@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 2,
+      "sequence": 3,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-10-03T16:47:15Z",
+      "updatedAt": "2026-10-12T21:34:29Z",
       "updatedBy": "admin-ui"
     },
     {
@@ -575,9 +575,9 @@
         "he": null,
         "en": null
       },
-      "allDay": true,
-      "start": "2026-10-20",
-      "end": "2026-10-21",
+      "allDay": false,
+      "start": "2026-10-20T19:30:00",
+      "end": "2026-10-20T21:00:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -612,9 +612,9 @@
           }
         }
       },
-      "sequence": 2,
+      "sequence": 3,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-10-03T16:47:05Z",
+      "updatedAt": "2026-10-12T21:33:42Z",
       "updatedBy": "admin-ui"
     },
     {
