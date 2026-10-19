@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T20:03:28Z",
+  "generatedAt": "2026-10-19T20:04:47Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -1705,8 +1705,8 @@
         "en": null
       },
       "allDay": true,
-      "start": "2026-12-19",
-      "end": "2026-12-20",
+      "start": "2027-01-02",
+      "end": "2027-01-03",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1724,10 +1724,10 @@
         "shchavag": "shchavag-031@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 0,
+      "sequence": 1,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-09-05T04:43:40Z",
-      "updatedBy": "migration"
+      "updatedAt": "2026-10-19T20:04:38Z",
+      "updatedBy": "admin-ui"
     },
     {
       "id": "evt_0040",
