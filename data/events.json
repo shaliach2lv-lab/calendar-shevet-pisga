@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T21:19:42Z",
+  "generatedAt": "2026-10-31T21:35:39Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -873,16 +873,16 @@
         "en": "Anivot Hike"
       },
       "description": {
-        "he": "נא לחנות בחניון עפר למעלה",
-        "en": "Park in the parking lot up top"
+        "he": null,
+        "en": null
       },
       "location": {
-        "he": "Parking lot, Sandstone Dr, Las Vegas, NV 89161",
-        "en": "Parking lot, Sandstone Dr, Las Vegas, NV 89161"
+        "he": "vistas park",
+        "en": "vistas park"
       },
       "allDay": false,
       "start": "2026-11-01T09:30:00",
-      "end": "2026-11-01T13:00:00",
+      "end": "2026-11-01T12:00:00",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -912,12 +912,12 @@
       "overrides": {
         "shchavag": {
           "start": "2026-11-01T08:30:00",
-          "end": "2026-11-01T13:30:00"
+          "end": "2026-11-01T12:30:00"
         }
       },
-      "sequence": 3,
+      "sequence": 4,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-10-22T21:19:31Z",
+      "updatedAt": "2026-10-31T21:35:29Z",
       "updatedBy": "admin-ui"
     },
     {
@@ -4588,6 +4588,60 @@
       "createdAt": "2026-09-05T04:43:40Z",
       "updatedAt": "2026-09-05T04:43:40Z",
       "updatedBy": "migration"
+    },
+    {
+      "id": "evt_0106",
+      "title": {
+        "he": "יום עבודה למחנה חורף",
+        "en": "yom avoda for machane choref"
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": "אצל שירה 2251 S Fort Apache Rd",
+        "en": "Shira's - 2251 S Fort Apache Rd"
+      },
+      "allDay": false,
+      "start": "2026-11-07T15:00:00",
+      "end": "2026-11-07T18:00:00",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": false,
+          "en": false
+        },
+        "tet": {
+          "he": false,
+          "en": false
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-042@shaliach2lv-lab.github.io",
+        "tet": "tet-048@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-086@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 1,
+      "createdAt": "2026-10-31T21:32:57Z",
+      "updatedAt": "2026-10-31T21:34:27Z",
+      "updatedBy": "admin-ui"
     }
-  ]
+  ],
+  "uidCounters": {
+    "pisga": 42,
+    "tet": 48,
+    "shchavag": 86
+  }
 }
