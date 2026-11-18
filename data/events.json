@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-17T01:33:12Z",
+  "generatedAt": "2026-11-18T22:57:16Z",
   "generator": "admin-ui",
   "timezone": "America/Los_Angeles",
   "legacyDtstamp": "20260831T000000Z",
@@ -1705,8 +1705,8 @@
         "en": null
       },
       "allDay": true,
-      "start": "2027-01-02",
-      "end": "2027-01-03",
+      "start": "2027-01-09",
+      "end": "2027-01-10",
       "timezone": "America/Los_Angeles",
       "recurrence": null,
       "category": null,
@@ -1724,9 +1724,9 @@
         "shchavag": "shchavag-031@shaliach2lv-lab.github.io"
       },
       "overrides": {},
-      "sequence": 1,
+      "sequence": 2,
       "createdAt": "2026-09-05T04:43:40Z",
-      "updatedAt": "2026-10-19T20:04:38Z",
+      "updatedAt": "2026-11-18T22:40:08Z",
       "updatedBy": "admin-ui"
     },
     {
@@ -4637,11 +4637,60 @@
       "createdAt": "2026-10-31T21:32:57Z",
       "updatedAt": "2026-10-31T21:34:27Z",
       "updatedBy": "admin-ui"
+    },
+    {
+      "id": "evt_0107",
+      "title": {
+        "he": "סליפאובר שכבג - הכנה למחנה שכב״ג",
+        "en": ""
+      },
+      "description": {
+        "he": null,
+        "en": null
+      },
+      "location": {
+        "he": null,
+        "en": null
+      },
+      "allDay": true,
+      "start": "2027-01-22",
+      "end": "2027-01-24",
+      "timezone": "America/Los_Angeles",
+      "recurrence": null,
+      "category": null,
+      "color": null,
+      "status": "published",
+      "link": null,
+      "notes": null,
+      "publications": {
+        "pisga": {
+          "he": false,
+          "en": false
+        },
+        "tet": {
+          "he": false,
+          "en": false
+        },
+        "shchavag": {
+          "he": true,
+          "en": true
+        }
+      },
+      "uids": {
+        "pisga": "pisga-043@shaliach2lv-lab.github.io",
+        "tet": "tet-049@shaliach2lv-lab.github.io",
+        "shchavag": "shchavag-087@shaliach2lv-lab.github.io"
+      },
+      "overrides": {},
+      "sequence": 1,
+      "createdAt": "2026-11-18T22:56:07Z",
+      "updatedAt": "2026-11-18T22:57:09Z",
+      "updatedBy": "admin-ui"
     }
   ],
   "uidCounters": {
-    "pisga": 42,
-    "tet": 48,
-    "shchavag": 86
+    "pisga": 43,
+    "tet": 49,
+    "shchavag": 87
   }
 }
